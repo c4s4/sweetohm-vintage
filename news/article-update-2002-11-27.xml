@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2002-11-27" url="html/ant-web.html">
+ 
+ <title>Mise à jour d'articles</title>
+ 
+ <p>Mises à jour mineures des articles&dp;</p>
+
+ <list>
+  <item><link url="html/ant-web.html">Génération de sites web avec
+    Ant</link></item>
+  <item><link url="html/intro-xml.html">Introduction à XML</link></item>
+ </list>
+
+</news>
+
+<!-- Local IspellDict: francais -->

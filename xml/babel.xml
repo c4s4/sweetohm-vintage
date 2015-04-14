@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!DOCTYPE article PUBLIC "-//CAFEBABE//DTD blog 1.0//EN"
+                             "../dtd/article.dtd">
+    <article id="babel" date="2014-11-05" author="Michel Casabianca" email="michel.casabianca@gmail.com" lang="en" toc="yes" pdf="no"><title>Babel</title><text>
+<p>Babel is a set of tools to manage versions of your favorite programming languages.</p>
+<p>To build and install GO <term>1.3.3</term>:</p>
+<source>go-build 1.3.3</source>
+<p>To use this GO version, run <term>version</term> script that list all installed versions:</p>
+<source>$ version go
+Please choose a version:
+0: Default
+1: 1.0.3
+2: 1.1.2
+3: 1.2.2 *
+4: 1.3.3
+4
+Selecting go version '1.3.3'
+$ go version
+go version go1.3.3 linux/amd64</source>
+<p>This tool is able to build and manage following programming languages:</p>
+<list>
+<item>Go</item>
+<item>Lua</item>
+<item>Python</item>
+<item>Ruby</item>
+<item>Java</item>
+</list>
+<sect level="1"><title>How it works</title></sect>
+<p>Build scripts builds and install VMs or compiler in directory <term>/opt/&lt;lang&gt;/&lt;version&gt;</term>. Thus GO <term>1.3.3</term> would be installed in directory <term>/opt/go/1.3.3</term>.</p>
+<p>Script <term>version</term> selects a given version by making a symbolic link between <term>/opt/&lt;lang&gt;/&lt;version&gt;</term> and <term>/opt/&lt;lang&gt;/current</term>.</p>
+<p>Thus, if you put directory <term>/opt/&lt;lang&gt;/current/bin</term> in your <term>PATH</term>, you would run selected version.</p>
+<p>This system is straightforward and works fine.</p>
+<sect level="1"><title>Installation</title></sect>
+<p>To install Babel:</p>
+<list>
+<item>Drop scripts somewhere in your <term>PATH</term>.</item>
+<item>Create directories <term>/opt/go</term>, i<term>/opt/lua</term>, <term>/opt/python</term>, <term>/opt/ruby</term> and/or <term>/opt/java</term> depending on which language you want to manage.</item>
+</list>
+<p>Build your VMs with scripts <term>&lt;lang&gt;-build version</term> (except for Java that you install already built in appropriate directory <term>/opt/java/&amp;lt:version&gt;</term>).</p>
+<sect level="1"><title>Languages</title></sect>
+<sect level="2"><title>GO</title></sect>
+<p>GO has no VM, thus:</p>
+<list>
+<item><term>go-build</term> script will install a given compiler and GO tools.</item>
+<item><term>version go</term> script will switch between these versions.</item>
+</list>
+<p>You must set following environment variables:</p>
+<list>
+<item><term>PATH</term>: must include <term>/opt/go/current/bin</term>.</item>
+<item><term>GOROOT</term>: must be <term>/opt/go/current</term>.</item>
+<item><term>GOPATH</term>: must be set as you wish (<term>~/go</term> for instance).</item>
+</list>
+<p><imp>Note</imp>:</p>
+<p>Even if tests fail (which is the case for release <term>1.1</term> for instance), the compiler is installed. Nevertheless, tools are not.</p>
+<sect level="2"><title>Lua</title></sect>
+<list>
+<item><term>lua-build</term> script will build the VM for the given version.</item>
+<item><term>version lua</term> script will switch between these versions.</item>
+</list>
+<sect level="2"><title>Python</title></sect>
+<list>
+<item><term>python-build</term> script will build the VM for given version.</item>
+<item><term>version python</term> script will switch between these versions.</item>
+</list>
+<p>To build Python VM, you must install ifollowing development libraries:</p>
+<list>
+<item><term>tetex-nox</term> and <term>latex2html</term> to generate documentation for 2.6 and earlier versions.</item>
+<item><term>libreadline-dev</term> to enable completion and line edition in interpreter.</item>
+<item><term>libssl-dev</term> to enable HTTPS.</item>
+<item><term>libzip-dev</term>, <term>libtar-dev</term>, <term>libbz2-dev</term>, <term>zlib1g-dev</term> to enable ZIP and TAR support.</item>
+<item><term>libmysqld-dev</term>, <term>libmysqlclient-dev</term> and <term>python-dev</term> to install MySQL driver.</item>
+<item><term>libsqlite3-dev</term> to enable sqlite3 support.</item>
+</list>
+<sect level="2"><title>Ruby</title></sect>
+<list>
+<item><term>ruby-build</term> script will build the VM for the given version.</item>
+<item><term>version ruby</term> script will switch between these versions.</item>
+</list>
+<sect level="2"><title>Java</title></sect>
+<list>
+<item>There is no build script: drop Java tarball content in <term>/opt/java/&lt;version&gt;</term> directory.</item>
+<item><term>version java</term> script will switch between these versions.</item>
+</list>
+<p>You must set following environment variables:</p>
+<list>
+<item><term>PATH</term>: must include <term>/opt/go/current/bin</term>.</item>
+<item><term>JAVA_HOME</term>: must be <term>/opt/java/current</term>.</item>
+</list>
+<sect level="1"><title>Download</title></sect>
+<p>You can download Babel here: <link url="https://github.com/c4s4/babel/releases">https://github.com/c4s4/babel/releases</link>.</p>
+<sect level="1"><title>History</title></sect>
+<list>
+<item><imp>0.2.0</imp> (<term>2015-03-24</term>): Added <term>Lua</term> support.</item>
+<item><imp>0.1.0</imp> (<term>2014-11-05</term>): First public release.</item>
+</list>
+
+</text></article>

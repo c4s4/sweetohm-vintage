@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ELEMENT menu (submenu|menuseparator|menuimage)*>
+
+<!ELEMENT submenu (menuitem)+>
+<!ATTLIST submenu
+          title CDATA #REQUIRED>
+
+<!ELEMENT menuitem EMPTY>
+<!ATTLIST menuitem
+          title CDATA #REQUIRED
+          url   CDATA #REQUIRED>
+
+<!ELEMENT menuimage EMPTY>
+<!ATTLIST menuimage
+          url   CDATA #REQUIRED>
+
+<!ELEMENT menuseparator EMPTY>

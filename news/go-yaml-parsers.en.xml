@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                      "../dtd/news.dtd">
+
+<news date="2014-06-17" 
+      url="html/go-yaml-parsers.en.html">
+
+ <title>A tour of YAML Parsers in Go</title>
+
+ <p>This article lists YAML parsers for Go programming language. For each
+  one, it provides a short description, an evaluation and an example source
+  code.</p>
+
+ <p>Enjoy!</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

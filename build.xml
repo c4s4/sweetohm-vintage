@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project name="cafebabe" default="all" basedir=".">
+
+  <property file="build.properties" />
+  <property name="xml" value="xml" />
+  <property name="news" value="news" />
+  <property name="build" value="build" />
+  <property name="tmp" value="${build}/tmp" />
+  <property name='site' value='${build}/site' />
+  <property name="img" value="img" />
+  <property name="draft" value="no" />
+  <property name="numbering" value="no" />
+  <property name="img-dir" value="../img" />
+  <property name="java" value="../java" />
+  <property name="limit" value="0000-01-01" />
+  <property name="blog" value="blog" />
+  <property name="articles" value="articles" />
+
+  <taskdef name="xtask" classname="net.cafebabe.sat.xml.XTask" />
+  <taskdef name="split" classname="net.cafebabe.sat.xml.SplitTask" />
+  <taskdef name="insert" classname="net.cafebabe.sat.xml.InsertTask" />
+  <taskdef name="nest" classname="net.cafebabe.sat.xml.NestTask" />
+  <taskdef name="link" classname="net.cafebabe.sat.html.LinkTask" />
+  <taskdef name="valid" classname="net.cafebabe.sat.xml.ValidTask" />
+  <taskdef name="merge" classname="net.cafebabe.sat.xml.MergeTask" />
+  <taskdef name="bsh" classname="net.cafebabe.sat.bsh.BshTask" />
+
+  <target name="time" description="Get compilation time">
+    <tstamp>
+      <format property="build.time" pattern="yyyy-MM-dd" />
+    </tstamp>
+  </target>
+
+  <target name="dir" description="Make directories">
+    <mkdir dir="${tmp}" />
+    <mkdir dir="${site}/html" />
+    <mkdir dir="${site}/img" />
+    <mkdir dir="${site}/arc" />
+    <mkdir dir="${site}/java" />
+    <mkdir dir="${site}/dtd" />
+    <copy todir="${site}/img">
+      <fileset dir="img" includes="**/*.png" excludes="**/.xvpics/" />
+      <fileset dir="${blog}" includes="**/*.png" />
+      <fileset dir="${articles}" includes="**/*.png" />
+    </copy>
+    <copy todir="${site}/arc">
+      <fileset dir="arc" includes="**/*" />
+      <fileset dir="${blog}" includes="**/*.zip" />
+      <fileset dir="${blog}" includes="**/*.jar" />
+      <fileset dir="${blog}" includes="**/*.dmg" />
+      <fileset dir="${articles}" includes="**/*.zip" />
+      <fileset dir="${articles}" includes="**/*.gz" />
+    </copy>
+    <copy todir="${site}/pdf">
+      <fileset dir="pdf" includes="**/*" />
+      <fileset dir="${articles}" includes="**/*.pdf" />
+    </copy>
+    <copy todir="${site}/java">
+      <fileset dir="java" includes="**/*" />
+    </copy>
+    <copy todir="${site}/dtd">
+      <fileset dir="dtd" includes="**/*.dtd" />
+    </copy>
+    <copy file="misc/htaccess.sweetohm" tofile="${site}/.htaccess" />
+    <copy file="misc/robots.txt" todir="${site}/" />
+    <copy file="misc/googlec80e7c935a95bb80.html" todir="${site}/" />
+  </target>
+
+  <target name="valid" description="Validate XML files">
+    <valid validating="true" failonerror="true" errorlevel="warning"
+           maxerrors="10">
+      <fileset dir="${xml}" includes="*.xml" />
+      <fileset dir="${news}" includes="*.xml" />
+      <fileset dir="${blog}" includes="*.xml" />
+      <fileset dir="${articles}" includes="*.xml" />
+    </valid>
+  </target>
+
+  <target name="html" depends="dir,valid"
+          description="Build HTML pages from XML files">
+    <xtask todir="${site}/html" style="xsl/document.xsl">
+      <fileset dir="${xml}" includes="*.xml"/>
+      <param name="draft" value="${draft}" />
+      <param name="numbering" value="${numbering}" />
+      <param name="img-dir" value="${img-dir}" />
+      <param name="version" value="${version}" />
+      <param name="fragment" value="yes" />
+    </xtask>
+    <xtask todir="${site}/html" style="xsl/document.xsl">
+      <fileset dir="${articles}" includes="*.xml"/>
+      <param name="draft" value="${draft}" />
+      <param name="numbering" value="${numbering}" />
+      <param name="img-dir" value="${img-dir}" />
+      <param name="version" value="${version}" />
+      <param name="fragment" value="yes" />
+    </xtask>
+    <split dir="${site}/html/" />
+  </target>
+
+  <target name="index" depends="time" description="Build the index page">
+    <merge tofile="${tmp}/index.en.xml" encoding="iso-8859-1"
+           doctype="index PUBLIC '-//CAFEBABE//DTD index 1.0//EN'
+                                 '../../dtd/index.dtd'">
+      <fileset dir="${news}" includes="*.en.xml" />
+    </merge>
+    <xtask file="${tmp}/index.en.xml" todir="${site}" style="xsl/index.xsl">
+      <param name="img-dir" value="img" />
+      <param name="lang" value="en" />
+      <param name="date" value="${build.time}" />
+      <param name="limit" value="${limit}" />
+    </xtask>
+  </target>
+
+  <target name="news" depends="time" description="Build the news page">
+    <merge tofile="${tmp}/news.xml" encoding="iso-8859-1"
+           doctype="index PUBLIC '-//CAFEBABE//DTD index 1.0//EN'
+                                 '../../dtd/index.dtd'">
+      <fileset dir="${news}" includes="*.xml" excludes="*.en.xml"/>
+    </merge>
+    <xtask file="${tmp}/news.xml" todir="${site}" style="xsl/index.xsl">
+      <param name="img-dir" value="img" />
+      <param name="lang" value="fr" />
+      <param name="date" value="${build.time}" />
+      <param name="limit" value="${limit}" />
+    </xtask>
+  </target>
+
+  <target name="menu" depends="dir,valid"
+          description="Build menu files for pages and index">
+    <xtask file="menu.xml" tofile="${tmp}/menu-page.html" style="xsl/menu.xsl">
+      <param name="root" value=".." />
+      <param name="html" value="." />
+      <param name="img" value="../img" />
+      <param name="lang" value="fr" />
+    </xtask>
+    <xtask file="menu.xml" tofile="${tmp}/menu-index.html" style="xsl/menu.xsl">
+      <param name="root" value="." />
+      <param name="html" value="html" />
+      <param name="img" value="img" />
+      <param name="lang" value="fr" />
+    </xtask>
+    <xtask file="menu.en.xml" tofile="${tmp}/menu-page.en.html"
+           style="xsl/menu.xsl">
+      <param name="root" value=".." />
+      <param name="html" value="." />
+      <param name="img" value="../img" />
+      <param name="lang" value="en" />
+    </xtask>
+    <xtask file="menu.en.xml" tofile="${tmp}/menu-index.en.html"
+           style="xsl/menu.xsl">
+      <param name="root" value="." />
+      <param name="html" value="html" />
+      <param name="img" value="img" />
+      <param name="lang" value="en" />
+    </xtask>
+  </target>
+
+  <target name="frame" depends="menu" description="Build page frames">
+    <xtask file="menu.xml" tofile="${tmp}/frame-page.html"
+           style="xsl/frame.xsl">
+      <param name="img-dir" value="${img}" />
+    </xtask>
+    <copy file="${tmp}/frame-page.html" tofile="${tmp}/frame-index.html" />
+    <xtask file="menu.en.xml" tofile="${tmp}/frame-page.en.html"
+           style="xsl/frame.xsl">
+      <param name="img-dir" value="${img}" />
+    </xtask>
+    <copy file="${tmp}/frame-page.en.html"
+          tofile="${tmp}/frame-index.en.html" />
+    <insert file="${tmp}/frame-page.html" pattern="menu"
+            source="${tmp}/menu-page.html" />
+    <insert file="${tmp}/frame-index.html" pattern="menu"
+            source="${tmp}/menu-index.html" />
+    <insert file="${tmp}/frame-page.en.html" pattern="menu"
+            source="${tmp}/menu-page.en.html" />
+    <insert file="${tmp}/frame-index.en.html" pattern="menu"
+            source="${tmp}/menu-index.en.html" />
+  </target>
+
+  <target name="pages" depends="html,frame,index,news"
+          description="Build pages nesting them in the frame">
+    <nest pattern="page" source="${tmp}/frame-page.html">
+      <fileset dir="${site}/html" includes="*.html" excludes="*.en.html" />
+    </nest>
+    <nest pattern="page" source="${tmp}/frame-index.html">
+      <fileset dir="${site}" includes="*.html" excludes="*.en.html" />
+    </nest>
+    <nest pattern="page" source="${tmp}/frame-page.en.html">
+      <fileset dir="${site}/html" includes="*.en.html" />
+    </nest>
+    <nest pattern="page" source="${tmp}/frame-index.en.html">
+      <fileset dir="${site}" includes="*.en.html" />
+    </nest>
+  </target>
+
+  <target name="links" description="Test internal links in HTML files">
+    <link interrupt="true">
+      <fileset dir="${site}" includes="**/*.html" />
+    </link>
+  </target>
+
+  <target name="external-links" description="Test external links in HTML files">
+    <link log="links.txt" external="true" interrupt="false">
+      <fileset dir="${site}" includes="**/*.html" />
+    </link>
+  </target>
+
+  <target name="copy"
+          depends="all"
+          description="Copy site to destination directory">
+    <copy todir="${root}">
+      <fileset dir="${site}" includes="**/*" />
+    </copy>
+  </target>
+
+  <target name="sync"
+          depends="all"
+          description="RSync site to sweetohm">
+    <exec executable="rsync" dir="${site}">
+     <arg value="-av"/>
+     <arg value="."/>
+     <arg value="casa@sweetohm.net:/home/web/sweetohm/"/>
+    </exec>
+  </target>
+
+  <target name="clean" description="Clean generated files">
+    <delete dir="${build}" />
+  </target>
+
+  <target name="cleanall" depends="clean" description="Clean generated files">
+    <delete>
+      <fileset dir="${img}" includes="*.eps" />
+    </delete>
+    <delete>
+      <fileset dir="." includes="links.txt" />
+    </delete>
+  </target>
+
+  <target name="blog" description="Generate and install blog pages"
+          depends="time">
+    <!-- make build directories -->
+    <delete dir="${tmp}" />
+    <mkdir dir="${tmp}" />
+    <delete dir="${site}/blog" />
+    <mkdir dir="${site}/blog" />
+    <delete>
+      <fileset dir="${site}" includes="index*.html" excludes="*.en.html" />
+    </delete>
+    <!-- merge all blog entries in a file -->
+    <merge tofile="${tmp}/blog.xml" encoding="utf-8"
+           doctype="blogs PUBLIC '-//CAFEBABE//DTD blogs 1.0//EN'
+                                 '../../dtd/blogs.dtd'">
+      <fileset dir="${blog}" includes="*.xml" />
+    </merge>
+    <!-- generate indexes -->
+    <xtask file="${tmp}/blog.xml" tofile="${site}/indexes.html"
+           style="xsl/blog-index.xsl">
+      <param name="draft" value="${draft}" />
+      <param name="img-dir" value="${img}" />
+      <param name="fragment" value="yes" />
+      <param name="version" value="" />
+    </xtask>
+    <!-- generate articles -->
+    <xtask file="${tmp}/blog.xml" tofile="${site}/blog/articles.html"
+           style="xsl/blog-articles.xsl">
+      <param name="draft" value="${draft}" />
+      <param name="img-dir" value="../${img}" />
+      <param name="fragment" value="yes" />
+      <param name="version" value="" />
+    </xtask>
+    <!-- split indexes and articles in individual files -->
+    <split dir="${site}/" />
+    <split dir="${site}/blog/" />
+    <delete file="${site}/indexes.html" />
+    <delete file="${site}/blog/articles.html" />
+    <!-- generate RSS file -->
+    <xtask file="${tmp}/blog.xml" tofile="${site}/rss.xml"
+           style="xsl/blog-rss.xsl">
+      <param name="date" value="${build.time}" />
+    </xtask>
+    <!-- generate frame for index -->
+    <xtask file="menu.xml" tofile="${tmp}/menu-index.html" style="xsl/menu.xsl">
+      <param name="root" value="." />
+      <param name="html" value="html" />
+      <param name="img" value="img" />
+      <param name="lang" value="fr" />
+    </xtask>
+    <xtask file="menu.xml" tofile="${tmp}/frame-index.html"
+           style="xsl/frame.xsl">
+      <param name="img-dir" value="${img}" />
+    </xtask>
+    <insert file="${tmp}/frame-index.html" pattern="menu"
+            source="${tmp}/menu-index.html" />
+    <nest pattern="page" source="${tmp}/frame-index.html">
+      <fileset dir="${site}" includes="index*.html" excludes="*.en.html" />
+    </nest>
+    <!-- generate frame for blog -->
+    <xtask file="menu.xml" tofile="${tmp}/menu-blog.html" style="xsl/menu.xsl">
+      <param name="root" value=".." />
+      <param name="html" value="../html" />
+      <param name="img" value="../${img}" />
+      <param name="lang" value="fr" />
+    </xtask>
+    <xtask file="menu.xml" tofile="${tmp}/frame-blog.html"
+           style="xsl/frame.xsl">
+      <param name="img-dir" value="${img}" />
+    </xtask>
+    <insert file="${tmp}/frame-blog.html" pattern="menu"
+            source="${tmp}/menu-blog.html" />
+    <nest pattern="page" source="${tmp}/frame-blog.html">
+      <fileset dir="${site}/blog" includes="*.html" />
+    </nest>
+    <!-- make a link for index -->
+    <exec executable="ln" dir="${site}">
+     <arg value="-s"/>
+     <arg value="index-1.html"/>
+     <arg value="index.html"/>
+    </exec>
+    <!-- copy files to site -->
+    <copy todir="${root}">
+      <fileset dir="${site}" includes="blog/*" />
+      <fileset dir="${site}" includes="index*.html" />
+    </copy>
+    <copy todir="${root}/img/">
+      <fileset dir="${blog}" includes="*.png" />
+    </copy>
+  </target>
+
+  <target name="sitemap" description="Generate sitemap file">
+    <exec executable="python">
+      <arg value="misc/sitemap.py"/>
+    </exec>
+  </target>
+
+  <target name="all" depends="clean,valid,pages,blog,sitemap"
+          description="Make the whole site" />
+
+</project>

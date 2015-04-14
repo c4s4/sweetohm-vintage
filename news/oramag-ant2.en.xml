@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                      "../dtd/links.dtd">
+
+<links date="2003-01-16"
+      url="http://otn.oracle.com/oramag/oracle/03-jan/o13ant.html">
+
+ <title>Second part of my article about Ant</title>
+
+ <p>This second part, published in the January/February issue of
+  Oracle Magazine, deals about advanced features of Ant (such as
+  packaging applications, perform unit tests and other tasks that you
+  may automate in build files).</p>
+
+ <figure url="index.ant.png"/>
+
+</links>
+
+<!-- Local IspellDict: american -->

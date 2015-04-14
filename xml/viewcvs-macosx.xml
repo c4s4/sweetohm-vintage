@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//SWEETOHM//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article author="Michel CASABIANCA"
+         email="casa@sweetohm.net"
+         date="2004-05-16"
+         id="viewcvs-macosx"
+         lang="fr"
+         pdf="true">
+
+ <title>Installer ViewCVS sous MacOSX</title>
+
+ <abstract>
+  <p>ViewCVS est un outil offrant une vue d'un entrepôt CVS au travers
+   d'une interface Web. Cet article décrit une installation simple et
+   rapide de cet outil sous MacOSX.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Présentation de ViewCVS</title>
+
+   <p>CVS est devenu un standard dans le monde des outils de gestion
+    de configuration. C'est en particulier l'outil par défaut de
+    l'environnement de développement chez Apple (il est livré en
+    standard avec les outils de développement). ViewCVS offre une vue
+    synthétique de votre entrepôt CVS au travers d'une interface
+    web.</p>
+
+   <p>Il permet en particulier de visualiser l'historique d'un
+    fichier&dp;</p>
+
+   <figure url="viewcvs-macosx.history.png">
+    <title>Historique d'un fichier</title>
+   </figure>
+
+   <p>Mais aussi de visualiser graphiquement les différences entre
+    deux versions d'un même fichier&dp;</p>
+
+   <figure url="viewcvs-macosx.diff.png">
+    <title>Différences entre versions d'un fichier</title>
+   </figure>
+
+   <p>ViewCVS offre nombre d'autres fonctionnalités qui deviennent
+    vite indispensables lorsqu'on y a goûté. La suite de cet article
+    indique la marche à suivre pour installer cet outil sous
+    MacOSX.</p>
+
+  </sect>
+
+  <sect><title>Installer ViewCVS</title>
+
+   <p>Commencer par télécharger l'archive à l'adresse <link
+     url="http://viewcvs.sourceforge.net/"/>. Dézipper l'archive et
+     l'installer dans le répertoire de votre choix (sous le compte
+     <value>root</value>) à l'aide des commandes suivantes dans un
+     terminal (on se placera dans le répertoire où l'archive a été
+     téléchargée)&dp;</p>
+
+   <source>$ unzip viewcvs-0.9.2.zip
+$ mv viewcvs-0.9.2 /opt/</source>
+
+   <p>Vous pouvez bien sûr l'installer où vous souhaitez, pour ma
+    part, j'installe mes applications Unix sous le répertoire
+    <file>/opt</file> de manière à ne pas interagir avec
+    l'arborescence des fichiers de MacOSX.</p>
+
+   <p>ViewCVS est un programme Python qui peut être lancé seul (il
+    lance alors son propre serveur HTTP pour répondre aux requêtes) ou
+    bien en tant que CGI derrière Apache par exemple. Pour ma part,
+    j'ai choisi de le lancer en standalone de manière à ne pas polluer
+    mon installation Apache d'origine (et m'épargner d'avoir à
+    le configurer :o)</p>
+
+   <p>Pour lancer ViewCVS en standalone, il faut commencer par le 
+     configurer en se plaçant dans le répertoire d'installation et 
+     en lançant la commande&dp;</p>
+
+   <source>$ ./viewcvs-install</source>
+   
+   <p>On peut alors le lancer en tapant la commande suivante&dp;</p>
+
+   <source>$ ./standalone.py -r /mon/repository/cvs</source>
+
+   <p>On peut alors visualiser son entrepôt en visitant l'adresse
+    <file>http://localhost:7467/</file> avec son navigateur
+    préféré. Voilà, c'est aussi simple que cela&pe;</p>
+
+   <p>Pour simplifier le lancement de ViewCVS de la ligne de commande,
+    j'ai écrit le petit script Shell ci-dessous&dp;</p>
+
+   <source>#!/bin/sh
+CVSROOT=/mon/repository/cvs
+VIEWCVS_HOME=/opt/viewcvs-0.9.2
+cd $VIEWCVS_HOME
+exec /sw/bin/python ./standalone.py -r $CVSROOT</source>
+
+   <p>On notera qu je donne explicitement le chemin de l'interpréteur
+     Python suite à une incompatibilité entre celui livré avec MacOS
+     (une version 2.3) et la version installée avec Fink (une
+     2.3.3).</p>
+
+   <p>Pour faciliter le lancement depuis la ligne de commande, j'ai tiré
+     un lien vers le répertoire <file>/opt/bin</file> qui se trouve dans
+     mon <keyb>PATH</keyb>. On notera que ViewCVS ne propose pas de
+     commande pour l'arrêter proprement, il faut donc l'interrompre
+     par un kill (mais cela n'a jamais tué personne :o)</p>
+
+  </sect>
+
+  <sect><title>Lancer ViewCVS au démarrage de MacOSX</title>
+
+   <p>Lancer l'outil dans un terminal après chaque démarrage devient
+    vite pénible. Le plus simple est de l'installer en tant que
+    service à lancer au démarrage de la machine. Pour ce faire, il
+    faut (sous le compte <value>root</value>) créer un répertoire
+    <file>ViewCVS</file> dans le répertoire
+    <file>/Library/StartupItems</file>.</p>
+
+   <p>Dans ce répertoire, on placera le script suivant (qui doit être
+    exécutable), appelé <file>ViewCVS</file>&dp;</p>
+
+   <source><![CDATA[#!/bin/sh
+#
+# ViewCVS
+#
+
+. /etc/rc.common
+
+##
+# Start up ViewCVS
+##
+
+if [ "${VIEWCVS:=-YES-}" = "-YES-" ]; then
+
+    ConsoleMessage "Starting ViewCVS"
+
+    nohup /opt/bin/viewcvs > /var/log/viewcvs.log 2>&1 &
+    /bin/chmod 664 /var/log/viewcvs.log
+    /usr/bin/chgrp admin /var/log/viewcvs.log
+fi]]></source>
+
+   <p>Ce fichier lance l'application après s'être assuré que le
+    service doit être lancé au démarrage (la ligne
+    <code>VIEWCVS=-YES-</code> doit être présente dans le fichier
+    <file>/etc/hostconfig</file>).</p>
+
+   <p>On doit aussi y placer le fichier de paramètres suivant (appelé
+    judicieusement <file>StartupParameters.plist</file>)&dp;</p>
+
+   <source>//
+// ViewCVS
+//
+{
+  Description     = "ViewCVS";
+  Provides        = ("ViewCVS");
+  Requires        = ("Network");
+  OrderPreference = "Late";
+  Messages =
+  {
+    start = "Starting ViewCVS";
+    stop  = "Stopping ViewCVS";
+  };
+}</source>
+
+   <p>Le service est maintenant lancé au démarrage de MacOS. Pour le
+    désactiver, éditer le fichier <file>/etc/hostconfig</file> et
+    remplacer la ligne <code>VIEWCVS=-YES-</code> par
+    <code>VIEWCVS=-NO-</code>.</p>
+
+   <p>Les scripts de démarrage comportent en général une fonction pour
+    arrêter le service, mais n'ayant pas trouvé dans le documentation
+    de ViewCVS de moyen d'arrêter le serveur standalone, il faudra se
+    contenter d'un kill sur le process (c'est un peu vulgaire mais on
+    n'en meurt pas :o)</p>
+
+  </sect>
+
+  <p>Enjoy!</p>
+
+ </text>
+
+</article>
+
+<!-- Local IspellDict: francais -->

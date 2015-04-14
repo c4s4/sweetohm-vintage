@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                      "../dtd/news.dtd">
+
+<news url="html/vsql.html" date="2000-06-06">
+
+ <title>VisualSQL</title>
+
+  <figure url="index.vsql.png"/>
+
+  <p>VisualSQL est un client JDBC pour bases de données. Il permet d'envoyer
+   des requêtes SQL et de visualiser le résultat sous forme de table.
+   C'est plus un tutoriel/prototype pour le développement d'applications
+   JDBC qu'un client JDBC surpuissant, mais il peut servir à l'occasion ;o).
+   Il est bien sur distribué sous GPL.</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

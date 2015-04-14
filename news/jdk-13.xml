@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN" "../dtd/links.dtd">
+<links url="http://alphaworks.ibm.com/tech/linuxjdk" date="2000-05-05">
+ 
+ <title>JDK 1.3 pour Linux</title>
+
+  <p>IBM met à disposition sur son site Alphaworks la dernière version
+   du JDK pour Linux (Java 2 version SDK 1.3, il faut s'accrocher pour 
+   comprendre les numéros de version chez Sun !). Elle est bien sûr
+   encore en version bêta (elle l'est encore pour les plateformes
+   Windows et Solaris). C'est une très bonne nouvelle pour les
+   développeurs Java travaillant sous Linux qui n'ont plus rien à
+   envier à leurs homologues encore prisonniers sous Windows.</p>
+ 
+
+</links><!-- Local IspellDict: francais -->

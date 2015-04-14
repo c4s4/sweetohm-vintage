@@ -1,0 +1,5 @@
+# .htaccess
+# Fichier à la racine du site Free pour rediriger vers le nouveau site.
+
+RedirectMatch permanent ^(.*)$ http://sweetohm.net$1
+

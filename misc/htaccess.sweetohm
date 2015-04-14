@@ -1,0 +1,11 @@
+# .htaccess
+# Fichier à la racine du site Sweetohm après renommage de fichiers.
+
+Redirect permanent /html/un-an-raspi.html http://sweetohm.net/html/raspi-un-an.html
+Redirect permanent /arc/un-an-raspi.pdf http://sweetohm.net/arc/raspi-un-an.pdf
+Redirect permanent /html/blog.html http://sweetohm.net
+Redirect permanent /blog/index.html http://sweetohm.net
+Redirect permanent /blog/rss.xml http://sweetohm.net/rss.xml
+Redirect permanent /html/gointerfaces.html /html/go-interfaces.html
+Redirect permanent /html/gointerfaces.en.html /html/go-interfaces.en.html
+RedirectMatch permanent /blog/index-(.*)\.html http://sweetohm.net/index-$1.html

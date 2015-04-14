@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="fr" 
+      id="powered"
+      date="2001-05-30"
+      email="casa@sweetohm.net"
+      author="Michel CASABIANCA">
+
+ <title>Logos Powered by ...</title>
+
+ <text>
+
+  <p>Tout a commencé lorsque j'ai trouvé sur une page ce logo <imp>LinuX 
+    Powered</imp>:</p>
+
+  <figure url="powered.linux.png"/>
+
+  <p>Je l'ai trouvé magnifique, et comme il était possible de le recopier
+   sur sa page, je me suis empressé de le faire. Problème ! Il me
+   manquait deux autre logos pour Java et XML (les deux autres technos
+   sur lesquelles reposent ma page).</p>
+
+  <p>J'ai alors décidé de plagier honteusement ce logo pour pondre
+   (dans la douleur :o) les deux ci-dessous:</p>
+
+  <figure url="powered.java.png"/>
+
+  <figure url="powered.xml.png"/>
+
+  <p>Il va sans dire que vous pouvez utiliser ces logos sur vos
+   propres pages. À partir du moment où ils ne sont associés à des
+   logos pervers (non, je ne pense pas à des sites porno :o)</p>
+
+ </text>
+
+</page>

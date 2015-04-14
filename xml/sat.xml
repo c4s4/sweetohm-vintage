@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"  
+                      "../dtd/page.dtd"
+[
+<!ENTITY version "1.0">
+<!ENTITY size "850">
+]>
+
+<page author="Michel CASABIANCA"  
+      email="casa@sweetohm.net"
+      date="2003-07-14"
+      id="sat"
+      lang="fr">
+ 
+ <title>Sweet Ant Tools</title>
+
+ <text>
+
+  <p>SAT est un ensemble d'outils pour 
+   <link url="http://jakarta.apache.org/ant">Ant</link> sous licence
+   Apache. On y trouve en particulier un mode console (pour lancer une
+   console Ant où l'on peut taper des commandes pour lancer des builds
+   par exemple) qui accélère considérablement la vitesse
+   d'exécution. On y trouve aussi nombre de tâches, pour exécuter des
+   scripts <link url="http://www.beanshell.org">Beanshell</link>
+   depuis un script Ant, une tâche de transformation XSLT utilisant 
+   <link url="http://www.jclark.com/xml/xt.html">XT</link> et
+   d'autres destinées à manipuler des documents XML (les fusionner,
+   les éclater ou encore les inclure dans un autre fichier). Un mode
+   Ant pour Emacs est aussi fourni. Ce package est utilisé pour
+   générer mon site web ainsi que celui des <link
+    url="http://www.oreilly.fr">Éditions O'Reilly</link>.</p>
+  
+  <table>
+   <li>
+    <co><link url="sat.doc.html">La documentation est disponible ici 
+      en ligne.</link></co>
+   </li>
+  </table>
+
+  <figure url="sat.titre.png"/>
+
+  <table>
+   <li>
+    <co>Archive Zip 
+     <link url="../arc/sat-&version;.zip">sat-&version;.zip</link>
+     (&size; ko environ)</co>
+   </li>
+  </table>
+
+  <p>Ce programme demande une machine virtuelle Java récente (1.2 ou
+   postérieure). Pour l'installer, dézipper l'archive et recopier les
+   fichiers du répertoire <file>lib</file> dans celui de Ant.</p>
+  
+  <p>Lire la documentation du répertoire <file>doc</file> pour plus de
+   précisions sur l'installation et l'utilisation.</p>
+  
+ </text>
+
+</page>
+
+<!-- Local IspellDict: francais -->

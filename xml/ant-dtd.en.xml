@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="en"
+      id="ant-dtd.en"
+      date="2000-04-03"
+      email="casa@sweetohm.net"
+      author="Michel Casabianca">
+
+ <title>Ant DTD</title>
+
+ <text>
+
+  <figure url="ant-dtd.ant.png"/>
+
+  <p>Why a DTD for Ant ? Because good XML editors (such as 
+   <link url="http://www.emacs.org">Emacs</link> with
+   <link url="http://www.lysator.liu.se/projects/about_psgml.html">PSGML</link>)
+   can ease <file>build.xml</file> files writing only if a <imp>DTD</imp> can 
+   be parsed. For instance, Emacs + PSGML indicates possible elements
+   for a point in a file, prompts for mandatory attributes (in the
+   minibuffer), etc. So a DTD is nice.</p>
+
+  <p>Furthermore, a DTD is mandatory in some cases. For instance
+   if you want to include a file A in a file B. Let's consider
+   the following file :</p>
+
+  <source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+
+&lt;!DOCTYPE project PUBLIC "-//ANT//DTD project//EN" "project.dtd" [
+&lt;!ENTITY include SYSTEM "message.xml"&gt;
+]&gt;
+
+&lt;project name="test" default="task" basedir="."&gt;
+
+ &lt;target name="task"&gt;
+  &lt;echo message="Hello"/&gt;
+  &amp;include;
+ &lt;/target&gt;
+
+&lt;/project&gt;</source>
+
+  <p>It imports, with an entity in internal subset, the file
+   <file>message.xml</file> :</p>
+
+  <source>&lt;echo message="World !"/&gt;</source>
+
+  <p>Then Ant ouputs :</p>
+
+<source>$ ant
+Buildfile: build.xml
+Project base dir set to: /home/casa/tmp/test
+Executing Target: task
+Hello
+World !
+Completed in 2 seconds</source>
+
+  <p>The task defined in the file <file>message.xml</file> have been
+   imported in the <file>build.xml</file> file and processed by
+   Ant.</p>
+
+  <p>I wrote such a DTD (it was painfull, believe me), you can
+   <link url="../arc/ant-dtd.zip">download it here</link>.</p>
+
+  <p>Maybe you wonder how it is possible to write such a DTD while
+   users can define their own elements (with the &lt;taskref&gt;
+   element).</p>
+
+  <p>To solve this problem, there are two ways :</p>
+
+  <sect><title>Internal subset</title>
+
+   <p>The first solution is to define an element associated with
+    a task in the internal subset of the DTD (within the 
+    DOCTYPE element).</p>
+
+   <p>For instance, if you declare a task as :</p>
+
+   <source>&lt;xt xml="file.xml" xsl="file.xsl" out="file.html"/&gt;</source>
+
+   <p>You may add to DOCTYPE the following fragment :</p>
+
+   <source>&lt;!ENTITY % ext "| xt"&gt;
+
+&lt;!ELEMENT xt EMPTY&gt;
+&lt;!ATTLIST xt
+          xml CDATA #REQUIRED
+          xsl CDATA #REQUIRED
+          out CDATA #REQUIRED&gt;</source>
+
+   <p>The role of &lt;!ELEMENT&gt; and &lt;!ATTLIST&gt; elements are
+    obvious. But the entity &lt;!ENTITY % ext "| xt"&gt; may seem strange.
+    This entity is appended to the content definition of the element
+    <code>target</code> in the DTD :</p>
+
+   <source>&lt;!ELEMENT target (ant | ... | zip %ext;)*&gt;</source>
+
+   <p>The fragment <code>| xt</code> is appended to the content model
+    so you can include an &lt;xt&gt; element in &lt;target&gt;.</p>
+
+  </sect>
+
+  <sect><title>Extensions file</title>
+
+   <p>If you want an extension to be declared in all files,
+    you add it to the <file>project-ext.dtd</file> file :</p>
+
+   <source>&lt;!ENTITY % ext "| xt"&gt;
+
+&lt;!ELEMENT xt EMPTY&gt;
+&lt;!ATTLIST xt
+          xml CDATA #REQUIRED
+          xsl CDATA #REQUIRED
+          out CDATA #REQUIRED&gt;</source>
+
+   <p>The idea is the same, but the fragment is not declared in
+    the DTD subset, instead it is in the extension file that
+    is included in the DTD with :</p>
+
+   <source>&lt;!ENTITY % ext-file SYSTEM "project-ext.dtd"&gt;
+%ext-file;</source>
+
+  </sect>
+
+  <p>The method you choose depends on the accessibility you 
+   would desire to this extension. This is very similar to
+   placing extensions in a separate jar file or in Ant's jar.
+   In the latter case, extensions are allways reachable,
+   whatever <file>build.xml</file> file you work on.</p>
+
+ </text>
+
+</page>
+

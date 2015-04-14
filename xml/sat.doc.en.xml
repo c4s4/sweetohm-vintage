@@ -1,0 +1,1504 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//CAFEBABE//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article lang="en"
+         id="sat.doc.en"
+         date="2003-07-14"
+         email="casa@sweetohm.net"
+         author="Michel CASABIANCA">
+  
+ <title>Sweet Ant Tools 1.0</title>
+
+ <abstract>
+  <p>Sweet Ant Tools (SAT) are a set of Ant tools under the Apache
+   license.  They are mostly dedicated to HTML page generation from
+   XML files.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Install SAT</title>
+
+   <p>To install SAT, you must first install a Java Virtual Machine
+    version 1.2 or 1.3. You can download one for free on  <link
+    url="http://java.sun.com/products/jdk/1.2">Sun web site</link>.
+    The latest version of SAT is available on  <link
+    url="http://www.cafebabe.net/html/sat.en.html">my personal web
+    page</link>.</p>
+
+   <p>To install SAT, unzip the archive in a directory where you want
+    to install it. Then copy files in the <file>lib</file> directory
+    into the <file>lib</file> directory of Ant.</p>
+
+  </sect>
+
+  <sect><title>Compile SAT</title>
+
+   <p>To compile SAT, you must install Ant version 1.3 or 1.4. You can
+    download it on <link url="http://jakarta.apache.org/ant">Apache
+    web  site</link>. You must also install jar files of Ant
+    (<file>ant.jar</file>) and a JAXP XML parser (for instance the one
+    you can download on <link url="http://java.sun.com/xml">Sun's web
+    site</link>) in the <file>lib</file> directory of SAT.</p>
+
+   <p>To generate the SAT <file>jar</file> file, type <code>ant
+    jar</code> in the  <file>prj</file> directory. Then put the
+    generated <file>jar</file> file (<file>sat.jar</file> in the
+    <file>lib</file> directory) in the <file>lib</file> directory of
+    Ant. You will then be able to generate the documentation and zip
+    archive by typing <file>ant</file> on the command line (SAT uses
+    itself to generate it's documentation and the zip archive).</p>
+
+  </sect>
+
+  <sect><title>Ant Console</title>
+
+   <p>This tool runs Ant in a console (in a terminal or within your
+    favorite IDE) and lets you type commands to run targets of the
+    loaded build file. This method runs much faster than Ant because
+    it saves time to launch the Java Virtual Machine, JIT compilation
+    time and build file loading. You can run builds up to 5 times
+    faster than running Ant on the command line. It is obvious than
+    you save more time on small builds (when time spent in usefull
+    code is small compared to startup time).</p>
+
+   <sect><title>Installation</title>
+
+    <p>Go in the <file>bin</file> directory of your Ant installation,
+     copy the <file>ant</file> script (or <file>ant.bat</file> for OS
+     disabled people) to file <file>antc</file> (or
+     <file>antc.bat</file>). Replace
+     <code>org.apache.tools.ant.Main</code> with
+     <code>net.cafebabe.sat.ant.Console</code>. This script will
+     launch the Ant console instead of traditional Ant. Make sure that
+     this script is in your <code>PATH</code>.</p>
+
+    <p>You must,  of course, install SAT by dropping the file
+     <file>sat.jar</file> in the <file>lib</file> directory of your
+     Ant installation.</p>
+
+   </sect>
+
+   <sect><title>Usage</title>
+
+    <p>To run the Ant console, go in the directory of your project
+     (where is living your <file>build.xml</file> file) ant type
+     <keyb>antc</keyb>. You will display an help screen typing
+     <keyb>antc -help</keyb> on the command line&dp;</p>
+
+<source><![CDATA[Ant Console 0.8 (C) Michel Casabianca 2003
+type "help" to get help on console commands
+Usage: antc [-help] [-version] [-timer] [-file file] [-find file]
+-help    Print this help screen
+-version Print the version
+-timer   Print build times
+-file    To set the build file
+-find    To search for the build file]]></source>
+
+
+    <p>When you launch the Ant console, you will be promped as
+     following&dp;</p>
+
+    <figure url="sat.doc.console.png">
+     <title>Ant Console running</title>
+    </figure>
+
+    <p>To display an help screen about the console commands, type
+     <keyb>help</keyb> in the console&dp;</p>
+
+<source><![CDATA[Commands you can run in the console are the following:
+  help          To display this help screen
+  exit          To quit the console
+  desc          To describe the loaded project
+  load file     To load the build file
+  find file     To find the project file
+  reload        To reload the current project
+  timer on/off  To set timer on/off
+  target foo    To run the target foo
+  targetname    To run the target (can't be a console command)
+  <empty>       To repeat the last command]]></source>
+
+    <p>Note that you can launch a given target by typing its name
+     (this is a shortcut for the <keyb>target</keyb> command) provided
+     that this target hasn't the same name than a console command. You
+     can repeat the last command by typing <keyb>ENTER</keyb>.</p>
+
+    <p>You can load a build file using the <keyb>load</keyb>
+     command (the path is then relative to the current directory) and
+     search for a build file recursively in the file system with the
+     <keyb>find</keyb> command (that behaves like the
+     <keyb>-find</keyb> command line argument for Ant). You can also
+     reload the current project with <keyb>reload</keyb>. This may be
+     necessary when the build file  changes on disk or when the
+     project is corrupted (which happens sometimes after a build error
+     because some tasks don't work after an error).</p>
+
+    <p>The <keyb>desc</keyb> command describes the current project
+     (behaves like the <keyb>-projecthelp</keyb> command line
+     parameter for Ant).</p>
+
+    <p>I have also implemented a timer (to display execution time for
+     builds) that you can switch <value>on</value> or
+     <value>off</value> using the <keyb>timer</keyb> command. The
+     result is in milliseconds (because the builds are so fast :o)</p>
+
+   </sect>
+
+   <sect><title>Notes</title>
+
+    <p>Builds in the console are faster because you save startup times,
+     thus performance gains are more important for small builds. For
+     instance, for an empty build (that doesn't do anything), the build
+     in the console takes about 30 ms and 5 seconds in Ant (more than
+     100 times slower). Nevertheless, performance boost should not be
+     neglected for real world project. For instance, rebuilding the
+     whole SAT project takes about 12 seconds in the console and 25
+     seconds running Ant (more than 2 times slower).</p>
+
+    <p>Furthermore, this console supercedes my <code>server</code> task
+     which is far more complex to use and I don't integrate it from the
+     0.9 release (you can still download it in
+     <link url="http://www.cafebabe.net/arc/sat-0.7.zip">version 0.7</link>.
+    </p>
+    
+    <p>The console was developped and tested using the latest stable
+     Ant release, that is version <value>1.5.3-1</value>. Le me know
+     if you have tested with other versions.</p>
+   
+   </sect>
+
+  </sect>
+
+  <sect><title>Tasks description</title>
+
+   <p>SAT is a set of optional tasks for Ant, thus for each task there
+    is a <file>taskdef</file> element (to tell Ant which class is
+    associated to a given task) and an XML element.</p>
+
+   <sect><title>File, dir et fileset</title>
+
+    <p>All those tasks select files using <file>file</file> and
+     <file>dir</file> attributes and the <file>fileset</file>
+     element. These attributes and element use the following syntax:</p>
+
+    <list>
+     <item><imp>file</imp>: This is an attribute that contains a list
+      (coma separated) of files to process.For instance,
+      <file>file="foo"</file> selects the file <file>foo</file> while
+      <file>file="foo,bar"</file> selects the files <file>foo</file>
+      and <file>bar</file>.</item>
+     <item><imp>dir</imp>: This is an attribute containing a (coma
+      separated) list of directories to process. This selects all files
+      in a directory but not those in a subdirectory. For instance,
+      <code>dir="foo"</code> selects all files in the <file>foo</file>
+      directory, but none in a <file>foo/bar</file>
+      subdirectory. <code>dir="foo,bar"</code> selects all files in
+      directories <file>foo</file> and <file>bar</file>.</item>
+     <item><imp>fileset</imp>: This is a nested element to select
+      files.  See Ant documentation for more details about this
+      element.</item>
+    </list>
+
+    <p>Files or directories with relative path are relative to the Ant
+     script. Thus, the attribute <code>file="foo"</code> in the script
+     <file>/home/casa/build.xml</file> selects the file
+     <file>/home/casa/foo</file>.</p>
+
+    <p>It is possible to mix the <file>file</file> and <file>dir</file>
+     attributes and <file>fileset</file> elements to select files. For
+     instance:</p>
+    
+    <source>&lt;foo file="file" dir="dir"&gt;
+  &lt;fileset dir="dir2" includes="*.xml"/&gt;
+&lt;/foo&gt;</source>
+
+    <p>Selects the file <file>file</file>, files in the directory
+     <file>dir</file> and XML files in the <file>dir2</file>
+     directory.</p>
+
+   </sect>
+
+   <sect><title>Bsh</title>
+
+    <sect><title>Description</title>
+
+     <p>This task launch a <link
+      url="http://www.beanshell.org">Beanshell </link> script. This
+      script may be nested in the element or written in a file. It is
+      also possible to give arguments to the script with the
+      <file>args</file> attribute or a nested script.</p>
+
+     <p>The declarative element (after the
+      <file>&lt;project&gt;</file> one) is the following:</p>
+
+     <source>&lt;taskdef name="bsh" classname="net.cafebabe.sat.bsh.BshTask"/&gt;</source>
+
+     <p>This task was successfully tested with Beanshell version
+      1.1a18 (which jar file is included in this package). It doesn't
+      work with version 1.1a12 or older (the interface
+      <code>bsh.ConsoleInterface</code> was different for those
+      versions) and with version 1.2b1 (due to a bug).</p>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>Beanshell script(s) to execute</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory(ies) with Beanshell scripts to execute</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>args</co>
+       <co>Argument list (coma separated) to pass the the Beanshell script.
+        You can access this argument array using
+        <code>this.interpreter.get("bsh.args");</code></co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>reset</co>
+       <co>Indicates if the Beanshell interpreter should be reset
+        before to launch the script. Can take the <file>true</file> or
+        <file>false</file> values.</co>
+       <co>No (defaults to <file>true</file>)</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>You may select scripts to launch using <file>&lt;fileset&gt;</file>
+      nested elements. See Ant documentation for more details about
+      this element.</p>
+
+    </sect>
+
+    <sect><title>Nested text</title>
+
+     <p>A script may be nested within a <file>&lt;bsh&gt;</file> element.</p>
+     
+    </sect>
+
+    <sect><title>Ant properties</title>
+
+     <p>A Beanshell script can access Ant properties using
+      <code>setAntProperty()</code> and <code>getAntProperty()</code>
+      commands.  See below for a short sample script.</p>
+
+    </sect>
+
+    <sect><title>Beanshell Commands</title>
+
+     <p>This package also provides Beanshell commands to access Ant
+      properties (defined using <code>property</code> elements) from within
+      a Beanshell script. Those commands have the following signature:</p>
+
+     <list>
+      <item><code>void setAntProperty(String name,String
+       value)</code>: defines a property called <file>name</file> with
+       a value <file>value</file>.  This property doesn't have to be
+       defined in a <code>property</code> element.</item>
+      <item><code>String getAntProperty(String name)</code>: returns
+       the value of the Ant property called <file>name</file>.</item>
+     </list>
+
+     <p>Another command resolves a file name according to the
+      directory where the Ant script is running. In an Ant script, a
+      file name is relative to the directory of the script (instead of
+      the current directory). The signature of this method is the
+      following:</p>
+
+     <list>
+      <item><code>File resolveAntFile(String file)</code>: return the file
+       resolved according to the directory where the script is running.
+      </item>
+     </list>
+
+     <p>This task defines a variable called <file>antProject</file> in the
+      Beanshell interpreter. This variable contains a reference to the
+      running Ant project.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>To launch a script <file>bsh.bsh</file> in the <file>test</file>
+      directory, you may write:</p>
+
+     <source>  &lt;bsh file="test/bsh.bsh"/&gt;</source>
+
+     <p>You can also write the script in the <file>&lt;bsh&gt;</file>
+      element:</p>
+
+     <source>&lt;bsh&gt;
+  print("Hello World !");
+&lt;/bsh&gt;</source>
+
+     <p>Note that a script nested in a <file>bsh</file> element is
+      parsed when the Ant script is executed. Thus it should not
+      contain &lt; nor &amp; characters or it must be nested in a
+      in a <file>CDATA</file> declaration as following:</p>
+
+     <source>&lt;bsh&gt;
+  &lt;![CDATA[
+  print("&lt;date&gt;"+new Date()+"&lt;/date&gt;");
+  ]]&gt;
+&lt;/bsh&gt;</source>
+
+     <p>To pass a <file>foo</file> argument to the script (as if it was
+      was passed on the command line), you may use an <file>args</file>
+      attribute:</p>
+
+     <source>  &lt;bsh file="test/bsh.bsh" args="foo"/&gt;</source>
+
+     <p>Now a more complex sample:</p>
+
+     <source>&lt;bsh file="test/bsh.bsh" args="foo,bar"&gt;
+  nested="nested";
+&lt;/bsh&gt;</source>
+
+     <p>Where the script <file>test/bsh.bsh</file> is the following:</p>
+
+     <source>#!/usr/local/bin/bsh
+// display arguments on the command line
+args=this.interpreter.get("bsh.args");;
+if(args!=null) {
+    for(int i=0;i&lt;args.length;i++)
+        print("Argument "+i+": "+args[i]);
+}
+// display argument in nested script
+print("Argument nested: "+nested);</source>
+
+     <p>Will produce the following output:</p>
+
+     <source>bsh:
+    [bsh] Arguments: foo bar
+    [bsh] Executing nested script...
+    [bsh] Executing script 'test/bsh.bsh'...
+    [bsh] Argument 0: foo
+    [bsh] Argument 1: bar
+    [bsh] Argument nested: nested</source>
+
+     <p>This trace shows the evaluation order of the beanshell code:</p>
+
+     <enum>
+      <item>The arguments are declared first.</item>
+      <item>Then the nested script (if any) is executed.</item>
+      <item>Then the selected script(s) are executed.</item>
+     </enum>
+
+     <p>The following script displays the value of <file>foo</file>
+      property and give a value to the <file>bar</file> property.</p>
+
+     <source>print(getAntProperty("foo");
+setProperty("bar","Hello World!");</source>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>XTask</title>
+
+    <sect><title>Description</title>
+
+     <p>This task uses the <link
+      url="http://www.jclark.com/xml/xt.html">XT </link> XSLT
+      processor from James Clark to transform an XML document.  This
+      processor is, according to many benchmarks, the fastest Java
+      processor (but the author doesn't develop it anymore).</p>
+
+     <p>The task declaration (after the <file>&lt;project&gt;</file>
+      element) is the following:</p>
+
+     <source>&lt;taskdef name="xtask" classname="net.cafebabe.sat.xml.XTask"/&gt;</source>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>File(s) to transform.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory(ies) of the files to transform.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>style</co>
+       <co>The stylesheet to use for transformation.</co>
+       <co>Yes</co>
+      </li>
+      <li>
+       <co>tofile</co>
+       <co>The generated file (if there is only one).</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>todir</co>
+       <co>Directory(ies) of the generated files.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>extension</co>
+       <co>The file extension of the generated files.</co>
+       <co>No (defaults to <file>.html</file>)</co>
+      </li>
+      <li>
+       <co>force</co>
+       <co>Force the transformation even if the generated file already
+        exists and is newer than the XML file and the stylesheet. May
+        take  <file>true</file> or <file>false</file> values.</co>
+       <co>No (defaults to false)</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>You may select files to transform with a nested
+      <file>&lt;fileset&gt;</file> element. See Ant documentation for
+      more details about this element.</p>
+
+     <p>It is also possible to pass arguments to the XSLT processor
+      using <file>&lt;arg&gt;</file> elements. For instance, to assign
+      the value <file>bar</file> to the parameter <file>foo</file>,
+      you should nest within the <file>&lt;xtask&gt;</file>
+      element:</p>
+
+     <source>&lt;arg name="foo" value="bar"/&gt;</source>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>To transform a file <file>foo.xml</file> to
+      <file>bar.html</file> using the <file>transfo.xsl</file>
+      stylesheet, you may write:</p>
+
+     <source>&lt;xtask file="foo.xml"
+       style="transfo.xsl"
+       tofile="bar.html"/&gt;</source>
+
+     <p>To assign the value <file>bar</file> to the parameter named
+      <file>foo</file>, you will write the element:</p>
+
+     <source>&lt;xtask file="foo.xml"
+       style="transfo.xsl"
+       tofile="bar.html"&gt;
+  &lt;arg name="foo" value="bar"/&gt;
+&lt;/xtask&gt;</source>
+
+
+    </sect>
+
+    <sect><title>Note</title>
+
+     <p>This task was previously distributed alone on my page
+      (version 0.1). It is now part of the SAT package.</p>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>Valid</title>
+
+    <sect><title>Description</title>
+
+     <p>This task validates XML files. You may validate a file against
+      its DTD or simply check the XML syntax (check that the document
+      is well formed). You can choose to stop Ant compilation while an
+      error is encountered, the error level or the maximum number of
+      parsing errors to display for each file.</p>
+
+     <p>The declarative element (after the <file>&lt;project&gt;</file> one)
+      is the following:</p>
+
+     <source>&lt;taskdef name="valid" classname="net.cafebabe.sat.xml.ValidTask"/&gt;</source>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>File(s) to validate.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory(ies) of the files to validate.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dtd</co>
+       <co>Tells the parser if the file(s) to parse have a DTD (stated
+        in the <file>DOCTYPE</file>) or if it should only check the XML
+        syntax (if the value of this attribute is <file>false</file>).</co>
+       <co>No (defaults to <file>true</file>)</co>
+      </li>
+      <li>
+       <co>failonerror</co>
+       <co>Tells the parser to stop Ant buildfile processing when it
+        encounters an error (if the value of this attribute is
+        <file>true</file>).</co>
+       <co>No (defaults to <file>true</file>)</co>
+      </li>
+      <li>
+       <co>errorlevel</co>
+       <co>The error level to check (errors of that level or higher are
+       displayed and may interrupt Ant processing). Possible values are
+        <file>warning</file>, <file>error</file> and <file>fatal</file>.</co>
+       <co>No (defaults to <file>fatal</file>)</co>
+      </li>
+      <li>
+       <co>maxerrors</co>
+       <co>This is the maximum number of errors to display for an
+        XML file. This number must be greater than 0.</co>
+       <co>No (defaults to <file>100</file>)</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>The files to merge can be selected using a <file>&lt;fileset&gt;</file>
+      element. See Ant documentation for more details about this element.
+     </p>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>To validate all XML files of the a directory, copy the following
+      buildfile in that directory:</p>
+
+     <source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+
+&lt;project name="xml" default="valid" basedir="."&gt;
+
+ &lt;taskdef name="valid" classname="net.cafebabe.sat.xml.ValidTask"/&gt;
+
+ &lt;target name="valid"&gt;
+  &lt;valid dtd="true"
+         failonerror="true"
+         errorlevel="fatal"
+         maxerrors="100"&gt;
+   &lt;fileset dir="." includes="*.xml"/&gt;
+  &lt;/valid&gt;
+ &lt;/target&gt;
+
+&lt;/project&gt;</source>
+
+     <p>Then launch Ant typing <code>ant</code> on the command line. Note
+      that attributes have their default values. Adapt this file to
+      meet your needs.</p>
+
+     <p>If you want to validate all Ant buildfile on your disk, launch
+      in the root directory the following file:</p>
+
+     <source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+
+&lt;project name="xml" default="valid" basedir="."&gt;
+
+ &lt;taskdef name="valid" classname="net.cafebabe.sat.xml.ValidTask"/&gt;
+
+ &lt;target name="valid"&gt;
+  &lt;valid dtd="false"
+         failonerror="false"
+         errorlevel="warning"
+         maxerrors="1"&gt;
+   &lt;fileset dir="." includes="**/build.xml"/&gt;
+  &lt;/valid&gt;
+ &lt;/target&gt;
+
+&lt;/project&gt;</source>
+
+     <p>The <code>dtd</code> attribute is <file>false</file> because
+      buildfile do not have a DTD, you ask the parser not to stop when
+      it encounters an error to scan the whole disk, you put the error
+      level on the lowest value to detect any problem and you ask to
+      display only one error per file in order to avoid too many error
+      messages.</p>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>Merge</title>
+
+    <sect><title>Description</title>
+
+     <p>This element is for merging XML files into one. This file
+      contains the root elements within a nesting one.</p>
+
+     <p>The task declaration (after the <file>&lt;project&gt;</file> element)
+      is the following:</p>
+
+     <source>&lt;taskdef name="merge" classname="net.cafebabe.sat.xml.MergeTask"/&gt;</source>
+
+     <p>For instance, this element may merge the following XML files:</p>
+
+     <source>&lt;?xml version="1.0"?&gt;
+&lt;root&gt;
+  &lt;element1/&gt;
+  &lt;element2/&gt;
+  &lt;element3/&gt;
+&lt;/root&gt;</source>
+
+     <p>and:</p>
+
+     <source>&lt;?xml version="1.0"?&gt;
+&lt;root&gt;
+  &lt;element4/&gt;
+  &lt;element5/&gt;
+&lt;/root&gt;</source>
+
+     <p>In a single file like this one:</p>
+
+     <source>&lt;?xml version="1.0"?&gt;
+&lt;index&gt;
+  &lt;root&gt;
+    &lt;element1/&gt;
+    &lt;element2/&gt;
+    &lt;element3/&gt;
+  &lt;/root&gt;
+  &lt;root&gt;
+    &lt;element4/&gt;
+    &lt;element5/&gt;
+  &lt;/root&gt;
+&lt;/index&gt;</source>
+
+     <p>This element is useful to generate composite documents. For
+      instance, the <link url="http://www.cafebabe.net">index page of
+       my site</link> is generated using this task. A presentation
+      text, news and links (that are small distinct files) are merged
+      in a single XML file. This file is transformed into an HTML page
+      using XSLT.</p>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>File(s) to merge.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory(ies) of the files to merge.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>tofile</co>
+       <co>File name of the resulting file.</co>
+       <co>Yes</co>
+      </li>
+      <li>
+       <co>encoding</co>
+       <co>This is the encoding of the resulting file. For instance, the
+        encoding for western European languages is iso-8859-1. This gives
+        the following XML declaration element: <code>&lt;?xml version="1.0"
+         encoding="iso-8859-1"?&gt;</code>.</co>
+       <co>No (defaults to ASCII encoding)</co>
+      </li>
+      <li>
+       <co>doctype</co>
+       <co>This is the second part of the doctype declaration. For
+        instance, a doctype such as <file>article PUBLIC "-//CASA//DTD
+        article//FR"  "article.dtd"</file> would result in the doctype
+        <code>&lt;!DOCTYPE  article PUBLIC "-//CASA//DTD article//FR"
+        "article.dtd"&gt;</code>.  The root element of the document is
+        extracted from this doctype.  If no doctype is provided, the
+        root element is <file>&lt;index&gt;</file>.
+       </co>
+       <co>No (defaults to no doctype)</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>The files to merge can be selected using a
+      <file>&lt;fileset&gt;</file> element. See Ant documentation for
+      more details about this element.</p>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>To merge XML files in the <file>index</file> directory using
+      <file>ISO 8859-1</file> encoding into a file called
+      <file>index.xml</file> with no doctype (and a root element
+      <file>index</file>), you may write:</p>
+
+     <source>
+&lt;merge dir="index"
+       tofile="index.xml"
+       encoding="iso-8859-1"
+       doctype="index PUBLIC '-//CASA//DTD index//FR' 'index.dtd'"/&gt;</source>
+
+     <p>To merge the XML files in the <file>xml</file> directory and
+      subdirectories, in a single <file>index.xml</file> file, you may
+      write:</p>
+
+     <source>&lt;merge tofile="index.xml"
+       encoding="iso-8859-1"
+       doctype="index PUBLIC '-//CASA//DTD index//FR' 'index.dtd'"&gt;
+  &lt;fileset dir="xml" includes="**/*.xml"/&gt;
+&lt;/merge&gt;</source>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>Insert</title>
+
+    <sect><title>Description</title>
+
+     <p>This task is for replacing a processing instruction with the
+      content of a given file. You can thus include an HTML file
+      fragment in an HTML file. This is the way menus are included
+      in the <link url="http://www.cafebabe.net">web pages of my
+       site</link>.</p>
+
+     <p>The task declaration (after the <file>&lt;project&gt;</file> element)
+      is the following:</p>
+
+     <source>&lt;taskdef name="insert" classname="net.cafebabe.sat.xml.InsertTask"/&gt;</source>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>File(s) to process.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory(ies) of the files to process.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>pattern</co>
+       <co>This is the name of the processing instruction to replace.
+        For instance, if the pattern is <file>foo</file>, the processing
+        instructions to replace are <code>&lt;?foo ?&gt;</code>.</co>
+       <co>No (defaults to <file>insert</file>)</co>
+      </li>
+      <li>
+       <co>source</co>
+       <co>File to insert to replace processing instructions.</co>
+       <co>Yes</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>You can select the files to process using a
+      <file>&lt;fileset&gt;</file> element. See Ant documentation for
+      more details about this element.</p>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>To replace <file>&lt;?menu ?&gt;</file> processing
+      instructions of files in the <file>html</file> directory with
+      the content of the <file>menu.html</file> file, you may write
+      the following element:</p>
+
+     <source>
+&lt;insert dir="html"
+        pattern="menu"
+        source="menu.html"/&gt;</source>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>Nest</title>
+
+    <sect><title>Description</title>
+
+     <p>Using this task, you can nest files within a given one,
+      replacing a given processing instruction. You may this way
+      nest HTML fragments in a page template.</p>
+
+     <p>The task declaration (after the <file>&lt;project&gt;</file>
+      element) is the following:</p>
+
+     <source>&lt;taskdef name="nest" classname="net.cafebabe.sat.xml.NestTask"/&gt;</source>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>File(s) to process.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory for files to process</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>pattern</co>
+       <co>The name of the processing instruction to replace. For
+        instance, if this pattern value is <value>foo</value>, the
+        replaced processing instructions are <code>&lt;?foo
+       ?&gt;</code>.</co>
+       <co>No (defaults to <value>nest</value>)</co>
+      </li>
+      <li>
+       <co>source</co>
+       <co>The file to nest around selected files.</co>
+       <co>Oui</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>You can select the files to process using a
+      <file>&lt;fileset&gt;</file> element. See Ant documentation for
+      more details about this element.</p>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Exemples</title>
+
+     <p>To nest files in the <file>html</file> directory within the
+      file <file>page.html</file>, replacing the <code>&lt;?body
+      ?</code> processing instruction, you may write the following
+      element:</p>
+
+     <source>&lt;nest source="page.html"
+      pattern="body"
+      dir="html"/&gt;</source>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>Split</title>
+
+    <sect><title>Description</title>
+
+     <p>This task splits files using processing instructions. The name
+     of the generated files is written in the processing instruction.</p>
+
+     <p>The task declaration (after the <file>&lt;project&gt;</file> element)
+      is the following:</p>
+
+     <source>&lt;taskdef name="split" classname="net.cafebabe.sat.xml.SplitTask"/&gt;</source>
+
+     <p>For instance, the following file:</p>
+
+     <source>&lt;?xml version="1.0"?&gt;
+&lt;?split file="page1.html"?&gt;
+&lt;html&gt;
+...
+&lt;/html&gt;
+&lt;?split file="page1.html"?&gt;
+&lt;?split file="page2.html"?&gt;
+&lt;html&gt;
+...
+&lt;/html&gt;
+&lt;?split file="page2.html"?&gt;</source>
+
+     <p>Will be split in two files (<file>page1.html</file> and
+      <file>page2.html</file>):</p>
+
+     <source>&lt;html&gt;
+...
+&lt;/html&gt;</source>
+
+     <p>Most of XSLT processors (such as
+      <link url="http://www.jclark.com/xml/xt.html">XT</link> or
+      <link url="http://xml.apache.org/xalan">Xalan</link>) implement
+      extensions to produce more than one file but this task allows
+      you to avoid to pollute your XSLT code with proprietary one.
+     </p>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>File(s) to process.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory(ies) of the files to process.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>pattern</co>
+       <co>This is the name of the processing instruction used to split
+        the files. For instance, if this pattern is <file>split</file>,
+        the processing instructions where to cut files look like
+        <code>&lt;?split file="foo"?&gt;</code>.</co>
+       <co>No (defaults to <file>split</file>)</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>You can choose the files to process with a nested
+      <file>&lt;fileset&gt;</file> element. See Ant documentation for
+      more details about this element.</p>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>To split a file called <file>foo</file> using processing
+      instructions that look like <code>&lt;?cut
+       file="bar"?&gt;</code>, you would write:</p>
+
+     <source>  &lt;split file="foo"
+         pattern="cut"/&gt;</source>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>XML Word Count</title>
+
+    <sect><title>Description</title>
+
+     <p>This task counts words in an XML document. Useful when you
+      write an XML file with word count constraints (for an article
+      for instance). The text in any element of the document is taken
+      into account while the text in attributes is ignored. This
+      default behavior may be changed using the task parameters.</p>
+
+     <p>The task declaration (after the <file>&lt;project&gt;</file> element)
+      is the following:</p>
+
+     <source>&lt;taskdef name="xwc" classname="net.cafebabe.sat.xml.WordCountTask"/&gt;</source>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>separators</co>
+       <co>The list of separator characters (characters between words).</co>
+       <co>No (defaults to a reasonable list of separators).</co>
+      </li>
+      <li>
+       <co>excludeElements</co>
+       <co>A coma separated list of elements to exclude from the word
+        count.</co>
+       <co>No (defaults to no elements).</co>
+      </li>
+      <li>
+       <co>singleElements</co>
+       <co>A coma separated list of elements that count as a single
+        word.</co>
+       <co>No (defaults to no elements).</co>
+      </li>
+      <li>
+       <co>includeAttributes</co>
+       <co>A coma separated list of attributes to include in the word
+        count. Those attributes are written as
+        <value>element@attribute</value>, thus an attribute is
+        associated to an element.</co>
+       <co>No (defaults to no attributes).</co>
+      </li>
+      <li>
+       <co>documentProperties</co>
+       <co>A file that contains the properties of the document (that
+        is a list of elements to exclude, single elements and
+        attributes to include). This is a properties file containing
+        the properties <code>separators</code>,
+        <code>excludeElements</code>, <code>singleElements</code>
+        and <code>includeAttributes</code>. Each of these property may
+        be empty.</co>
+       <co>No (no properties are loaded when empty).</co>
+      </li>
+      <li>
+       <co>property</co>
+       <co>The Ant property where the word count is put.</co>
+       <co>Yes</co>
+      </li>
+      <li>
+       <co>propertyFiles</co>
+       <co>The Ant property where to put the file count.</co>
+       <co>No (defaults to no property).</co>
+      </li>
+      <li>
+       <co>quiet</co>
+       <co>If set to <value>yes</value>, the task doesn't display any
+        word and file count.</co>
+       <co>No (default to <value>no</value>).</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>You can choose the files to process with a nested
+      <file>&lt;fileset&gt;</file> element. See Ant documentation for
+      more details about this element.</p>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>Let's say you want to count words in the XML files of the
+      current directory except <file>build.xml</file> and want to
+      exclude the <code>source</code> element of the word count. You
+      may write the following target:</p>
+
+     <source>&lt;target name="wc">
+ &lt;xwc excludeElements="source">
+  &lt;fileset dir="." includes="*.xml" excludes="build.xml"/>
+ &lt;/xwc>
+&lt;/target>
+</source>
+
+     <p>This will produce the following output:</p>
+
+     <source>$ ant wc
+Buildfile: build.xml
+
+wc:
+      [xwc] 8414 words in 2 file(s).
+
+BUILD SUCCESSFUL
+Total time: 4 seconds</source>
+
+     <p>Now let's suppose that we want to write the count rules in a
+      properties file named <file>document.properties</file>:</p>
+
+     <source>excludeElements=comment,source
+singleElements=file,keyb,code
+includeAttributes=sect@title</source>
+
+     <p>This file indicates the following rules:</p>
+
+     <list>
+      <item>We must exclude elements <code>comment</code> and
+       <code>source</code> from the word count.</item>
+      <item>The elements <code>file</code>, <code>keyb</code> and
+       <code>code</code> must count as a single word.</item>
+      <item>The text in attributes <code>title</code> in the
+       <code>sect</code> elements must be taken into account.</item>
+     </list>
+
+     <p>To count words in XML documents of the <file>xml</file>
+      directory using those rules and put the result in the
+      <code>wc</code> Ant property, we might write:</p>
+
+     <source>&lt;target name="wc">
+ &lt;xwc property="wc"
+      documentProperties="document.properties">
+  &lt;fileset dir="xml" includes="*.xml"/>
+ &lt;/xwc>
+&lt;/target></source>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>Link</title>
+
+    <sect><title>Description</title>
+
+     <p>This task checks links in HTML files. It distincts two kinds
+      of links: <file>local</file> links (that point to a file in the
+      same site and are relatives) and <file>external</file> ones
+      (that point to other sites and start with a protocol indicator
+      such as <code>http:</code> or <code>ftp:</code>).</p>
+
+     <p>The task declaration (after the <file>&lt;project&gt;</file> element)
+      is the following:</p>
+
+     <source>&lt;taskdef name="link" classname="net.cafebabe.sat.html.LinkTask"/&gt;</source>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+     <table>
+      <th>
+       <co>Attribute</co>
+       <co>Description</co>
+       <co>Required</co>
+      </th>
+      <li>
+       <co>file</co>
+       <co>File(s) to process.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>dir</co>
+       <co>Directory(ies) to process.</co>
+       <co>No</co>
+      </li>
+      <li>
+       <co>external</co>
+       <co>Indicates if external links should be checked.</co>
+       <co>No (defaults to <file>false</file>).</co>
+      </li>
+      <li>
+       <co>interrupt</co>
+       <co>Indicates if processing should stop with an error message if a
+        broken link is met.</co>
+       <co>No (defaults to <file>false</file>).</co>
+      </li>
+      <li>
+       <co>log</co>
+       <co>The name of the file where to log link checks.</co>
+       <co>No</co>
+      </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+     <p>You can choose the files to process with a nested
+      <file>&lt;fileset&gt;</file> element. See Ant documentation for
+      more details about this element.</p>
+
+     <p>This element may not contain text.</p>
+
+    </sect>
+
+    <sect><title>Examples</title>
+
+     <p>Let's suppose that you want to check HTML files in the
+      <file>html</file> directory and it's subdirectories and want to
+      stop processing if a broken link is met. You would write:</p>
+
+     <source>&lt;link external="false"
+      interrupt="true"&gt;
+ &lt;fileset dir="html" includes="**/*.html"/&gt;
+&lt;/link&gt;</source>
+
+     <p>If a broken link is met, the compilation will stop with an
+      error message that gives the file and link.</p>
+
+     <p>If you want to to check external links (which may be quite long)
+      without stopping on error and log checks in a file named
+      <file>links.txt</file>, you may write:</p>
+
+     <source>&lt;link external="true"
+      interrupt="false"
+      log="links.txt"&gt;
+ &lt;fileset dir="html" includes="**/*.html"/&gt;
+&lt;/link&gt;</source>
+
+    </sect>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Emacs mode</title>
+
+   <p>Ant is widely used to build Java projects, and thus is
+    integrated to many Java development tools (such as JDE, an Emacs
+    mode for Java development). Nevertheless, Ant also proves to be
+    helpful in many other occasions, such as generate HTML
+    documentation from XML source files. That's what lead me to
+    develop this standalone Ant mode for Emacs.</p>
+
+   <p>To install this Ant mode, copy <file>el/ant.el</file> file in a
+    location where Emacs will find it and add the following lines in
+    your <file>.emacs</file> configuration file:</p>
+
+   <source>(load "ant")
+(ant-mode)</source>
+
+   <p>When you restart Emacs, an <code>Ant</code> menu appears, with
+    the following entries:</p>
+
+   <list>
+    <item><imp>Build</imp>: Launch Ant. A prompt in the minibuffer
+     enables you to type the target to launch. If you enter no target,
+     the default one will run. You may give more than one target,
+     separating them with a white space.</item>
+    <item><imp>Rebuild</imp>: Launch Ant using the target you used in
+     last execution.</item>
+    <item><imp>Build File</imp>: The default behavior is to search for
+     the build file recursively in the directory tree. Using this menu
+     option, you can use any build file.</item>
+    <item><imp>Targets</imp>: Prints the list of targets in the
+     minibuffer.</item>
+    <item><imp>Help</imp>: Print an help screen on the build file (a
+     list of targets and their description).</item>
+    <item><imp>Start Server</imp>: Starts Ant in server mode (see the
+     <code>server</code> task bellow). This feature is quite
+     experimental and buggy).</item>
+    <item><imp>Stop Server</imp>: Stops Ant running in server
+     mode.</item>
+   </list>
+
+   <p>The result of the build is printed in the compilation buffer and
+    you may thus click on an error message to open the responsible
+    file in an Emacs buffer.</p>
+
+   <p>It may be useful to bind keys to Ant calls. For instance, my
+    <file>.emacs</file> file has the following lines:</p>
+
+   <source>(global-set-key [f2] 'ant-build)
+(global-set-key [f3] 'ant-rebuild)</source>
+
+  </sect>
+
+  <sect><title>License</title>
+
+   <p>This software is under
+    <link url="http://www.apache.org/LICENSE.txt">Apache Software
+     License</link>. You may find a copy of this license (and of the
+    licenses of other software used in this program) in the
+    <file>LICENSE</file> file of SAT installation directory.</p>
+
+  </sect>
+
+  <sect><title>History</title>
+  
+   <sect><title>Version 0.9 (2003-07-14)</title>
+
+    <p>Upadtes are the following:</p>
+
+    <list>
+     <item>The <code>server</code> task has been removed from the project
+      and is not supported anymore. Use the Ant Console instead, which is
+      much simpler to use.</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Version 0.8 (2003-07-13)</title>
+
+    <p>Updates are the following:</p>
+
+    <list>
+     <item>All tasks have been moved in the package
+      <code>net.cafebabe.sat</code>. This is the last time, I swear
+      :o)</item>
+     <item>I have developped a console (which is far more efficient
+      than the server mode).</item>
+     <item>Scripts <file>antc</file>, to run the console, and
+      <file>ants</file>, to run the server, have been added in the
+      <file>bin</file> directory.</item>
+    </list>
+    
+   </sect>
+
+   <sect><title>Version 0.7 (2002-11-11)</title>
+
+    <p>The documentation uses my new DTD and has been updated.</p>
+
+    <p>New tasks:</p>
+
+    <list>
+     <item>Server: Boosts builds.</item>
+     <item>Nest: New XML management task.</item>
+     <item>XML Word Count: To count words in XML documents.</item>
+    </list>
+
+    <p>Bug fix and enhancements:</p>
+
+    <list>
+     <item>Task XTask debugged (to run in server mode).</item>
+     <item>Encoding management enhanced in <code>merge</code>
+      task.</item>
+     <item>Updated to Ant version 1.5.1.</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Version 0.6 (2001-10-27)</title>
+
+    <p>The task <code>Marge</code> has been optimized (using
+     <code>StringBuffer</code>). The task is about 30 times faster !</p>
+
+   </sect>
+
+   <sect><title>Version 0.5 (2001-10-17)</title>
+
+    <p>New <code>Valid</code> task to validate XML files.</p>
+    
+   </sect>
+
+   <sect><title>Version 0.4 (2001-09-22)</title>
+
+    <p>New <code>Link</code> task to check links in an HTML file.</p>
+
+   </sect>
+
+   <sect><title>Version 0.3 (2001-09-18)</title>
+
+    <p>Test tasks attributes. File attributes (such as <code>file</code> and
+     <code>dir</code>) are checked.</p>
+
+    <p>Bug correction (file path are now relative to the project file
+     location instead of the current directory).</p>
+
+    <p>It is now possible to set and get Ant properties from within a
+     Beanshell script using <code>setAntProperty()</code> and
+     <code>getAntProperty()</code> commands.</p>
+
+    <p>Tasks are no more executable outside Ant (this was much more
+     simple within Ant and painful to maintain).</p>
+
+    <p>The code was ported to the last versions of Beanshell (version
+     1.1a18 works, but 1.2b1 doesn't due to a bug).</p>
+
+    <p>Added unit tests (in the <file>prj/test</file> directory).</p>
+
+   </sect>
+
+   <sect><title>Version 0.2 (2001-08-20)</title>
+
+    <p>The JAXP API is now used in the XTask. Permits to instanciate
+     the XML parser in a generic way (independent from the parser
+     implementation, provided that it implements the JAXP API). This
+     class also search correctly for files (in the directory of the
+     <file>build.xml</file> file).</p>
+
+   </sect>
+
+   <sect><title>Version 0.1 (2001-06-06)</title>
+
+    <p>The tasks have been modified (after intensive usage to generate
+     my web site) to be more efficient/user friendly. Changes are
+     the following:</p>
+
+    <list>
+     <item><imp>bsh</imp>: <file>&lt;arg&gt;</file> nested elements have been
+      removed (parameters are set in a nested script). <file>args</file>
+      attribute have been implemented to pass arguments to a script
+      (as if they had been written on the command line launching the
+      script). <file>source</file> attribute have been replaced with
+      <file>file</file>. Attribute <file>dir</file> has been implemented.
+      <file>&lt;fileset&gt;</file> element have been implemented. The output
+      of the scripts have been redirected in the standard way (after
+      a [bsh] tag).</item>
+     <item><imp>xtask</imp>: Bug correction. All attributes have changed
+      (they where inefficient for real usage). <file>&lt;fileset&gt;</file>
+      have been implemented.</item>
+     <item><imp>merge</imp>, <imp>insert</imp> and <imp>split</imp>:
+      <file>file</file> and <file>dir</file> implemented. No more
+      <file>verbose</file> attribute (output have been
+      tailored). <file>&lt;fileset&gt;</file> element
+      implemented.</item>
+    </list>
+
+    <p>There should not be any syntax modification in future versions,
+     that should only stabilize the code (attributes have to be tested
+     to produce informative error messages).</p>
+
+   </sect>
+
+   <sect><title>Version 0.0 (2001-05-28)</title>
+
+    <p>First distributed version of SAT. The tasks <file>Bsh</file>,
+     <file>XTask</file>, <file>Merge</file>, <file>Insert</file> and
+     <file>Split</file> have been implemented.</p>
+
+   </sect>
+
+  </sect>
+
+  <p><imp>Enjoy !</imp></p>
+
+ </text>
+
+</article>
+
+<!-- Local IspellDict: american -->

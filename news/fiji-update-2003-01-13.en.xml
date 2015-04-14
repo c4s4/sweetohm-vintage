@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-01-13" url="html/fiji.en.html">
+
+ <title>New FiJI version</title>
+
+ <p>This version fixes a configuration parsing bug and a bug in the
+  installer. Many thanks to Daphné Costantini for this bug report.</p>
+
+</news>
+
+<!-- Local IspellDict: american -->

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE menu PUBLIC "-//CAFEBABE//DTD menu 1.0//EN" 
+                      "dtd/menu.dtd">
+
+<menu>
+  
+  <menuimage url="menu.sweetohm.png"/>
+  
+  <submenu title="Articles">
+    <menuitem title="Debian on Zotac Nano CI320"
+              url="debian-jessie-zotac-nano-ci320.en.html"/>
+    <menuitem title="Debian on Acer C720P"
+              url="debian-jessie-acer-c720p.en.html"/>
+    <menuitem title="All GO interfaces" url="go-interfaces.en.html"/>
+    <menuitem title="YAML Parsers for Go" url="go-yaml-parsers.en.html"/>
+    <menuitem title="Ant DTD" url="ant-dtd.en.html"/>
+    <menuitem title="CodeGuide tips" url="codeguide-tips.en.html"/>
+    <menuitem title="Ant Console in CodeGuide"
+              url="codeguide-antconsole.en.html"/>
+  </submenu>
+
+  <submenu title="Tools">
+    <menuitem title="Babel" url="babel.html"/>
+    <menuitem title="Bee" url="http://sweetohm.net/bee/"/>
+    <menuitem title="Ant Tasks" url="sat.en.html"/>
+    <menuitem title="Java Installer" url="fiji.en.html"/>
+    <menuitem title="Visual SQL" url="vsql.en.html"/>
+  </submenu>
+ 
+  <submenu title="Graphics">
+    <menuitem title="Ecce Duke" url="duke.en.html"/>
+  </submenu>
+  
+</menu>

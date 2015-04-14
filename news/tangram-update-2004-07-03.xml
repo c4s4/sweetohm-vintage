@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2004-07-03" url="html/tangram.html">
+
+ <title>Nouveau problème de Tangram</title>
+
+ <p>Un nouveau problème de Tangram par <file>Olivier Capitan</file>. Un grand 
+  merci à lui.</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

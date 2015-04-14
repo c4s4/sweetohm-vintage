@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-07-13" url="html/codeguide-antconsole.en.html">
+
+ <title>Console Ant dans CodeGuide</title>
+
+ <p>Cet article, en anglais, indique comment accélérer les builds Ant
+  dans CodeGuide au moyen de la Console Ant (traduction en français à
+  venir prochainement).</p>
+
+ <figure url="index.codeguide.png"/>
+
+</news>
+
+<!-- Local IspellDict: francais -->

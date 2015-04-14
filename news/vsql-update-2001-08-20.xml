@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/vsql.html" date="2001-08-20">
+
+ 
+ <title>Mise à jour de VisualSQL</title>
+ 
+
+ 
+
+  <p>Mise à jour de VisualSQL (correction de bugs et améliorations mineures).
+   Un grand merci à <link url="mailto:vixxes@noos.fr">Laurent ROMEO</link>
+   pour sa contribution.</p>
+
+ 
+
+</news><!-- Local IspellDict: francais -->

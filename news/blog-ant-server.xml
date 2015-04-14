@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links date="2003-07-10" 
+       url="http://crazybob.org/index.jsp?weblog=http://crazybob.org/roller/page/">
+
+ <title>Un article sur la tâche AntServer</title>
+
+ <p>Cet article décrit la mise en oeuvre de la tâche <link
+   url="http://www.cafebabe.net/html/sat.doc.html#4.1">AntServer</link>
+  et fournit notamment un script shell bien pratique pour lancer Ant
+  en mode serveur. Merci Bob et Andrew.</p>
+
+</links>
+
+<!-- Local IspellDict: francais -->

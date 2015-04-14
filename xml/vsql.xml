@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"  
+                      "../dtd/page.dtd"
+[
+<!ENTITY version "0.5">
+<!ENTITY size "360">
+]>
+
+<page author="Michel CASABIANCA"  
+      email="casa@sweetohm.net"  
+      date="2001-10-15"
+      id="vsql"
+      lang="fr">
+
+ <title>VisualSQL</title>
+
+ <text>
+
+  <p>VisualSQL est un client JDBC pour bases de données. Il permet de
+   leur envoyer des requêtes et de visualiser le résultat (éventuel)
+   sous forme d'une table. Il est distribué sous license GPL et les 
+   sources en sont donc disponibles.</p>
+
+  <table>
+   <li>
+    <co>
+     <link url="../html/vsql.doc.html">La documentation est disponible
+      ici en ligne</link>
+    </co>
+   </li>
+  </table>
+
+  <figure url="vsql.title.png"/>
+
+  <table>
+   <li>
+    <co>Auto installeur 
+     <link url="../arc/vsql-&version;.jar">vsql-&version;.jar</link>
+     (&size; ko environ)</co>
+   </li>
+  </table>
+
+  <p>Pour installer le programme, se placer dans le répertoire de
+   l'archive et taper <keyb>java -jar vsql-&version;.jar</keyb> sur la
+   ligne de commande.</p>
+
+  <p>Lire la documentation du répertoire <file>doc/</file> pour plus de
+   précisions sur l'installation (des drivers JDBC en particulier).</p>
+  
+  </text>
+
+</page>
+
+<!-- Local IspellDict: francais -->

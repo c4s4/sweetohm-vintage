@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                      "../dtd/news.dtd">
+
+<news date="2014-06-17" 
+      url="html/debian-jessie-acer-c720p.html">
+
+ <title>Installation d'une Debian sur un Acer C720</title>
+
+ <p>Cet article rassemble mes diverses sources qui m'ont permis d'installer la meilleure distrib du monde sur ce Cromebook :o)</p>
+
+ <p>Enjoy!</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

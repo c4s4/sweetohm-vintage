@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//CAFEBABE//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article lang="en"
+         id="fiji.doc.en"
+         date="2003-01-12"
+         email="casa@sweetohm.net"
+         author="Michel CASABIANCA">
+ 
+ <title>FiJI 1.0-1</title>
+
+ <abstract>
+  <p>FiJI is a Free Java Installer released under GPL.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Installing FiJI</title>
+
+   <p>To install FiJI, you must first install a 1.2 or 1.3 Java Virtual
+    Machine. You can download one for free on
+    <link url="http://java.sun.com/products/jdk/1.2">Sun's web site</link>.
+   </p>
+
+   <p>The latest version of FiJI is on
+    <link url="http://www.sweetohm.net/html/fiji.html">my web
+     page</link>. To install it, go to the directory where you saved the
+    archive and type <code>java -jar fiji-0.4.jar</code>. Windows and Solaris
+    users can simply double-click the file. FiJI is delivered with himself
+    has a self extracting installer, so you should have an idea of what
+    it can do.</p>
+
+   <p><imp>Note:</imp> Windows may complain that it doesn't have enough
+    environment space. In this case, add the line <code>shell=command.com
+     /E:8000 /P</code> to your <file>config.sys</file> file and reboot.
+    Furthermore, the environment should not alter file names, there is
+    an option under Windows NT to work with case sensitive file names.</p>
+
+  </sect>
+
+  <sect><title>Building FiJI</title>
+
+   <p>To build FiJI, you will need Ant version 1.2. You can download it on
+     <link url="http://jakarta.apache.org/ant">Apache web site</link>.
+    Simply type <code>ant</code> in the install directory to rebuild.</p>
+
+  </sect>
+
+  <sect><title>Using FiJI</title>
+
+   <p>Let's have a look on the <file>install.xml</file> file in the install
+    directory of FiJI :</p>
+
+<source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+
+&lt;install jar="/tmp/fiji-0.4.jar"
+         logo="lib/logo.gif"&gt;
+    &lt;text title="FiJI"
+          text="This program will install Fiji on\
+                your computer. Hit [|&gt;] to continue\
+                or [O] to abort installation."/&gt;
+    &lt;license file="lib/LICENSE"/&gt;
+    &lt;copy dir="tmp"
+          property="fiji.home"
+          defaults="Windows=c:\Fiji,Unix=/usr/local/fiji"&gt;
+          &lt;filter file="bin/fiji" from="@HOME@" to="${fiji.home}"/&gt;
+          &lt;filter file="bin/fiji.bat" from="@HOME@" to="${fiji.home}"/&gt;
+    &lt;/copy&gt;
+    &lt;link from="${fiji.home}/bin/fiji"
+          to="/usr/local/bin"
+          mandatory="no"/&gt;
+    &lt;append file="c:\autoexec.bat"
+            line="set PATH=%PATH%;${fiji.home}\bin"
+            os="Windows"
+            mandatory="no"/&gt;
+    &lt;text title="Congratulation !"
+          text="FiJI have been installed succesfully.\
+                Hit [O] to terminate this program."/&gt;
+&lt;/install&gt;</source>
+
+   <p>This XML file is a script for the installation. Each element
+    is a screen of the installer:</p>
+
+   <enum>
+    <item>The first screen (<file>text</file> element) shows a welcome message.
+     This message is written in the <file>text</file> attribute of this
+     element.</item>
+    <item>Then the user must agree the license (in the <file>license</file>
+     element). The path to the license file is in the <file>file</file>
+     attribute.</item>
+    <item>The third screen (<file>copy</file> element) asks for an installation
+     directory and copies files in that directory.</item>
+    <item>Then, if the user is running a Unix box, it will be prompt for
+     a destination directory (in his <file>PATH</file>) for a link to the
+     script launching the application.</item>
+    <item>If the user is installing the program on Windows, the next
+     screen will append a line to his <file>autoexec.bat</file> file
+     (to put the <file>bin</file> directory in the <file>PATH</file>).</item>
+    <item>The program ends the installation with another message that
+     informs the user that the installation was successful.</item>
+   </enum>
+
+   <p>As you can see, this script is quite simple and easy to code
+    (few minutes when you know the syntax of these elements). To
+    produce the installation Jar file, simply go the directory of
+    the script and type <code>fiji</code>. You can indicate
+    the location of the script on the command line and specify a
+    verbosity argument (<code>-v</code>). Type <code>fiji -help</code> for a
+    short help on the command line arguments.</p>
+
+   <p>To run the installer, the user will have to go the the directory
+    where he saved the Jar file, and type : <code>java -jar
+     archive-name.jar</code>, or double click it (on Windows or Solaris).</p>
+
+  </sect>
+
+  <sect><title>FiJI Tasks</title>
+
+   <p>The elements of the install file are tasks (except for the
+    root element and filters). The root element, <file>install</file>
+    can accept two attributes :</p>
+
+<source>
+  &lt;install jar="../fiji-0.3.jar"
+           logo="lib/logo.gif"&gt;
+  ...
+  &lt;/install&gt;
+</source>
+
+   <p>The first one, <file>jar</file> names the produced Jar installer.
+    The second gives the URL of the logo (the picture on the left of
+    the frame). This attribute is not mandatory (no image is dispayed
+    if this attribute is missing).</p>
+
+   <p>You can customize the installer interface with the <file>theme</file>
+    element (that comes just after <file>install</file> one). It may
+    have up to six attributes (<file>primary1</file>,
+    <file>primary2</file>, <file>primary3</file>, <file>secondary1</file>,
+    <file>secondary2</file> and <file>secondary3</file>) that define a hexadecimal
+    coded color. Those six colors define a theme for Swing(Metal look
+    &amp; feel), as defined
+    <link url="http://java.sun.com/products/jlf/dg/higg.htm">
+     on this page page</link>. For instance, the following element
+    defines the theme for the FiJI installer:</p>
+
+   <source>    &lt;theme primary2="6eb2ce"
+           primary3="d5fedc"/&gt;</source>
+
+   <p>In order the install script to be fully portable, the paths
+    must be written in the URL notation (Unix paths). Just replace
+    under Windows the antislash with slash. Thus, you would
+    write <file>foo/bar.txt</file> instead of <file>foo\bar.txt</file>.
+    Furthermore, relative paths are relative to the directory
+    of the <file>install.xml</file> script.</p>
+
+   <p>Each screen of the installer is processed by a specific task.
+    Those tasks are :</p>
+
+   <sect><title>Text</title>
+
+    <p>This task shows a simple text (in the <file>text</file> attribute)
+     with a title (in the <file>title</file> attribute). For instance:</p>
+
+<source>
+    &lt;text title="FiJI"
+          text="This program will install Fiji on\
+                your computer. Hit [&gt;] to continue\
+                or [O] to abort installation."/&gt;
+</source>
+
+    <p>Produces the screen:</p>
+
+    <figure url="fiji.text.png" width="10"/>
+
+    <p>This is the first screen of the installer for FiJI itself. Those
+     two attributes are mandatory. A new line is indicated with
+     an antislash.</p>
+
+   </sect>
+
+   <sect><title>License</title>
+
+    <p>This task displays a license for agreement. The user must
+     agree (by clicking on the message <file>I accept the terms of this
+      License</file>) this license or abort installation. For instance:</p>
+
+<source>
+    &lt;license file="lib/LICENSE"/&gt;
+</source>
+
+    <p>Displays the screen:</p>
+
+    <figure url="fiji.license.png" width="10"/>
+
+    <p>This element displays the license in the text file <file>LICENSE</file> in
+     the <file>lib</file> subdirectory (all paths are relative to the directory
+     of the <file>install.xml</file> script, except for absolute ones, starting
+     with "/").</p>
+
+   </sect>
+
+   <sect><title>Copy</title>
+
+    <p>This task installs the content of a directory (the one of the
+     application to install) in a directory chosen by the user. This
+     directory is ziped when the archive is being built.</p>
+
+<source>
+    &lt;copy dir="tmp"
+          property="fiji.home"
+          defaults="Windows=c:\Fiji,Unix=/usr/local/fiji"&gt;
+          &lt;filter file="bin/fiji" from="@HOME@"
+                  to="${fiji.home}"/&gt;
+          &lt;filter file="bin/fiji.bat" from="@HOME@"
+                  to="${fiji.home}"/&gt;
+    &lt;/copy&gt;
+</source>
+
+    <p>Displays the following screen:</p>
+
+    <figure url="fiji.copy.png" width="10"/>
+
+    <p>The <file>dir</file> attribute indicates the source directory to
+     copy. <file>property</file> gives to the program the property name for
+     the installation directory. You can use this property in other
+     tasks. For instance, the attribute <file>to</file> of the element
+     <file>filter</file> is <file>${fiji.home}</file>, so it will be replaced
+     with the installation directory. The last attribute, <file>defaults</file>
+     indicates a list of default install dirs with their targeted
+     plateform.</p>
+
+    <p>The <file>filter</file> elements can be nested within <file>copy</file>
+     ones. They are usefull to filter some given files. For instance,
+     the element :</p>
+
+<source>
+          &lt;filter file="bin/fiji" from="@HOME@"
+                  to="${fiji.home}"/&gt;
+</source>
+
+    <p>Will filter the file <file>bin/fiji</file> (of the directory,
+     <file>after</file> installation), replacing the string <code>@HOME@</code> with
+     <code>${fiji.home}</code>, which is the installation directory
+     (which name is given by the <file>property</file> attribute of
+     the <file>copy</file> element). Thus, the following script:</p>
+
+<source>
+  #!/bin/sh
+  java -jar @HOME@/fiji.jar -v "$@"
+</source>
+
+    <p>Will be replaced (after the filter applies) by:</p>
+
+<source>
+  #!/bin/sh
+  java -jar /usr/local/fiji/fiji.jar -v "$@"
+</source>
+
+    <p>On the user's hard disk, if he chosed <file>/usr/local/fiji</file>
+     as installation directory (the default install dir for Unix).</p>
+
+
+    <p>When the user clicks on the <imp>[&gt;]</imp> button, the files
+     will be copied and the progress bar shows the progression.</p>
+
+   </sect>
+
+   <sect><title>Link</title>
+
+    <p>This task is specific to Unix systems (and won't be processed on
+     other systems). Let's consider the following element:</p>
+
+<source>
+    &lt;link from="${fiji.home}/bin/fiji" to="/usr/local/bin"/&gt;
+</source>
+
+    <p>It will display the screen:</p>
+
+    <figure url="fiji.link.png" width="10"/>
+
+    <p>This task will perform two things :</p>
+
+    <enum>
+     <item>It will make the file <file>${fiji.home}/bin/fiji</file>
+      (the launching script) runnable (with
+      <code>chmod a+rx ${fiji.home}/bin/fiji</code>).</item>
+     <item>It will make a symlink from this file to the directory
+      the user choosed (the default value is <file>/usr/local/bin</file>),
+      that is supposed to be in the <file>PATH</file> of the user, with
+      <code>ln -sf ${fiji.home}/bin/fiji /usr/local/bin</code>.</item>
+    </enum>
+
+    <p>The user can now type <code>fiji</code> on the command line to
+     launch FiJI.</p>
+
+   </sect>
+
+   <sect><title>KDE Desktop</title>
+
+    <p>This task is for Unix systems running the KDE window manager (and
+     will not be processed on other systems). Let's consider the
+     following element:</p>
+
+<source>
+    &lt;kdeDesktop exec="fiji"
+                icon="${fiji.home}/prj/fiji/lib/fiji.gif"
+                term="1"/&gt;
+</source>
+
+    <p>It will display the screen:</p>
+
+    <figure url="fiji.kde.png" width="10"/>
+
+    <p>This task prompts for adding an icon on the desktop of the
+     user to launch the application. The <file>exec</file> attribute
+     indicates the command line to launch the application.
+     <file>icon</file> is the path to the icon file (on the system
+     where the program have been installed). <file>term</file> indicates
+     if the program must be launched in a terminal (<file>1</file> value)
+     or not (<file>0</file> value).</p>
+
+   </sect>
+
+   <sect><title>File update</title>
+
+    <p>This task append a line to a given file. It is useful to update
+     a configuration file (such as <file>autoexec.bat</file> or
+     <file>/etc/profile</file>). The corresponding element is:</p>
+
+    <source>    &lt;append file="c:\autoexec.bat"
+            line="set PATH=%PATH%;${fiji.home}\bin"
+            os="Windows"/&gt;</source>
+
+    <p>This element will display the following screen:</p>
+
+    <figure url="fiji.append.png" width="10"/>
+
+    <p>This task displays the line (in the attribute <file>line</file>) to
+     append to a file which default name is in <file>file</file> attribute.
+     The <file>os</file> attribute indicates the target OS.</p>
+
+   </sect>
+
+   <sect><title>Common attributes for all tasks</title>
+
+    <p>All tasks accept the following attributes:</p>
+
+    <list>
+     <item><imp>mandatory</imp> (<file>yes</file> or <file>no</file> values)
+      indicates if this task is mandatory (any task defaults to
+      mandatory). If it is not, the user can click on the [&gt;&gt;] button
+      to skip this task. If a task is mandatory, this button is
+      disabled.</item>
+     <item><imp>title</imp> gives the title for the task (see the <file>text</file>
+      task for more details).</item>
+     <item><imp>text</imp> is the same than <file>title</file> but for the text
+      of the task. For the <file>license</file> task, it indicates the
+      text to accept the license. The <file>link</file> tasks can take a
+      second text for the second line of the screen. This text is set
+      with the <file>text2</file> attribute.</item>
+     <item><imp>error</imp> is used to set the error text for some tasks
+      that may display some. This is the case for <file>license</file>
+      task (if the user did not accept the license) and <file>kdeDesktop</file>
+      (error when creating the shortcut). Some tasks can have two error
+      messages: <file>copy</file> (error creating the installation directory
+      and copying files) and <file>link</file> (error changing mode and
+      making the link). The second error message is set using the
+      <file>error2</file> attribute.</item>
+    </list>
+
+    <p>Those attributes make it possible to customize the interface
+     but also to translate the installer.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>How it works</title>
+
+   <p>To explain the principles of this program, we must consider two
+    stages : the generation of the Jar installer and the extraction
+    performed by the installer.</p>
+
+   <p>The builder generates the installer (that is a Jar file) this
+    way :</p>
+
+   <enum>
+    <item>The xml builder (class <file>casa.fiji.builder.XmlBuilder</file>)
+     reads the XML file (<file>install.xml</file>) and builds an object
+     tree while processing elements. It uses reflection (and doesn't
+     know anything about the generated objects). When it encounters
+     a <file>foo</file> element, it instanciates a <file>Foo</file> object.
+     When it encounters a <file>bar</file> attribute, it calls a method
+     named <file>setBar()</file> with the value of the attribute on the
+     parent element. When an element <file>bar</file> is nested within
+     an element <file>foo</file>, it calls a method <file>add</file> on the
+     object <file>Foo</file> with <file>Bar</file> as argument.</item>
+    <item>The main class of the builder (<file>casa.fiji.builder.Main</file>)
+     collects the resources needed by the classes involved in the installer
+     and put them in the Jar file (that will be the installer itself).</item>
+    <item>Then the <file>casa.fiji.installer.Install</file> class (the
+     main class of the installer, generated by the XML builder) is
+     serialized and placed in the Jar installer. It coutains references
+     to the other classes of the installer, that are this way serialized
+     too.</item>
+   </enum>
+
+   <p>This method is a simple way to configure the classes of the
+    installer. Their configuration is performed by the XML builder by
+    calling their methods <file>setFoo()</file>. Furthermore, this
+    methods is light : the serialized classes weight less than 1000
+    compressed bytes, that is far less than the weight of the XML file
+    itself (and if I used an XML parser to configure the installer, I
+    would have to carry the parser in the archive).</p>
+
+   <p>I have been told that there could be problems between versions
+    of serialized classes, but I had no problems during my tests (with
+    1.1, 1.2 and 1.3 virtual machines).</p>
+
+   <p>The second stage (extraction of the archive) works this way :</p>
+
+   <enum>
+    <item>When you lauch the Jar file, the <file>main()</file> method of the
+     main class of the installer (<file>casa.fiji.installer.Install</file>)
+     is called. This class deserializes itself, obtaining the serialized
+     data in the Jar file. The object tree of the installer is then
+     rebuilt.</item>
+    <item>This class selects the apropriate tasks (calling the methods
+     <file>isValid()</file> of each task in the stack). A task can be valid
+     for a given OS or if a given directory exists for instance.</item>
+    <item>Then the installer calls the <file>init()</file> and <file>done()</file>
+     method of the tasks as the user view them.</item>
+    <item>A task performs its work in the <file>done()</file> method that
+     is called by the installer when the user clicks the <imp>[&gt;]</imp>
+     button. If it does something quick (that doesn't cause CPU starvation),
+     it return <file>true</file>, indicating to the installer that the work
+     is done. If a task takes a long time (such as copying many files),
+     it returns <file>false</file>. When the work is done, it calls the
+     method <file>update()</file> of the installer to indicate that to work
+     is done.</item>
+   </enum>
+
+   <p>This text is a rapid overview of the builder and the installer,
+    dig the code for more details (without comments, sorry ;o).</p>
+
+  </sect>
+
+  <sect><title>How to develop new tasks for FiJI</title>
+
+   <p>FiJI is an extensible system: it is possible to develop new
+    tasks to meet your specific needs. I will take as example the
+    <code>Link</code> task that makes a link (for Unix systems) from
+    a script to a directory in the <file>PATH</file>.</p>
+
+   <sect><title>XML element</title>
+
+    <p>To make such a link, you must know the source file and
+     target directory. Thus, the element for this task will be
+     the following:</p>
+
+    <source>
+    &lt;link from="${fiji.home}/bin/fiji" to="/usr/local/bin"/&gt;
+    </source>
+
+    <p>The <file>link</file> element gives the name of the class to
+     develop (<code>Link</code> with an uppercase in order to follow the
+     Java naming conventions). The <file>from</file> attribute gives the
+     name of the source file while <file>to</file> indicates the target
+     directory for the link.</p>
+
+   </sect>
+
+   <sect><title>Initialisation de l'installeur</title>
+
+    <p>When the FiJI XML parser encounters such an element, it tries
+     to instantiate the <code>Link</code> class, the invokes the
+     <code>setFrom()</code> and <code>setTo()</code> methods on it. The FiJI
+     task system is extensible because the program knows nothing about
+     the tasks it builds, but uses reflexion instead. Thus, it is not
+     necessary to modify FiJI's source code to add new tasks.</p>
+
+    <p>Furthermore, hour class must extend the abstract class
+     <code>casa.fiji.installer.Task</code> in order to be a valid task.
+     It must also live in the <code>casa.fiji.installer</code> package.</p>
+
+    <p>To finish about tasks, I have to talk about the resources and
+     classes to add in the installer file. Because this file must contain
+     all the necessary classes and resources to run, you must indicate
+     those in the <file>install.xml</file> file.</p>
+
+    <p>Task classes are automatically added (using reflexion) by the
+     <code>Task</code> class: it adds the class for the task and the GUI
+     (which name is the one of the class plus <file>UI</file>, so if the
+     class for the task is called <code>Link</code>, the class for the GUI
+     is called <code>LinkUI</code>) in the list of files to add in the
+     archive. If your code uses another class, it must do so using
+     the <code>addClass()</code> method in it's contructor and passing the
+     list of qualified class names (with package) to this method.
+     In our example, adding new classes in the archive is not necessary,
+     so we don't have to call this method.</p>
+
+    <p>If your task uses resources (such as an icon file), you declare
+     it invoking the <code>addResources()</code> method, passing the list
+     of files as argument. Note that the GUI reference is marqued
+     <file>transient</file> because this GUI must not be serialized (as
+     it is dangerous and useless to serialize this object).</p>
+
+    <p>You know enought now to anderstand the first part of the class
+     <code>Task</code> that is following:</p>
+
+<source>
+/*
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+package casa.fiji.installer;
+
+import casa.fiji.util.Misc;
+import java.awt.*;
+import javax.swing.*;
+import java.io.*;
+import java.util.*;
+
+/**
+ * The link  task. It creates a link from a script (or executable) to a
+ * directory in the PATH. For Unix systems only.
+ */
+public class Link extends Task {
+
+    /**
+     * The from part of the link.
+     */
+    String from=null;
+    /**
+     * The from part of the link, expanded.
+     */
+    String fromExpanded=null;
+    /**
+     * The to part of the link.
+     */
+    String to=null;
+    /**
+     * The to part of the link, expanded.
+     */
+    String toExpanded=null;
+    /**
+     * The reference to the GUI.
+     */
+    transient LinkUI ui=null;
+    /**
+     * The resources used by this task.
+     */
+    static final String[] resources={"lib/home.gif"};
+
+    /**
+     * Constructor. Adds resources to the jar installer.
+     */
+    public Link() {
+        super();
+        addResources(resources);
+    }
+
+    /**
+     *Sets the from part of the link.
+     */
+    public void setFrom(String from) {this.from=from;}
+
+    /**
+     * Sets the to part of the link.
+     */
+    public void setTo(String to) {this.to=to;}
+</source>
+
+    <p>This first part is called when the installer archive is built
+     (to initialize the <code>Link</code> task). All the tasks rely in
+     a <code>Vector</code> in the <code>casa.fiji.install.Install</code> class
+     (that is the main class of the installer). This object (and
+     other tasks it contains) is serialized in the installer file.
+     When running the installer, this object is deserialized and
+     launched, which launches the install procedure.</p>
+
+   </sect>
+
+   <sect><title>Installer initialization</title>
+
+    <p>We will now study the part of the code running at installation
+     time.</p>
+
+    <p>First, that installer must know if the task is to be runned
+     on the host sytem (some tasks run only on given systems and/or
+     configurations). To do so, it calls the <code>isValid()</code>
+     method that returns a boolean. In our task, we simply return
+     <file>true</file> if the system is Unix.</p>
+
+    <p>Then, the installer must retrieve the task's GUI. It is done by
+     calling the <code>getUI()</code> method. Our method simply instantiates
+     a <code>LinkUI</code> object and returns it.</p>
+
+    <p>Those methods are called during installer initialization. The
+     following ones are called when the task is processed:</p>
+
+    <p>The <code>init()</code> method is called when the task's GUI is
+     shown. It evaluates the <file>from</file> and <file>to</file> expressions,
+     that is, it replaces property references with their value. For
+     instance, it will replace <file>${fiji.home}/bin/fiji</file> with
+     <file>/usr/local/fiji/bin/fiji</file> if the installation directory
+     is <file>/usr/local/fiji</file>. Note that the expanded values are
+     stored in fields suffixed with <file>Expanded</file> in order
+     another evaluation to remain possible if the user come back to
+     a previous task.</p>
+
+    <p>When the user clicks on the <imp>[&gt;]</imp> button (to call the
+     next task), the installer calls the <code>next()</code> method of
+     the current task. This method returns <file>true</file> if everything
+     is OK and <file>false</file> if something went wrong during the
+     operation. In this case, the next task is not shown.</p>
+
+    <p>Here is the code for this part of the task:</p>
+
+<source>
+    /**
+     * Indicates if the system running the installer should run this task.
+     * That is if it is a Unix like system.
+     */
+    public boolean isValid() {
+        return isUnix();
+    }
+
+    /**
+     * Returns the GUI for this task.
+     */
+    public Component getUI() {
+        ui=new LinkUI(this);
+        return ui;
+    }
+
+    /**
+     * Init is called when the task is shown in the installer. It expands
+     * the from and to parts of the link (evaluating expressions).
+     */
+    public void init() {
+        fromExpanded=Misc.expand(from);
+        toExpanded=Misc.expand(to);
+        ui.setFrom(fromExpanded);
+        ui.setTo(toExpanded);
+    }
+
+    /**
+     * Creates the link (when the user clicks on the next button).
+     */
+    public boolean next() {
+        // build the chmod command
+        toExpanded=ui.getTo();
+        String command="chmod a+x "+fromExpanded;
+        String error=Misc.execute(command);
+        // if error, display an error message
+        if(error!=null) {
+            JOptionPane.showMessageDialog(ui,
+                "Unbable to change the mode:\n"+command+'\n'+error,
+                "Error",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        // build the ln command
+        command="ln -sf "+fromExpanded+" "+toExpanded;
+        error=Misc.execute(command);
+        // if error, display an error message
+        if(error!=null) {
+            JOptionPane.showMessageDialog(ui,
+                "Unbable to make the link:\n"+command+'\n'+error,
+                "Error",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+}
+</source>
+
+   </sect>
+
+   <sect><title>Graphic Interface</title>
+
+    <p>We must code a GUI for our task. This interface is implemented
+     in the <code>LinkUI</code> class which source code is:</p>
+
+<source>
+/*
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+package casa.fiji.installer;
+
+import casa.fiji.util.Misc;
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+/**
+ * The GUI for the link task.
+ */
+public class LinkUI extends JPanel implements ActionListener {
+
+    /**
+     * The refernce to the task.
+     */
+    Link link=null;
+    /**
+     * The text field for the directory.
+     */
+    JTextField field=new JTextField();
+    /**
+     * The label for the from part of the link.
+     */
+    JTextField label=new JTextField();
+    /**
+     * Home button.
+     */
+    JButton buttonHome=new JButton(new
+        ImageIcon(ClassLoader.getSystemResource("lib/home.gif")));
+
+    /**
+     * The constructor. GUI initialization.
+     */
+    public LinkUI(Link link) {
+        this.link=link;
+        ui();
+    }
+
+    /**
+     * GUI initialization.
+     */
+    void ui() {
+        setLayout(new GridBagLayout());
+        Misc.add(this,new JLabel("Link"), 0, 0, 2, 1, 0.0, 0.0,
+		    GridBagConstraints.NORTH, GridBagConstraints.NONE,
+		    new Insets(10, 10, 10, 10));
+        Misc.add(this,new JLabel("This program will make a link from:"),
+		    0, 1, 2, 1, 0.0, 1.0,GridBagConstraints.SOUTHWEST,
+		    GridBagConstraints.NONE,new Insets(10, 10, 5, 10));
+        Misc.add(this,label, 0, 2, 2, 1, 1.0, 0.0,
+		    GridBagConstraints.SOUTHWEST, GridBagConstraints.HORIZONTAL,
+		    new Insets(0, 10, 10, 10));
+        Misc.add(this,new JLabel("to a directory in your PATH:"),
+            0, 3, 2, 1, 0.0, 0.0,GridBagConstraints.NORTHWEST,
+            GridBagConstraints.NONE,new Insets(10, 10, 5, 10));
+        Misc.add(this,field, 0, 4, 1, 1, 1.0, 1.0,
+            GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL,
+            new Insets(0, 10, 10, 5));
+        Misc.add(this,buttonHome, 1, 4, 1, 1, 0.0, 1.0,
+		    GridBagConstraints.NORTHEAST, GridBagConstraints.NONE,
+		    new Insets(0, 0, 10, 10));
+        buttonHome.addActionListener(this);
+        buttonHome.setMargin(new Insets(0,0,0,0));
+        label.setEditable(false);
+    }
+
+    /**
+     * User actions processing.
+     */
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==buttonHome) {
+            JFileChooser chooser=new
+                JFileChooser(System.getProperty("user.home"));
+            chooser.setDialogType(JFileChooser.OPEN_DIALOG|
+                JFileChooser.DIRECTORIES_ONLY);
+            int returnVal=chooser.showOpenDialog(this);
+            File dir=chooser.getCurrentDirectory();
+            if(dir.isDirectory()) field.setText(dir.getAbsolutePath());
+        }
+    }
+
+    /**
+     * Sets the to part of the link.
+     */
+    public void setTo(String to) {field.setText(to);}
+
+    /**
+     * Returns the to part of the link.
+     */
+    public String getTo() {return field.getText();}
+
+    /**
+     * Sets the from part of the link.
+     */
+    public void setFrom(String from) {label.setText(from);}
+}
+</source>
+
+    <p>This class is quite obvious except that it must extend
+     (directly or not) <code>JPanel</code>. Note that it uses the
+     <code>add()</code> method of <code>casa.fiji.util.Misc</code> class
+     that adds a component to a <code>GridBagLayout</code>. Please
+     don't code graphic interfaces using absolute coordinates
+     for components (your code would not be portable).</p>
+
+    <p>To use a task in FiJI, you must put the classes in the
+     <file>CLASSPATH</file> to use it.</p>
+
+    <p>I hope this overview is sufficient to start coding tasks.
+     I think the best way to do so is to modify the example
+     source code. Please feel free to contact me for any question.</p>
+
+   </sect>
+
+   <sect><title>Tasks License</title>
+
+    <p>This program is under GPL, so any task should have the
+     same license. Anyway, you might use this installer to
+     distribute a program under any license (including
+     commercial ones).</p>
+
+   </sect>
+
+  </sect>
+  
+  <sect><title>Ant task</title>
+
+   <p>To use this task in a build file, you must drop the archive
+    <file>fiji.jar</file> in the <file>lib</file> directory of your
+    Ant installation.</p>
+
+   <sect><title>Description</title>
+
+    <p>Using this task, you can generate FiJI installers from within
+     an Ant build file.</p>
+
+     <p>The declarative element (after the
+      <file>&lt;project&gt;</file> one) is the following:</p>
+
+     <source>&lt;taskdef name="fiji" classname="net.cafebabe.fiji.builder.FijiTask"/&gt;</source>
+
+    </sect>
+
+    <sect><title>Parameters</title>
+
+    <table>
+     <th>
+      <co>Attribute</co>
+      <co>Description</co>
+      <co>Required</co>
+     </th>
+     <li>
+      <co>file</co>
+      <co>Installer definition file.</co>
+      <co>Yes</co>
+     </li>
+     <li>
+      <co>verbose</co>
+      <co>If <value>true</value>, messages are printed during
+       installer generation.</co>
+      <co>No (defaults to <value>no</value>)</co>
+     </li>
+     </table>
+
+    </sect>
+
+    <sect><title>Nested elements</title>
+
+    <p>This task accepts no nested element or text.</p>
+   
+   </sect>
+
+   <sect><title>Examples</title>
+
+    <p>To generate an installer which definition file is
+     <file>fiji/install.xml</file> in verbose mode, you might
+     write&dp;</p>
+
+    <source>&lt;fiji file="fiji/install.xml"
+      verbose="true"/></source>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>License</title>
+
+   <p>This software is free and released under the
+    <link url="http://www.gnu.org/copyleft/gpl.html">GPL</link>.
+    You can find a copy of this license in the file <file>LICENSE</file>
+    in the installation directory.</p>
+
+  </sect>
+
+  <sect><title>History</title>
+  
+   <sect><title>Version 1.0-1 (2003-01-12)</title>
+
+    <p>This version fixes a bug when loading XML configuration file
+     (with a message "String index out of range: 1"). Many thanks to
+     Daphné Costantini for this bug report. Also fixes a bug in the
+     installer of the application.</p>
+     
+   </sect>
+
+   <sect><title>Version 1.0 (2002-11-16)</title>
+
+    <list>
+     <item>New Ant task to generate FiJI installers.</item>
+     <item>New package name (<code>net.cafebabe.fiji</code>).</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Version 0.4 (2000-12-31)</title>
+
+    <list>
+     <item>New <file>title</file>, <file>text</file> and <file>mandatory</file>
+      for all elements.</item>
+     <item>New <file>append</file> task that enable to update a configuration
+      file.</item>
+     <item>The [&gt;&gt;] button (to skip a task) and the task counter have
+      been added to the interface.</item>
+     <item>The installer interface may be customized using theme.</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Version 0.3 (2000-12-27)</title>
+
+    <list>
+     <item>This version have been heavily tested on Windows.</item>
+     <item>Error management have been improved (exception stack
+      traces have been replaced with clear messages, for instance,
+      the program clearly indicates that it doesn't find the
+      configuration file).</item>
+     <item>Some attribute names have been changed for clarity.
+      The attribute <code>src</code> of the element <file>copy</file>
+      have been renamed to <file>dir</file>, <file>prop</file> have been
+      renamed to <file>property</file>. The <file>target</file> attribute
+      of the <file>filter</file> element have been renamed <file>file</file>.
+     </item>
+     <item>The <code>Task</code> interface have been simplified (the
+      <code>done()</code> method, quite tricky to implement, have
+      been replaced by <code>next()</code> much simpler). Task writing
+      should be much easier.</item>
+     <item>The source code is commented and API docs rely in
+      the <file>api</file> subdirectory of the docs.</item>
+     <item>UML diagrams rely in the <file>uml</file> subdirectory.</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Version 0.2 (2000-06-11)</title>
+
+    <list>
+     <item>The documentation have been translated in French.</item>
+     <item>A bug in the launching script for Windows have been
+      corrected (thanks to Romain Guy).</item>
+     <item>A bug related to Windows platform detection have been
+      corrected.</item>
+     <item>The jar file for the Sun's XML parser have been included.</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Version 0.1 (2000-06-07)</title>
+
+    <list>
+     <item>The entire architecture have been improved.</item>
+     <item>First fully functionnal version.</item>
+     <item>First distributed version.</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Version 0.0 (2000-06-01)</title>
+
+    <list>
+     <item>Demo version to validate the concept.</item>
+    </list>
+
+   </sect>
+
+  </sect>
+
+  <p><imp>Enjoy !</imp></p>
+
+ </text>
+
+</article>
+
+<!-- Local IspellDict: american -->

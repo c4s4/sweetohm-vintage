@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/fractales.applet.html" date="2001-12-18">
+
+ 
+ <title>Recompilation des Applets</title>
+ 
+
+ 
+  <p>Certaines applets posaient des problèmes avec les dernières versions
+   de la VM de Sun (<file>ClassFormatException</file>), c'est maintenant
+   corrigé.</p>
+ 
+
+</news><!-- Local IspellDict: francais -->

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2002-10-22" url="http://www.cafebabe.net">
+
+ <title>Nouveau nom de domaine</title>
+  
+ <p>La patience a payé ! Un beau soir, un <keyb>whois</keyb> m'a
+  apporté la bonne nouvelle : network solutions ne possède pas tous
+  les noms de domaine de moins de 25 lettres, sans doute une faille
+  de leur programme de réservation automatique des noms de domaine
+  ;o)</p>
+
+ <p>Pourquoi <file>cafebabe</file> pour un site Java ? Tout
+  simplement parceque c'est le <term>magic number</term> (en hexa)
+  des classes Java.</p>
+ 
+ <p>Un grand merci à Frédéric !</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

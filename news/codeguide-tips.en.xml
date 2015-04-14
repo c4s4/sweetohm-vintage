@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-06-29" url="html/codeguide-tips.en.html">
+
+ <title>CodeGuide Tips Article</title>
+
+ <p>I demonstrate how you can integrate JUnit, Beanshell and Ant in
+  this efficient IDE.</p>
+
+ <figure url="index.codeguide.png"/>
+
+</news>
+
+<!-- Local IspellDict: english -->

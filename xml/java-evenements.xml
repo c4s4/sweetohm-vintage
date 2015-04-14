@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="fr" 
+      id="java-evenements"
+      date="2000-05-05"
+      email="peignier@mygale.org"
+      author="Alain PEIGNIER">
+
+ <title>Toute la vérité sur les évènements de l'AWT 1.1</title>
+
+ <text>
+
+  <p>Les classes permettant de travailler avec des fenêtres dans un 
+   environnement graphique (AWT) fonctionnent depuis la version 1.1.1 
+   de Java selon un nouveau modèle d'événements. Le plus dur n'est pas 
+   de comprendre le fonctionnement très simple de cette technique, c'est 
+   plutôt de bien l'utiliser.</p>
+
+  <sect><title>Au sommaire</title>
+
+   <enum>
+    <item>Les événements, c'est quoi ? Petits rappels.</item>
+    <item>L'utilisation des Listeners.</item>
+    <item>Un avenir prometteur pour les événements : la librairie Swing</item>
+   </enum>
+  </sect>
+
+  <sect><title>Les événements dans l'AWT</title>
+
+   <p>Le but ici n'est pas refaire un réchauffé de la doc Java disponible 
+    sur le Net. Attention, anglophobes sévères, apprendre la langue de 
+    Shakespeare au plus vite.</p>
+
+   <list>
+    <item><link url="http://www.javasoft.com/products/jdk/1.1/docs/api/Package-java.awt.html"/></item>
+    <item><link url="http://www.javasoft.com/products/jdk/1.1/docs/guide/awt/index.html"/></item>
+    <item><link url="http://java.sun.com/docs/books/tutorial/post1.0/ui/eventmodel.html"/></item>
+   </list>
+
+   <p>Pour synthétiser : Java utilise des événements qui ne sont pas 
+    directement ceux que produit la plate-forme. Adieu constantes 
+    entières qui circulent de fonction en fonction au bon gré des 
+    librairies, Java implémente un système tout beau tout propre et 
+    fait maison. Toutes les victimes du Borland C++ sous Windows ont 
+    déjà compris l'intérêt de la manoeuvre : la SIMPLICITÉ.</p>
+
+   <p>Plus clair, se serait en effet transparent; en voici la preuve :</p>
+
+   <sect><title>Les Events</title>
+
+    <p>Les événements sont les porteurs d'information. Ceux qui 
+     renseignement votre application par leur existence d'une part et 
+     par les informations qu'ils peuvent contenir (touche de clavier 
+     appuyée, nom de l'action déclenchée, position de la souris).</p>
+
+    <p>On décompose les événements en plusieurs types :</p>
+
+    <list>
+     <item>ActionEvent (cf classe <link url="http://www.javasoft.com/products/jdk/1.1/docs/api/java.awt.event.ActionEvent.html"/>)</item>
+     <item>KeyEvent (cf classe <link url="http://www.javasoft.com/products/jdk/1.1/docs/api/java.awt.event.KeyEvent.html"/>)</item>
+     <item>WindowEvent (cf classe <link url="http://www.javasoft.com/products/jdk/1.1/docs/api/java.awt.event.WindowEvent.html"/>)</item>
+     <item>FocusEvent (cf classe <link url="http://www.javasoft.com/products/jdk/1.1/docs/api/java.awt.event.FocusEvent.html"/>)</item>
+     <item>MouseEvent (cf classe <link url="http://www.javasoft.com/products/jdk/1.1/docs/api/java.awt.event.MouseEvent.html"/>)</item>
+     <item>ItemEvent (cf classe <link url="http://www.javasoft.com/products/jdk/1.1/docs/api/java.awt.event.ItemEvent.html"/>)</item>
+    </list>
+
+    <p>Les événements MouseEvent et KeyEvent permettent de réceptionner 
+     les actions de l'utilisateur. Les événements WindowEvent permettent 
+     de gérer le comportement des fenêtres. Les événements FocusEvent 
+     quant eux permettent de prévenir un composant graphique (bouton, 
+     menu, liste ...) que le focus lui arrive, s'en va ... Les 
+     événements ItemEvent sont un peu particuliers et ne s'appliquent 
+     qu'aux composants ou l'on peut sélectionner quelque chose (cf 
+     interface java.awt.ItemSelectable) les List, Choice ... Et pour 
+     finir par les plus importants : les événements ActionEvent qui 
+     permettent de faire ce qui vous voulez. On les utilise en particulier 
+     pour les boutons (cf classe java.awt.Button) qui lorsqu'on les 
+     déclenche envoient un événement ActionEvent a qui veut l'entendre.</p>
+
+    <p>Il manque encore la moitie des acteurs de la gestion des 
+     événements :</p>
+
+   </sect>
+
+   <sect><title>les Listeners</title>
+    
+    <p>Les Listeners sont les récepteurs des événements. Ce sont les 
+     méthodes chargées d'analyser et de traiter les informations de 
+     l'événement qu'on leur soumet.</p>
+
+    <p>Évidemment chaque Event trouve son réceptacle dans l'une des 
+     interfaces suivantes :</p>
+
+    <list>
+     <item>ActionListener (cf classe <link url=""/>)</item>
+     <item>KeyListener (cf classe <link url=""/>)</item>
+     <item>WindowListener (cf classe <link url=""/>)</item>
+     <item>FocusListener (cf classe <link url=""/>)</item>
+     <item>MouseListener (cf classe <link url=""/>)</item>
+     <item>ItemListener (cf classe <link url=""/>)</item>
+    </list>
+
+    <p>Comme vous avez dû le remarquer dans la documentation Java, ce 
+     sont des interfaces. Vous êtes donc libre d'implémenter les méthodes 
+     nécessaires où bon vous semble, ce que nous verrons plus tard.</p>
+
+    <p>Pour qu'un Listener reçoive des événements, il faut signaler 
+     son existence à la ou les source(s) d'Events que l'on veut gérer. 
+     Pour cela, les sources de l'AWT sont toutes dotées de méthodes 
+     addTypeListener et removeTypeListener. Dès lors qu'un Listener 
+     est ajouté par la méthode addTypeListener, il fait parti d'une 
+     file d'attente dont chaque participant est mis au courant de 
+     chaque TypeEvent provenant de la source (cf méthode processEvent).</p>
+
+    <source>
+  private Vector actionListeners = new Vector();
+
+  public void addActionListener(ActionListener actionListener) {
+    actionListeners.addElement(actionListener);
+  }
+
+  public void removeActionListener(ActionListener actionListener) {
+    actionListeners.removeElement(actionListener);
+  }
+
+  protected void processActionEvent(ActionEvent event) {
+    for (Enumeration e=actionListeners.elements(); e.hasMoreElement();) 
+      ((ActionListener)e.nextElement()).actionPerformed(event);
+  }
+    </source>
+
+    <sect><title>Traitement des Listeners</title>
+
+     <p>On peut par ce mécanisme "enregistrer" un Listener auprès de 
+      plusieurs sources. Les événements lui parviendront et il pourra 
+      utiliser la méthode AWTEvent.getSource() (cf classe java.awt.AWTEvent)
+      pour déterminer quelle source est concernée.</p>
+
+     <p>On peut aussi "enregistrer" plusieurs Listeners auprès d'une 
+      même source. Attention à ne peut enregistrer deux fois un même 
+      listener chez une source ...</p>
+
+    </sect>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Vivre en paix avec des Listeners et des Events</title>
+
+   <p>Le modèle est simple. reste à l'appliquer avec autant de succès.</p>
+
+   <p>Le choix le plus important est l'endroit où l'on implante les 
+    méthodes des Listeners. Toute l'astuce consiste à minimiser le 
+    nombre de classes utilisées.</p>
+
+   <sect><title>Premier exemple</title>
+    
+    <source>
+  import java.awt.*;
+  import java.awt.event.*;
+
+  public class ButtonWithEvent extends Frame implements ActionListener {
+
+    public final static String QUITTER = "Quitter";
+
+    public ButtonWithEvent() {
+      super("Button With Event");
+
+      Button b = new Button(QUITTER);
+      b.addActionListener(this);
+      add(b);
+
+      pack();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+      String actionCommand = e.getActionCommand();
+      if (actionCommand.equals(QUITTER)) dispose();
+    }
+  }
+    </source>
+
+   </sect>
+
+   <p>On se sert en fait de la fenêtre comme support aux méthodes 
+    des listeners. L'astuce fonctionne bien pour les Listeners qui 
+    nécessite une seule méthode, c'est a dire ActionListener et 
+    ItemListener.</p>
+
+   <p>Pour KeyListener, WindowListener, FocusListener, il y a plusieurs 
+    méthodes définies dans l'interface alors qu'on n'utilise généralement 
+    qu'une seule d'entre elles : par exemple pour le KeyListener, la 
+    méthode la plus utilisée est keyPressed(KeyEvent) et on néglige 
+    bien souvent les deux autres.</p>
+
+   <p>Heureusement, les gentils créateurs de Java ont pense a nos 
+    petits doigts et ont laisse traîner trois classes : KeyAdapter, 
+    WindowAdapter et FocusAdapter. Elles ne font que implémenter les 
+    fonctions des Listeners correspondant pour des méthodes vides, mais 
+    elles sont bel et bien salvatrices : il ne reste qu'a hériter le ou 
+    les méthodes intéressante(s).</p>
+
+   <source>
+  static class keyAdapter extends KeyAdapter {
+
+    private ButtonWithEvent fenetre;
+
+    public KeyAdapter (ButtonWithEvent fenetre) {
+      this.fenetre = fenetre;
+    }
+
+    public void keyPressed(KeyEvent e) {
+      switch (e.getKeyCode()) {
+        case KeyEvent.ESCAPE : fenetre.dispose();
+      }
+    }
+  }
+   </source>
+
+   <sect><title>A ajouter a la classe ButtonWithEvent précédemment décrite. Et ajouter dans le constructeur b.addKeyListener(new keyAdapter(this));</title>
+
+    <p>Une technique directement due a la syntaxe de Java permet 
+     d'instancier une classe, tout en déclarant certaines variables et 
+     certaines méthodes.</p>
+
+    <source>
+  WindowAdapter l = new WindowAdapter() {
+
+    public void windowClosing(WindowEvent e) {
+      ((Window)e.getSource()).dispose();
+    }
+  }
+
+  addWindowAdapter(l);
+    </source>
+
+   </sect>
+
+   <sect><title>Instanciation et déclaration simultanée d'un WindowAdapter</title>
+
+    <p>On peut faire encore plus fort et tout implémenter en posant 
+     par des ActionEvent. Chaque événement est traite et transforme 
+     en un ActionEvent correspondant. Par exemple, le WindowListener 
+     transforme le WINDOWCLOSING en ActionEvent QUITTER, le KeyListener, 
+     le KeyEvent.ESCAPE en ActionEvent QUITTER.</p>
+
+    <p>La fenetre devient une antenne à événements, les transforme
+     et ne gère alors que des ActionEvents. Toute la gestion est ainsi 
+     centralise autour de la méthode actionPerformed.</p>
+
+    <source>
+  static class keyAdapter extends KeyAdapter {
+
+    private ButtonWithEvent fenetre;
+
+    public KeyAdapter (ButtonWithEvent fenetre) {
+      this.fenetre = fenetre;
+    }
+
+    public void keyPressed(KeyEvent e) {
+      String actionCommand = "";
+
+      switch (e.getKeyCode()) {
+        case KeyEvent.ESCAPE : actionCommand = fenetre.QUITTER;
+      }
+
+      if (actionCommand.length() &gt; 0) {
+        ActionEvent aEvent = new ActionEvent(this,
+          ActionEvent.ACTIONPERFORMED,actionCommand);
+        fenetre.actionPerformed(aEvent);        
+      }
+    }
+  }
+    </source>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Voir la librairie Swing ou/et mourir</title>
+
+   <p>Dans les futurs composants graphiques de l'AWT, l'usage des 
+    événements passe au cran supérieur. L'apparition des nouveaux 
+    événements, en particulier, ChangeEvent permet d'implémenter 
+    facilement des interfaces intelligentes avec des composants 
+    interagissant entre eux.</p>
+
+   <p>On notera aussi l'apparition d'une gestion plus aisée des 
+    raccourcis clavier qui se branchent directement sur des ActionEvents.</p>
+
+   <p>Pour ceux qui croient avoir tout compris sur les événements, 
+    découvrez vite l'enfer des Events et des Listeners : la JTable de 
+    la libraire Swing, la plus grosse concentration d'événements au 
+    Web-metre carre.</p>
+
+   <p>Vous trouverez tout ça dans l'api Swing (Java Foundation Classes).</p>
+
+  </sect>
+
+  <sect><title>Petite note de fin</title>
+
+   <p>Pour tout commentaire, remarque, question, erreur infâme : 
+    <link url="mailto:peignier@mygale.org"/></p>
+
+  </sect>
+
+ </text>
+
+</page>

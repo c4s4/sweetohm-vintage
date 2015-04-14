@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+
+<news url="html/ruby-dbi.html" date="2008-06-25">
+ 
+ <title>Utiliser le module Ruby DBI</title>
+
+  <p>Un nouvel article traduit dans la série sur MySQL de Paul Dubois. Un
+    grand merci à lui pour sa série d'articles que l'on peut trouver sur
+    sa page à l'adresse : <link url="http://www.kitebird.com/articles/"/>.</p>
+
+</news>
+<!-- Local IspellDict: francais -->

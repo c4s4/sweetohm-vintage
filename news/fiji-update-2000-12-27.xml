@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                      "../dtd/news.dtd">
+
+<news url="html/fiji.html" date="2000-12-27">
+
+ <title>Mise à jour FiJI</title>
+
+  <figure url="index.fiji.png"/>
+
+  <p>Cette mise à jour majeure de mon installeur Java Open Source (sous
+   licence GPL) concerne les points suivants :</p>
+
+  <list>
+   <item>Tests intensifs sous Windows.</item>
+   <item>Le traitement des erreurs a été amélioré.</item>
+   <item>Certains attributs ont changé de nom (pour plus de clarté).</item>
+   <item>La réalisation de nouvelles tâches a été simplifié (interface
+    task simplifiée).</item>
+   <item>Le code a été documenté (commentaires dans le source, documentation
+    de l'API et diagrammes UML).</item>
+  </list>
+
+</news>
+
+<!-- Local IspellDict: francais -->

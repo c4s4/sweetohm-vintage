@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="applet">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="param"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.applet"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.applet">
+    <xs:attribute name="code" use="required"/>
+    <xs:attribute name="codebase"/>
+    <xs:attribute name="width" use="required"/>
+    <xs:attribute name="height" use="required"/>
+    <xs:attribute name="archive"/>
+  </xs:attributeGroup>
+  <xs:element name="param">
+    <xs:complexType>
+      <xs:attributeGroup ref="attlist.param"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.param">
+    <xs:attribute name="name" use="required"/>
+    <xs:attribute name="value" use="required"/>
+  </xs:attributeGroup>
+</xs:schema>

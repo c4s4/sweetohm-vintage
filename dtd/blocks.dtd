@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-words PUBLIC "-//CAFEBABE//DTD words 1.0//EN" 
+                            "words.dtd">
+%dtd-words;
+<!ENTITY % dtd-applet PUBLIC "-//CAFEBABE//DTD applet 1.0//EN" 
+                            "applet.dtd">
+%dtd-applet;
+
+<!ENTITY % blocks "p|list|enum|table|source|frame|figure|applet">
+
+<!ELEMENT p (%words;)*>
+
+<!ELEMENT list (item | list | enum)*>
+<!ELEMENT enum (item | list | enum)*>
+<!ELEMENT item (%words;)*>
+
+<!ELEMENT table (title?,th?,li+)>
+<!ATTLIST table
+          id ID #IMPLIED>
+<!ELEMENT th (co+)>
+<!ELEMENT li (co+)>
+<!ELEMENT co (%words;)*>
+
+<!ELEMENT source (#PCDATA)>
+<!ATTLIST source
+          id ID #IMPLIED
+          file CDATA #IMPLIED>
+
+<!ELEMENT frame (title?,(%blocks;)*)>
+<!ATTLIST frame
+          id ID #IMPLIED>
+
+<!ELEMENT figure (title?)>
+<!ATTLIST figure
+          id ID #IMPLIED
+          url CDATA #REQUIRED
+          link CDATA #IMPLIED
+          width CDATA #IMPLIED
+          height CDATA #IMPLIED>
+
+<!ELEMENT title (%words;)*>

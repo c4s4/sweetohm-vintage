@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-07-13" url="html/sat.en.html">
+
+ <title>SAT Release 0.8</title>
+
+ <p>This release implements an Ant console that boosts performance (up
+  to 5 times) by running Ant in a console that lets you type commands
+  to run builds.</p>
+
+</news>
+
+<!-- Local IspellDict: english -->

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2002-10-24" url="html/ant-web.html">
+
+ <title>Article sur la génération de site web avec Ant</title>
+
+ <p>Cet article présente le procédé utilisé pour générer le site des
+  Éditions O'Reilly, utilisant Ant pour automatiser la transformation
+  de documents XML avec XSLT (et bien plus)...</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

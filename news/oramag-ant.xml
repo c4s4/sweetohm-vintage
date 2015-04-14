@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links date="2002-11-01"
+       url="http://otn.oracle.com/oramag/oracle/02-nov/o62odev_ant.html">
+
+ <title>Article d'introduction à Ant</title>
+
+ <p>Oracle Magazine publie dans son numéro de novembre un article
+  d'introduction à Ant écrit par votre serviteur. Cet article
+  présente les principes généraux de Ant avec un exemple concret de
+  fichier de build. Le prochain numéro traitera de fonctionnalités
+  avancées (comme les tests unitaires ou la compilation de JSP). En
+  anglais dans le texte, merci Alfi.</p>
+
+ <figure url="index.ant.png"/>
+
+</links>
+
+<!-- Local IspellDict: francais -->

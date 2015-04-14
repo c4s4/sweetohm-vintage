@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="fr"
+      id="ant-dtd"
+      date="2000-04-03"
+      email="casa@sweetohm.net"
+      author="Michel Casabianca">
+
+ <title>DTD Ant</title>
+
+ <text>
+
+  <figure url="ant-dtd.ant.png"/>
+
+  <p>Pourquoi une DTD pour Ant ? Parcequ'un bon éditeur XML (comme
+   <link url="http://www.emacs.org">Emacs</link> associé à
+   <link url="http://www.lysator.liu.se/projects/about_psgml.html">PSGML</link>)
+   permet de faciliter la tâche lors de l'écriture des fichiers
+   <file>build.xml</file> si et seulement si l'on dispose d'une <imp>DTD</imp>
+   pour ces fichiers. Par exemple, le couple Emacs + PSGML indique
+   les éléments autorisés en un point du fichier, affiche une
+   invite (dans le minibuffer) pour compléter les attributs
+   obligatoires, etc. Bref, une DTD facilite la vie.</p>
+
+  <p>De plus, une DTD est obligatoire dans certains cas. Par
+   exemple lorsqu'on souhaite inclure un fichier A dans un
+   fichier B. Considérons le fichier suivant :</p>
+
+  <source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+
+&lt;!DOCTYPE project PUBLIC "-//ANT//DTD project//EN" "project.dtd" [
+&lt;!ENTITY include SYSTEM "message.xml"&gt;
+]&gt;
+
+&lt;project name="test" default="task" basedir="."&gt;
+
+ &lt;target name="task"&gt;
+  &lt;echo message="Hello"/&gt;
+  &amp;include;
+ &lt;/target&gt;
+
+&lt;/project&gt;</source>
+
+  <p>Il importe, au moyen d'une entité dans la sous DTD interne,
+   le fichier <file>message.xml</file> que voici :</p>
+
+  <source>&lt;echo message="World !"/&gt;</source>
+
+  <p>Le résultat de l'appel de Ant est alors :</p>
+
+  <source>$ ant
+Buildfile: build.xml
+Project base dir set to: /home/casa/tmp/test
+Executing Target: task
+Hello
+World !
+Completed in 2 seconds</source>
+
+  <p>On constate que la tâche définie dans le fichier <file>message.xml</file>
+   a bien été importée dans le fichier <file>build.xml</file> et
+   exécutée par Ant.</p>
+
+  <p>Je me suis attelé à la tâche (longue et pénible) d'écrire cette
+   DTD, que l'on peut <link url="../arc/ant-dtd.zip">télécharger ici</link>.
+  </p>
+
+  <p>On peut cependant se demander comment il est possible de définir
+   une telle DTD alors que le jeu des éléments autorisés n'est pas
+   fixé (puisqu'il est possible de définir ses propres tâches
+   grâce à l'élément &lt;taskdef&gt;).</p>
+  
+  <p>Pour contourner le problème, il existe deux solutions :</p>
+
+  <sect><title>Sous DTD interne</title>
+
+   <p>La première solution consiste à définir les éléments associés aux
+    tâches définies par l'utiisateur à l'aide de la sous DTD interne
+    (le fragment de DTD se trouvant dans l'élément DOCTYPE).</p>
+
+   <p>Par exemple, si on définit une tâche ayant la forme suivante :</p>
+
+   <source>&lt;xt xml="fichier.xml" xsl="fichier.xsl" out="fichier.html"/&gt;</source>
+
+   <p>On pourra ajouter dans le DOCTYPE le fragment suivant :</p>
+
+   <source>&lt;!ENTITY % ext "| xt"&gt;
+
+&lt;!ELEMENT xt EMPTY&gt;
+&lt;!ATTLIST xt
+          xml CDATA #REQUIRED
+          xsl CDATA #REQUIRED
+          out CDATA #REQUIRED&gt;</source>
+
+   <p>Les rôles de &lt;!ELEMENT&gt; et de &lt;!ATTLIST&gt; sont évidents, par
+    contre, l'entité &lt;!ENTITY % ext "| xt"&gt; peut paraître plus
+    mystérieuse. Cette entité est collé à la définition de l'élément
+    <code>target</code> dans le fichier de la DTD, comme suit :</p>
+
+   <source>&lt;!ELEMENT target (ant | ... | zip %ext;)*&gt;</source>
+
+   <p>Le fragment <code>| xt</code> est donc ajouté à la définition
+    et permet alors d'intégrer des éléments &lt;xt&gt; dans un
+    élément &lt;target&gt;.</p>
+
+  </sect>
+
+  <sect><title>Fichier d'extensions</title>
+
+   <p>Pour qu'une extension soit disponible dans tous les fichiers
+    <file>build.xml</file>, on peut l'ajouter dans le fichier 
+    <file>project-ext.dtd</file> qui a l'allure suivante :</p>
+
+   <source>&lt;!ENTITY % ext "| xt"&gt;
+
+&lt;!ELEMENT xt EMPTY&gt;
+&lt;!ATTLIST xt
+          xml CDATA #REQUIRED
+          xsl CDATA #REQUIRED
+          out CDATA #REQUIRED&gt;</source>
+
+   <p>Le principe est le même que dans la méthode précédente, mais
+    ce fichier est inclus dans la DTD des projets de manière
+    permanente, à l'aide de :</p>
+
+   <source>&lt;!ENTITY % ext-file SYSTEM "project-ext.dtd"&gt;
+%ext-file;</source>
+
+  </sect>
+
+  <p>Le choix de la méthode de définition des extensions
+   dépendra de la disponibiité souhaitée pour l'extension
+   (de la même manière que l'on peut inclure les classes
+   Java d'une extension dans un jar séparé ou dans celui 
+   des classes de Ant, pour qu'elles soient toujours disponibles).</p>
+
+ </text>
+
+</page>
+

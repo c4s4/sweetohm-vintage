@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/site.html" date="2001-05-17">
+
+ 
+ <title>Nouveau générateur de site</title>
+ 
+
+ 
+
+  <p>Mon site est maintenant généré (toujours à partir de fichiers XML)
+   en utilisant un script Ant. Pour ce faire, j'ai dû développer de 
+   nouvelles tâches pour ce dernier:</p>
+
+  <list>
+   <item><imp>bsh :</imp> cette tâche permet de lancer des scripts
+    <link url="http://www.beanshell.org">beanshell</link> à partir de
+    Ant.</item>
+   <item><imp>merge :</imp> pour grouper des fichiers XML en un seul
+    (ce qui permet de générer cette page d'index à partir de fichiers
+    de news et de liens).</item>
+   <item><imp>split :</imp> pour éclater une page HTML générée en plusieurs
+    morceaux (c'est les cas des pages d'un même article).</item>
+   <item><imp>insert :</imp> pour remplacer une instruction de traitement
+    (ou Processing Instruction) par le contenu d'un fichier. Cela me
+    permet d'injecter dans les pages un menu (fragment de fichier HTML
+    généré à partir d'un fichier XML).</item>
+   <item><imp>xt :</imp> une tâche pour lancer le processeur XSLT XT (de
+    James Clark).</item>
+  </list>
+
+  <p>Ce package devrait être disponible très prochainement sur ces pages.</p>
+
+ 
+
+</news><!-- Local IspellDict: francais -->

@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//CAFEBABE//DTD article 1.0//EN" 
+                         "../dtd/article.dtd">
+
+<article lang="fr" 
+         id="intro-xml" 
+         date="2002-11-26" 
+         email="casa@sweetohm.net" 
+         author="Michel CASABIANCA"
+         pdf="true">
+
+ <title>Introduction à XML</title>
+
+ <abstract>
+  <p>Cet article est le premier d'une série de trois consacrés à XML,
+   XSLT et le développement d'application XML en Java. Il traite de la
+   syntaxe XML et des applications de ce langage de balises.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Présentation de XML</title>
+
+   <sect><title>Origines</title>
+
+    <p>XML (eXtensible Markup Language) est né du constat que le HTML
+     n'est pas adapté aux futures exigences de l'internet. Des
+     ingénieurs ont alors eu l'idée de remplacer le HTML par SGML
+     (Standard Generalized Markup Language), seul système capable à
+     l'époque de succéder au HTML.</p>
+
+    <p>Jon Bosak, qui travaillait pour Sun, a alors été chargé par le
+     W3C de "mettre le SGML sur le web". Le travail de définition de ce
+     qui allait devenir le XML (suggestion du gourou SGML James Clark) a
+     duré onze semaines (de la fin août 1996 à novembre de la même
+     année, date de publication du premier draft). Les finitions ont
+     pris encore une année et la version 1.0 de la norme a été publiée
+     en février 1998.</p>
+
+    <p>L'idée du groupe de travail du W3C était de créer un langage de
+     balisage hypertexte aussi simple à apprendre et utiliser que le
+     HTML et aussi puissant que le SGML. C'est une démarche similaire
+     qui a conduit Sun à développer Java (simplification du C++).</p>
+
+   </sect>
+
+   <sect><title>Comparaison avec HTML</title>
+
+    <p>Comme nous l'avons vu plus haut, HTML est le petit neveu du XML
+     et présente avec lui de nombreux points commun; de plus, il
+     présente l'avantage d'être connu de tous. Nous allons donc
+     maintenant comparer les deux langages avec un petit exemple de
+     carnet d'adresse:</p>
+
+    <p>La version HTML est la suivante:</p>
+
+    <source>&lt;html&gt;
+ &lt;head&gt;&lt;title&gt;R&amp;#233;pertoire&lt;/title&gt;&lt;/head&gt;
+ &lt;body&gt;
+  &lt;center&gt;&lt;h1&gt;Mon r&amp;#233;pertoire&lt;/h1&gt;&lt;/center&gt;
+  &lt;h2&gt;Michel Casabianca&lt;/h2&gt;
+  &lt;p&gt;Expert Java et XML (In-Fusio)&lt;/p&gt;
+  &lt;p&gt;&lt;bf&gt;Adresse:&lt;/bf&gt;&lt;/p&gt;
+  &lt;p&gt;48 rue Binaud
+   33300 Bordeaux&lt;/p&gt;
+  &lt;p&gt;T&amp;#233;l&amp;#233;phone: 05.57.87.13.27&lt;/p&gt;
+  &lt;p&gt;Mobile: 06.81.71.72.44&lt;/p&gt;
+  &lt;p&gt;email: casa@sweetohm.net&lt;/p&gt;
+  &lt;p&gt;www: www.sweetohm.net&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</source>
+
+    <p>Cette page se passe de commentaires. Voyons maintenant la
+     version XML:</p>
+
+    <source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;!DOCTYPE repertoire PUBLIC "-//CASA//DTD repertoire//FR" "repertoire.dtd"&gt;
+&lt;repertoire&gt;
+ &lt;personne&gt;
+  &lt;prenom&gt;Michel&lt;/prenom&gt;
+  &lt;nom&gt;Casabianca&lt;/nom&gt;
+  &lt;qualite&gt;Expert Java &amp;amp; XML&lt;/qualite&gt;
+  &lt;entreprise&gt;In-Fusio&lt;/entreprise&gt;
+  &lt;adresse lieu="domicile"&gt;
+   &lt;rue&gt;48 rue Binaud&lt;/rue&gt;
+   &lt;cp&gt;33300&lt;/cp&gt;
+   &lt;ville&gt;Bordeaux&lt;/ville&gt;
+   &lt;pays&gt;France&lt;/pays&gt;
+   &lt;telephone type="fixe"&gt;05.57.87.13.27&lt;/telephone&gt;
+   &lt;telephone type="mobile"&gt;06.81.71.72.44&lt;/telephone&gt;
+   &lt;email&gt;casa@sweetohm.net&lt;/email&gt;
+   &lt;www&gt;www.sweetohm.net&lt;/www&gt;
+  &lt;/adresse&gt;
+ &lt;/personne&gt;
+&lt;/repertoire&gt;</source>
+
+    <p>Nous pouvons noter les points suivants:</p>
+
+    <list>
+     <item>Le fichier XML comporte des éléments définis par
+      l'utilisateur (comme <code>&lt;adresse&gt;</code>) alors qu'un document
+      HTML ne peut comporter que des balises définies dans la
+      norme.</item>
+     <item>Le fichier HTML comporte des éléments qui se rapportent au
+      formatage du document (comme par exemple le tag
+      <code>&lt;bf&gt;</code>) alors que le document XML ne comporte que des
+      éléments relatifs à la signification du contenu.</item>
+     <item>Les valeurs des attributs doivent toujours être placées
+      entre guillemets (ce qui n'est pas nécessaire en HTML sauf si
+      cette valeur comporte des blancs).</item>
+     <item>Les éléments vides doivent être fermés. Ils le sont par un
+      élément fermant ou par un slash de fermeture en fin d'élément
+      (par exemple <code>&lt;vide/&gt;</code>, ce qui est équivalent à
+      <code>&lt;vide&gt;</code><code>&lt;/vide&gt;</code>).</item>
+     <item>Les balises doivent être emboîtées correctement. Par
+      exemple, <code>&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;</code> est
+      incorrect en XML (et lèvera une erreur) alors qu'il est souvent
+      toléré en HTML par de nombreux navigateurs.</item>
+    </list>
+
+    <p>Cette liste met en valeur les caractéristiques essentielles du
+     XML: il dissocie le fond (les éléments indiquent la nature des
+     données qu'ils encapsulent) et la forme (la représentation d'un
+     document). D'autre part, la syntaxe d'un document XML est à la
+     fois plus rigoureuse que celle d'un document SGML (et par
+     extension, de celle d'un document HTML qui est une
+     <file>instance</file> de SGML) et bien plus simple tout en gardant
+     une compatibilité avec SGML.</p>
+
+    <p>Ces caractéristiques ont fait le succès de XML. La dissociation
+     du fond et de la forme permet le traitement automatique des
+     données (ce qui est très difficile avec un document HTML). Sa
+     simplicité permet un apprentissage rapide (quelques heures
+     suffisent pour acquérir les bases du XML) et une implémentation
+     facile des parsers. La rigueur du XML quand à elle, a facilité
+     l'échange des données XML. Pour finir, la compatibilité avec SGML
+     a permis une adoption rapide par réutilisation des outils
+     existants (il suffit souvent de paramétrer les outils SGML pour
+     les rendre compatibles avec XML).</p>
+
+   </sect>
+
+   <sect><title>Types de document</title>
+
+    <p>L'agencement des éléments XML d'un type de fichier peut être
+     contraint par une <file>DTD</file> (pour Document Type
+     Definition). Par exemple, une DTD pour un répertoire d'adresse
+     pourrait être la suivante:</p>
+
+    <source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+
+&lt;!ENTITY % lieux "travail | domicile | vacances"&gt;
+
+&lt;!ELEMENT repertoire (personne+)&gt;
+
+&lt;!ELEMENT personne (prenom, nom, qualite, entreprise, adresse+)&gt;
+
+&lt;!ELEMENT prenom (#PCDATA)&gt;
+&lt;!ELEMENT nom (#PCDATA)&gt;
+&lt;!ELEMENT qualite (#PCDATA)&gt;
+&lt;!ELEMENT entreprise (#PCDATA)&gt;
+
+&lt;!ELEMENT adresse (rue, cp, ville, pays, telephone, email?, www?)&gt;
+&lt;!ATTLIST adresse lieu (%lieux;) "travail"&gt;
+
+&lt;!ELEMENT rue (#PCDATA)&gt;
+&lt;!ELEMENT cp (#PCDATA)&gt;
+&lt;!ELEMENT ville (#PCDATA)&gt;
+&lt;!ELEMENT pays (#PCDATA)&gt;
+&lt;!ELEMENT telephone (#PCDATA)&gt;
+&lt;!ATTLIST telephone type (fixe | mobile) "fixe"&gt;
+&lt;!ELEMENT email (#PCDATA)&gt;
+&lt;!ELEMENT www (#PCDATA)&gt;</source>
+
+    <p>Cette DTD indique que:</p>
+
+    <list>
+     <item>Un répertoire est composé d'au moins une personne.</item>
+     <item>Une personne est composée d'un prénom, d'un nom, d'un
+      qualité, d'un entreprise et d'au moins une adresse.</item>
+     <item>Une adresse doit être composée d'une rue, d'un cp, d'une
+      ville, d'un pays, d'un telephone (de <code>type</code> <file>fixe</file>
+      ou mobile), d'un email (optionnel) et d'un www (optionnel).</item>
+    </list>
+
+    <p>Nous verrons plus tard en détail la syntaxe d'une DTD, mais
+     nous pouvons dors et déjà comprendre son intérêt: elle permet de
+     s'assurer (en <file>validant</file> un document) que ce document est
+     valide pour cette DTD et donc qu'aucun renseignement n'a été
+     omis. Cette validation intervient au niveau du programme traitant
+     le fichier XML lors de sa mise en forme ou de son traitement.</p>
+
+   </sect>
+
+   <sect><title>Mise en forme</title>
+
+    <p>Contrairement à un document HTML (qui peut être affiché par un
+     navigateur), un document XML ne peut à priori pas être affiché
+     par un programme puisque les éléments qui composent ce document
+     sont à l'initiative du rédacteur du document (ou de celui de la
+     DTD). Pour visualiser un document XML, il est donc nécessaire de
+     le transformer en un document mis en forme. C'est le rôle des
+     <file>feuilles de style</file> (ou style sheets en anglais).</p>
+
+    <p>Le standard XML pour les feuilles de style est XSLT pour
+     eXtensible Stylesheet Language et T pour Transformation. Une
+     feuille de style XSLT transforme (à l'aide d'un <file>processeur
+     XSLT</file>) un document XML en un document HTML, un autre document
+     XML (conforme à une autre DTD en général) ou tout autre
+     format. Le principe de fonctionnement est donc le suivant:</p>
+
+    <figure url="intro-xml.xslt.png"><title>Transformation XSLT</title></figure>
+
+    <p>Nous étudierons ces feuilles de style dans un article
+     ultérieur et je ne m'y attarderai donc pas.</p>
+
+   </sect>
+
+   <sect><title>Terminologie XML</title>
+
+    <p>XML comporte une terminologie qui lui est propre.</p>
+
+    <p>On appelle <file>élément</file> les balises (appelés <file>tags</file>
+     en HTML). Par exemple, <code>&lt;adresse&gt;</code> est un élément.</p>
+
+    <p>Un élément peut comporter des informations internes qui sont
+     localisées dans des <file>attributs</file>. Par exemple, l'élément
+     adresse <code>&lt;adresse lieu="domicile"&gt;</code> comporte un attribut
+     <code>lieu</code> dont le contenu est <file>domicile</file>.</p>
+
+    <p>Une <file>entité</file> est une référence remplacée lors du parsing
+     du document par une valeur qui leur est assignée.</p>
+
+    <p>L'élément le plus extérieur au document (dans lequel sont
+     imbriqués tous les autres éléments d'un document) est appelé
+     <file>racine</file> de ce document.</p>
+
+    <p>Un document XML peut être représenté comme un arbre dans
+     lequel les éléments ou les fragments de texte sont des
+     <file>noeuds</file>. Par exemple, le document suivant:</p>
+
+    <source>&lt;a&gt;
+   &lt;b/&gt;
+   &lt;c&gt;
+     &lt;d/&gt;
+     &lt;d/&gt;
+   &lt;/c&gt;
+&lt;/a&gt;</source>
+
+    <p>Peut être représenté par l'arbre ci-dessous:</p>
+
+    <figure url="intro-xml.arbre.png"><title>Arbre XML</title></figure>
+
+    <p>Un <file>parser</file> est un programme capable de parcourir un
+     document XML, de le valider (vérifier sa syntaxe XML et sa
+     conformité à une DTD) pour en extraire les données qu'il
+     contient.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Syntaxe XML</title>
+
+   <p>Maintenant que nous avons une idée générale de ce qu'est un
+    document XML, nous allons en étudier la syntaxe en détail.</p>
+
+   <sect><title>En tête</title>
+
+    <p>Tout document XML doit commencer par un en tête standard de la
+     forme:</p>
+
+    <source>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;</source>
+
+    <p>Ceci n'est pas un élément mais une instruction de traitement
+     (ou <file>processing instruction</file> en anglais) car entourée des
+     marques <code>&lt;?</code> et <code>?&gt;</code>. Elle indique que c'est un
+     document XML conforme à la recommandation (c'est ainsi que l'on
+     appelle les standards au W3, organisation de normalisation du
+     web) en version <code>1.0</code>. L'attribut <code>encoding</code>
+     indique l'encodage du document. Un autre attribut
+     <code>standalone</code> (pouvant prendre les valeurs <file>yes</file> ou
+     <file>no</file>) indique si le document peut être lu seul (valeur
+     <file>yes</file>) ou s'il est muni d'une DTD (valeur <file>no</file>).</p>
+
+   </sect>
+
+   <sect><title>Déclaration du type de document</title>
+
+    <p>On peut indiquer le type de document dans une déclaration
+    <file>DOCTYPE</file>, comme suit:</p>
+
+    <source>&lt;!DOCTYPE article SYSTEM "../dtd/article.dtd"&gt;</source>
+
+
+    <p>Cette déclaration indique que le document est de type
+     <file>article</file> (qui est nécessairement l'élément racine du
+     document) et que l'on peut trouver la DTD dans le fichier
+     <file>../dtd/article.dtd</file> (chemin relatif au fichier XML lui
+     même). Lors du <file>parsing</file> du document, le parser charge ce
+     fichier et valide le document par rapport à cette DTD. </p>
+
+    <p>Cette déclaration est optionnelle: un fichier peut ne pas être
+     associé à une DTD. Dans ce cas, il n'y a pas de contrainte
+     concernant les éléments du document, mais la syntaxe XML doit
+     être correcte (on dit alors que le document est <file>bien
+      formé</file>). Un document conforme à une DTD est dit
+     <file>valide</file>.</p>
+
+    <p>Il existe une autre forme de déclaration <file>DOCTYPE</file>:</p>
+
+    <source>&lt;!DOCTYPE article PUBLIC "-//CASA//DTD article//fr" 
+                         "../dtd/article.dtd"&gt;</source>
+
+    <p>Cette déclaration indique que le document est de type
+     <file>article</file> et permet de retrouver la DTD par:</p>
+
+    <list>
+     <item>Un nom symbolique <file>-//CASA//DTD article//fr</file> qui
+      sera recherché dans un catalogue. Le catalogue associe à ce nom
+      symbolique un fichier qui contient la DTD. Cela permet de ne pas
+      lier <file>en dur</file> une DTD à un fichier
+      (et donc d'avoir à recopier cette DTD avec chaque fichier XML,
+      ou de changer cette référence si l'on déplace le fichier de la
+      DTD).</item>
+     <item>Une URI (qui peut être un nom de fichier ou une URL). Ce
+      fichier est chargé si la référence symbolique n'est pas trouvée
+      (en l'absence de catalogue par exemple).</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Les instructions de traitement</title>
+
+    <p>Ces marqueurs ont la forme suivante:</p>
+
+    <source>&lt;?cible attribut1="valeur1" ... attributN="valeurN"?&gt;</source>
+
+    <p>Ces marqueurs sont destinés aux applications qui vont traiter
+     ce document et ne font pas à proprement parler partie du
+     document.</p>
+
+   </sect>
+
+   <sect><title>Commentaires</title>
+
+    <p>Les commentaires sont semblables à ceux du HTML:</p>
+
+    <source>&lt;!-- Ceci est un commentaire --&gt;</source>
+
+    <p>Ces commentaires sont ignorés lors du parsing du document.</p>
+
+   </sect>
+
+   <sect><title>Sections CDATA</title>
+
+    <p>Un telle section ne sera pas interprétée par le parser. Par
+     exemple la section suivante est parfaitement valide (parce que non
+     parsée par le parser):</p>
+
+    <source>&lt;![CDATA[&lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;]]&gt;</source>
+
+    <p>En pratique, ces sections CDATA sont très commodes pour écrire
+     un fragment de XML d'exemple dans un document XML. Il est aussi
+     commode de s'en servir pour un fragment de code (qui peut
+     comporter des signes &lt; qui provoqueront des erreurs de
+     parsing).</p>
+
+   </sect>
+
+   <sect><title>Éléments et attributs</title>
+
+    <p>Un élément peut contenir des attributs, d'autres éléments, du
+     texte ou une combinaison des deux. Un nom d'élément doit
+     commencer par une lettre ou un underscore et peut comporter tout
+     nombre de lettres, chiffres, trait d'union, point, double point
+     ou underscore. Les noms d'éléments commençant par <code>xml</code>
+     sont réservés. Les noms d'éléments sont sensibles à la casse. Les
+     lettres des noms d'éléments peuvent être de tout alphabet pourvu
+     que ce soit celui déclaré dans l'encodage du document.</p>
+
+    <p>Les noms d'attributs sont sujets aux mêmes restrictions que
+     ceux des éléments. La valeur de l'attribut doit être encadrée
+     par des guillemets simples ou doubles. La valeur d'un élément
+     délimitée par des guillemets simples peut contenir des guillemets
+     doubles et inversement. Par exemple, on pourra écrire:</p>
+
+    <source>&lt;chapitre titre="Je n'en pense pas moins"&gt;</source>
+
+    <p>Ou encore:</p>
+
+    <source>&lt;chapitre titre='Le "Bidule"'&gt;</source>
+
+    <p>Il existe deux attributs réservés:</p>
+
+    <list>
+     <item><code>xml:lang</code>: Cet attribut peut être présent dans
+      tout élément et indique la langue de celui-ci.</item>
+     <item><code>xml:space</code>: Cet attribut peut être présent dans
+      tout élément et peut prendre les valeurs <file>default</file> ou
+      <file>préserve</file>. Indique si les blancs (espaces, sauts à
+      la ligne ou tabulations) à l'intérieur de l'élément doivent être
+      préservés (valeur <file>preserve</file>).</item>
+    </list>
+
+    <p>Par défaut, XML se réserve le droit, comme HTML, de remplacer
+     une suite de blancs (espaces, saut de ligne ou tabulations) par
+     un seul espace. Ceci s'explique par le fait qu'un saut de ligne
+     n'a pas de signification de formatage puisque ce dernier dépend
+     du système sur lequel est affiché le document.</p>
+
+    <p>Par exemple, le texte suivant:</p>
+
+    <source>while(true) {
+  System.out.println("Hello World!");
+}</source>
+
+    <p>Sera affiché de la manière suivante (si on ne demande pas au
+     parser de préserver les blancs):</p>
+
+    <source>while(true) { System.out.println("Hello World!"); }</source>
+
+   </sect>
+
+   <sect><title>Entités</title>
+
+    <p>XML définit cinq entités qui permettent d'éviter les collisions
+     du texte avec la syntaxe XML:</p>
+
+    <table>
+     <th>
+      <co><imp>entité</imp></co>
+      <co><imp>Caractère</imp></co>
+     </th>
+     <li>
+      <co>&amp;amp;</co>
+      <co>&amp; (et commercial)</co>
+     </li>
+     <li>
+      <co>&amp;lt;</co>
+      <co>&lt; (inférieur à)</co>
+     </li>
+     <li>
+      <co>&amp;gt;</co>
+      <co>&gt; (supérieur à)</co>
+     </li>
+     <li>
+      <co>&amp;quot;</co>
+      <co>" (guillemet double)</co>
+     </li>
+     <li>
+      <co>&amp;apos;</co>
+      <co>' (guillemet simple)</co>
+     </li>
+    </table>
+
+    <p>Pour éviter une collision avec la marque d'ouverture d'un
+     élément, on pourra écrire dans un document XML le signe inférieur
+     à avec l'entité suivante:</p>
+
+    <source>  &lt;p&gt;Ceci est un texte XML valide car le signe
+   "inférieur à" a été écrit avec l'entité &amp;lt;.&lt;/p&gt;</source>
+
+    <p>Lors du parsing, la référence à l'entité est remplacée par sa
+     valeur et le texte devient:</p>
+
+    <source>  Ceci est un texte XML valide car le signe
+  "inférieur à" a été écrit avec l'entité &lt;.</source>
+
+    <p>On peut aussi faire référence à tout caractère UNICODE avec une
+     entité numérique de la forme <code>&amp;#xxx;</code> où xxx est la
+     valeur de ce caractère dans le standard UNICODE (en décimal ou en
+     hexadécimal si cette valeur commence par un <code>x</code>).</p>
+
+    <p>On peut ainsi écrire le signe <file>copyright</file> (©) avec
+    l'entité <code>&amp;#xA9;</code>.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Types de documents</title>
+
+   <p>Les types de documents permettent de contraindre les éléments à
+    respecter une syntaxe donnée. Une DTD peut comporter des déclarations
+    d'éléments, d'attributs, d'entités ou de notations.</p>
+
+   <sect><title>Déclaration d'élément</title>
+
+    <p>Une déclaration d'élément a la forme suivante:</p>
+
+    <source>  &lt;!ELEMENT nom règle&gt;</source>
+
+    <p>La règle peut être une liste d'éléments. Par exemple, on peut
+     définir un élément <code>adresse</code> par:</p>
+
+    <source>  &lt;!ELEMENT adresse (rue,cp,ville)&gt;</source>
+
+    <p>Cela indique qu'une adresse est composée d'un élément
+     <code>rue</code> suivi d'un élément <code>cp</code> puis d'un élément
+     <code>ville</code>.</p>
+
+    <p>On peut indiquer qu'un élément est optionnel (il peut
+     apparaître 0 ou 1 fois) avec le marqueur <code>?</code> après le nom
+     de cet élément. Par exemple, pour indiquer qu'un élément
+     <code>cedex</code> peut être présent à la fin d'une adresse, on
+     déclarera cet élément <code>adresse</code> par:</p>
+
+    <source>  &lt;!ELEMENT adresse (rue,cp,ville,cedex?)&gt;</source>
+
+    <p>De la même manière, on peut indiquer qu'un élément peut être
+     présent en au moins un exemplaire à l'aide du marqueur
+     <code>+</code> (plus) ou en un nombre quelconque d'exemplaires (y
+     compris 0) avec le marqueur <code>*</code> (étoile).</p>
+
+    <p>On peut aussi combiner des éléments avec des opérateurs
+     logiques <code>et</code> et <code>ou</code>. La virgule (vue ci dessus)
+     est l'opérateur <code>et</code> et le trait vertical (<file>pipe</file>
+     UNIX) est l'opérateur <code>ou</code>. Par exemple:</p>
+
+    <source>  &lt;!ELEMENT adresse ((rue|lieu-dit),cp,ville)&gt;</source>
+
+    <p>Indique que l'élément <code>adresse</code> peut être composé en
+     premier lieu d'un élément <code>rue</code> ou d'un élément
+     <code>lieu-dit</code>.</p>
+
+    <p>Le marqueur <code>#PCDATA</code> (que nous verrons plus loin en
+     détail) peut apparaître dans une liste, pour indiquer la présence
+     de texte (<file>mixed content</file>), mais:</p>
+
+    <list>
+     <item>L'élément <code>#PCDATA</code> doit être le premier dans une
+      liste.</item>
+     <item>La liste doit être terminée par le marqueur <code>*</code>.</item>
+    </list>
+
+    <p>Par exemple, la déclaration:</p>
+
+    <source>  &lt;!ELEMENT para (#PCDATA,code,emp)*)&gt;</source>
+
+    <p>Est valide, mais la suivante ne l'est pas:</p>
+
+    <source>  &lt;!ELEMENT sect (titre,#PCDATA)&gt;</source>
+
+    <p>En effet, le marqueur <code>#PCDATA</code> n'est pas en première
+     place dans la liste et celle ci ne se termine pas par un
+     marqueur <code>*</code>. Ces contraintes impliquent que l'on ne peut
+     pas contraindre un élément à comporter des sous éléments et du
+     texte dans un ordre et en nombre déterminés.</p>
+
+    <p>Un élément peut être déclaré comme devant être vide à l'aide de
+     la règle <code>EMPTY</code>. On peut aussi indiquer qu'il peut
+     contenir tout élément avec le marqueur <code>ANY</code>.</p>
+
+    <p>Pour finir, on peut indiquer qu'un élément ne peut contenir que
+     du texte à l'aide du marqueur <code>#PCDATA</code> (pour Parsed
+     Character Data). Par exemple, un élément <code>titre</code> pourrait
+     être déclaré par:</p>
+
+    <source>  &lt;!ELEMENT titre (#PCDATA)&gt;</source>
+
+    <p>Ce qui signifie qu'il ne peut contenir que du texte à
+     l'exclusion de tout élément.</p>
+
+   </sect>
+
+   <sect><title>Déclaration d'une liste d'attributs</title>
+
+    <p>Un élément peut comporter des attributs que l'on déclare dans
+     une DTD à l'aide d'une déclaration <code>ATTLIST</code> (pour
+     ATTribute LIST). Une telle déclaration est de la forme:</p>
+
+    <source>  &lt;!ATTLIST element
+            attribut1 type valeur
+            ...
+            attributN type valeur&gt;</source>
+
+    <p>Les types possibles sont les suivants:</p>
+
+    <table>
+     <th>
+      <co><imp>Type</imp></co>
+      <co><imp>Description</imp></co>
+     </th>
+     <li>
+      <co>CDATA</co>
+      <co>Caractères</co>
+     </li>
+     <li>
+      <co>énumération</co>
+      <co>Énumération de valeurs séparées par des caractères | et
+       entourées de parenthèses (la valeur de l'attribut doit être
+       une des valeurs de cette liste)</co>
+     </li>
+     <li>
+      <co>ENTITY</co>
+      <co>Une entité déclarées dans la DTD</co>
+     </li>
+     <li>
+      <co>ENTITIES</co>
+      <co>Une liste d'entités séparées par des blancs</co>
+     </li>
+     <li>
+      <co>ID</co>
+      <co>Un identifiant (unique dans le document)</co>
+     </li>
+     <li>
+      <co>IDREF</co>
+      <co>Une référence à un identifiant (doit être présent dans le
+       document)</co>
+     </li>
+     <li>
+      <co>IDREFS</co>
+      <co>Liste de références d'entités séparées par des blancs</co>
+     </li>
+     <li>
+      <co>NMTOKEN</co>
+      <co>Un token</co>
+     </li>
+     <li>
+      <co>NMTOKENS</co>
+      <co>Une liste de tokens séparés par des blancs</co>
+     </li>
+     <li>
+      <co>NOTATION</co>
+      <co>Une notation déclarée dans la DTD</co>
+     </li>
+    </table>
+
+    <p>La valeur de l'attribut peut être une valeur (que l'on note
+     entre guillemets) ou l'un des mots clef ci-dessous:</p>
+
+    <table>
+     <th>
+      <co><imp>Type</imp></co>
+      <co><imp>Description</imp></co>
+     </th>
+     <li>
+      <co>#REQUIRED</co>
+      <co>La valeur de cette attribut doit être présente dans le
+       document</co>
+     </li>
+     <li>
+      <co>#IMPLIED</co>
+      <co>Cet attribut n'a pas de valeur par défaut mais peut être
+       omis dans le document</co>
+     </li>
+     <li>
+      <co>#FIXED</co>
+      <co>La valeur est fixe (et déclarée après le mot clef)</co>
+     </li>
+    </table>
+
+    <p>Nous allons maintenant étudier des exemples pour clarifier ces
+     déclarations d'attributs:</p>
+
+    <source>&lt;!ATTLIST prix
+          monaie CDATA #IMPLIED&gt;</source>
+
+    <p>Cette déclaration indique que l'élément <code>prix</code>
+     <file>peut</file> comporter un attribut <code>monaie</code> qui est de
+     type caractère.</p>
+
+    <source>&lt;!ATTLIST prix
+          monaie CDATA "euro"&gt;</source>
+
+    <p>Indique que l'élément <code>prix</code> <file>peut</file> comporter un
+     attribut <code>monaie</code>. Si ce n'est pas le cas, le parser en
+     insère un avec la valeur <file>euro</file>.</p>
+
+    <source>&lt;!ATTLIST prix
+          monaie CDATA #REQUIRED&gt;</source>
+
+    <p>Indique de l'élément <code>prix</code> <file>doit</file> comporter un
+     attribut <file>monnaie</file>. Il n'y a donc pas de valeur par défaut
+     et si l'on n'indique pas cet attribut dans le document, il en
+     résulte une erreur de parsing.</p>
+
+    <source>&lt;!ATTLIST prix
+          monaie CDATA #FIXED "euro"&gt;</source>
+
+    <p>Indique que l'attribut <file>monnaie</file> a toujours la valeur
+     <file>euro</file>.</p>
+
+    <source>&lt;!ATTLIST prix
+          monaie (franc | euro) "euro"&gt;</source>
+
+    <p>Indique que l'attribut <code>monaie</code> peut prendre une des
+     valeurs <file>franc</file> ou <file>euro</file>. Si l'attribut est omis,
+     la valeur <file>euro</file> lui est donnée par défaut.</p>
+
+    <p>Les exemples ci dessus sont les cas d'utilisation les plus
+     fréquents. Une autre notion importante est celle
+     d'identifiant:</p>
+
+    <source>&lt;!ATTLIST chapitre
+          id ID #IMPLIED&gt;</source>
+
+    <p>Déclare un attribut <code>id</code> de type <code>ID</code>. C'est un
+     identifiant unique dans le document. On peut y faire référence
+     dans un attribut de type <code>IDREF</code>:</p>
+
+    <source>&lt;!ATTLIST lien
+          idref IDREF #REQUIRED&gt;</source>
+
+    <p>Lorsque la parser rencontre un attribut de type <code>IDREF</code>,
+     il vérifie que la référence est présente dans le document. On
+     crée ainsi des liens à l'intérieur d'un même document. Si nous
+     déclarions les attributs <code>id</code> et <code>idref</code> comme
+     étant de type <code>CDATA</code>, nous ne serions pas assurés que
+     notre document ne comporte pas de liens cassés (parce que
+     l'unicité et l'existence des identifiants ne serait pas
+     vérifiés). Le type <code>IDREFS</code> est une liste de références à
+     des identifiants séparés par des espaces.</p>
+
+    <p>Un attribut peut aussi être déclaré de type
+     <code>NMTOKEN</code>. Dans ce cas, la valeur de l'attribut doit être
+     un token XML (c'est à dire un nom ayant les mêmes restrictions
+     que celui d'un élément, sauf qu'il peut commencer par un
+     chiffre, un tiret ou une virgule). Le type <code>NMTOKENS</code> est
+     une liste de tokens séparés par des espaces.</p>
+
+    <p>Pour finir, le type <code>NOTATION</code> doit contenir une
+     notation définie au préalable dans la DTD (voire plus loin).</p>
+
+   </sect>
+
+   <sect><title>Déclaration d'une entité</title>
+
+    <p>Une entité permet d'écrire un caractère ou chaîne de caractères
+     qu'il serait impossible (parce que l'encodage du document ou le
+     clavier ne le permettent pas) ou fastidieux d'écrire. Par
+     exemple, la déclaration suivante (que l'on doit écrire dans une
+     DTD):</p>
+
+    <source>&lt;!ENTITY copyright "&amp;#xa9;"&gt;</source>
+
+    <p>Permet simplement d'insérer le signe de copyright dans un
+     document, à l'aide de l'écriture suivante:</p>
+
+    <source>&amp;copyright; In Fusio - 2002</source>
+
+    <p>Lors du parsing du document, on obtiendra:</p>
+
+    <source>© In Fusio - 2002</source>
+
+    <p>Il existe des entités dont la portée est réduite à la DTD dans
+     laquelle elles sont déclarées, ce sont les entités
+     paramètres. Par exemple, la déclaration suivante:</p>
+
+    <source>&lt;!ENTITY % boolean "(true | false)"&gt;</source>
+
+    <p>Permet de simplifier l'écriture de déclarations d'attributs,
+     comme celui-ci:</p>
+
+    <source>&lt;!ATTLIST copy
+          overwrite (true | false) "false"&gt;</source>
+
+    <p>De la manière suivante:</p>
+
+    <source>&lt;!ATTLIST copy
+          overwrite %boolean; "false"&gt;</source>
+
+    <p>On peut voire les entités paramètres comme des macros pour
+     l'écriture de DTDs.</p>
+
+    <p>Les entités externes quand à elles permettent de faire
+     référence à un document externe. Par exemple, la déclaration
+     suivante:</p>
+
+    <source>&lt;!ENTITY pricelist SYSTEM "http://www.foobar.com/pricelist.xml"&gt;</source>
+
+    <p>Permet d'inclure la liste des prix dans un document XML à
+     l'aide de la simple référence:</p>
+
+    <source>&amp;pricelist;</source>
+
+    <p>Inutile de dire que cela peut poser des problèmes de sécurité
+     de faire référence à un document externe...</p>
+
+    <p>Pour finir, il est possible de déclarer des entités non parsées
+     avec une déclaration du type:</p>
+
+    <source>&lt;!ENTITY logo SYSTEM "images/logo.gif" NDATA GIF89a&gt;</source>
+
+    <p><code>NDATA</code> signifie ici Notation DATA. Il faut bien sûr
+     avoir au préalable déclaré la notation à l'aide d'une déclaration
+     <code>&lt;!NOTATION ...&gt;</code>.</p>
+
+   </sect>
+
+   <sect><title>Déclaration de notation</title>
+
+    <p>Les notations permettent d'identifier par leur nom des entités
+     non XML (qui ne doivent être parsées). On peut ainsi identifier
+     le type d'image GIF par la déclaration:</p>
+
+    <source>&lt;!NOTATION GIF89a PUBLIC "-//Compuserve//NOTATION Graphics Interchange Format 89a//EN"&gt;</source>
+
+    <p>On pourra alors faire référence à ce type d'image dans une
+     entité externe ou un attribut de type <code>NOTATION</code>.</p>
+
+   </sect>
+
+   <sect><title>Sous DTD internes</title>
+
+    <p>Un document XML peut incorporer sa propre DTD après la
+     déclaration du type de document de la manière suivante:</p>
+
+    <source>&lt;!DOCTYPE type [
+ &lt;!-- sous DTD interne --&gt;
+]&gt;</source>
+
+    <p>Il est aussi possible de modifier une DTD existante pour un
+     document en incluant une sous DTD interne dans la déclaration
+     <code>DOCTYPE</code> comme suit:</p>
+
+    <source>&lt;!DOCTYPE article SYSTEM "dtd/article" [
+ &lt;!ENTITY rec "Recommandation XML du W3"&gt;
+]&gt;</source>
+
+    <p>Il faut cependant éviter ce genre de raccourcis car un fragment
+     de cet <code>article</code> (que l'on pourrait insérer dans un autre
+     par copier/coller) pourrait, s'il inclue une référence à l'entité
+     <code>rec</code>, ne plus être valide hors de ce document.</p>
+
+   </sect>
+
+   <sect><title>Sections INCLUDE/IGNORE</title>
+
+    <p>Il est possible de marquer une section à inclure dans la DTD
+     avec un marqueur du type:</p>
+
+    <source>&lt;![INCLUDE[ ... ]]&gt;</source>
+
+    <p>Une section à ignorer pourra quand à elle être marquée de la
+     manière suivante:</p>
+
+    <source>&lt;![IGNORE[ ... ]]&gt;</source>
+
+    <p>Les plus attentifs auront remarqué que ces sections ne servent
+     à rien utilisées telles-quelles (à quoi sert-il de marquer une
+     section à inclure alors que c'est le cas par défaut ? À quoi
+     sert-il d'écrire une section à ignorer ?). L'intérêt vient de
+     l'utilisation des entités paramètres: on peut remplacer les mots
+     <code>INCLUDE</code> et <code>IGNORE</code> par des références à des
+     entités paramètres comme ceci:</p>
+
+    <source>&lt;![%final;[ &lt;!ELEMENT para (#PCDATA,emph,code)*&gt;]]&gt;
+&lt;![%draft;[ &lt;!ELEMENT para (#PCDATA,emph,code,note)*&gt;]]&gt;</source>
+
+    <p>On donne deux définitions pour l'élément <code>para</code>: avec ou
+     sans élément <code>note</code> imbriqué suivant les valeurs des
+     entités paramètres <code>final</code> et <code>draft</code>. Si
+     <code>final</code> vaut <file>INCLUDE</file> et <code>draft</code> vaut
+     <file>IGNORE</file>, alors la définition de l'élément <code>para</code>
+     devient:</p>
+
+    <source>&lt;!ELEMENT para (#PCDATA,emph,code)*&gt;]]&gt;</source>
+
+    <p>Dans le cas contraire, la définition de l'élément <code>para</code>
+     devient:</p>
+
+    <source>&lt;!ELEMENT para (#PCDATA,emph,code,note)*&gt;]]&gt;</source>
+
+    <p>En modifiant la valeur de l'entité paramètre, on change la DTD
+     du document et les notes peuvent ou pas être légales dans un
+     paragraphe. Ces inclusions prennent tous leur sens lorsque les
+     entités paramètres sont définies dans la sous DTD interne.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Espaces de nommage</title>
+
+   <p>Les espaces de nommage (une recommandation du W3 distincte de la
+    recommandation XML, mais qui lui est maintenant presque
+    indissociable) permettent d'éviter les collisions entre les DTDs de
+    documents d'origines diverses (qui peuvent donc déclarer des
+    éléments de même nom mais ayant des significations
+    différentes).</p>
+
+   <p>On déclare un espace de nommage dans un attribut <code>xmlns</code>
+    (pour XML Name Space) d'un élément, de la manière suivante:</p>
+
+   <source>&lt;element xmlns:foo="http://www.bar.com/foo"&gt;</source>
+
+   <p>La valeur <file>foo</file> est un préfixe définissant l'espace de
+    nommage <file>http://www.bar.com/foo</file>. Donc l'élément de la
+    déclaration et tout élément inclus dans cet élément
+    <code>element</code> et dont le nom commence par <file>foo:</file>
+    appartient à cet espace. On notera que si un nom d'élément peut
+    comporter le caractère : (deux points), il est préférable de
+    l'éviter pour ne pas créer de confusion avec les espaces de
+    nommage. D'autre part, on placera généralement cette déclaration à
+    la racine du document de manière à ce que sa portée soit le
+    document entier. Enfin, l'URI délimitant l'espace de nommage doit
+    comporter un nom de domaine dont on est propriétaire de manière à
+    garantir l'absence de collision.</p>
+
+   <p>Il est aussi possible de définir un espace de nommage par défaut
+    (ce sera celui de tout élément n'ayant aucun préfixe d'espace de
+    nommage) avec une déclaration du type:</p>
+
+   <source>&lt;element xmlns="http://www.bar.com/foo"&gt;</source>
+
+   <p>Les espaces de nommage sont par exemple utilisés par le langage
+    de feuilles de style XSLT dont toute feuille de style comporte
+    l'élément racine suivant:</p>
+
+   <source>&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;</source>
+
+   <p>Dans une telle feuille de style, les éléments commençant par
+    <file>xsl:</file> seront reconnus comme des éléments de l'espace
+    unique <file>http://www.w3.org/1999/XSL/Transform</file>. Ainsi, un
+    élément <code>&lt;xsl:value-of&gt;</code> sera distingué de
+    <code>&lt;value-of&gt;.</code></p>
+
+  </sect>
+
+  <sect><title>Conclusion</title>
+
+   <p>XML a pris ces dernières années une importance croissante au
+    point de devenir une mode dans laquelle se sont engouffrés nombre
+    de fournisseurs de logiciel (qui n'a pas aujourd'hui à son
+    catalogue une base de donnée "XML" ou un système de RPC en XML
+    ,suivez mon regard... ?). Par delà cet effet de mode, XML reste
+    une technologie extrêmement souple et puissante qui, à n'en pas
+    douter, vous deviendra vite indispensable.</p>
+
+  </sect>
+
+  <sect><title>Bibliographie</title>
+
+   <p>Cette bibliographie succincte permet d'approfondir ses
+    connaissances sur XML (en particulier sur les thèmes non abordés
+    dans ce texte).</p>
+
+   <sect><title>Internet</title>
+
+    <list>
+     <item>Recommandation du W3C: <link url="http://www.w3.org/TR/REC-xml"/>
+     </item>
+     <item>Traduction en français: 
+      <link url="http://babel.alis.com/web_ml/xml/REC-xml.fr.html"/></item>
+     <item>Naissance de XML:
+      <link url="http://java.sun.com/xml/birth_of_xml.html"/></item>
+    </list>
+
+   </sect>
+
+   <sect><title>Livres</title>
+
+    <list>
+     <item>XML précis et concis:
+      <link url="http://www.oreilly.fr/catalogue/xml_pkt.html"/></item>
+     <item>Bible XML:
+      <link url="http://www.amazon.fr/exec/obidos/ASIN/0764547607/171-9000749-7409836"/></item>
+    </list>
+
+   </sect>
+
+  </sect>
+
+ </text>
+
+</article><!-- Local IspellDict: francais -->

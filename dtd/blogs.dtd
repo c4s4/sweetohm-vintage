@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-blog PUBLIC "-//CAFEBABE//DTD blog 1.0//EN" 
+                           "blog.dtd">
+%dtd-blog;
+
+<!ELEMENT weblogs (forewords,blog)*>

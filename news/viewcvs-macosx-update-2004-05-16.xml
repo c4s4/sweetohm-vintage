@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2004-05-16" url="html/viewcvs-macosx.html">
+
+ <title>Mise à jour de mon article sur ViewCVS sous MacOSX</title>
+
+ <p>Une mise à jour qui règle certains problèmes que j'ai rencontré
+   lors de mon passage à Panther.</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>                                     
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/python-dbapi.html" date="2011-12-26">
+
+<title>Ecrire des scripts Python avec DB-API</title>
+
+<p>Pour les amateurs de Python et MySQL, je propose une traduction d'un article
+de Paul Dubois sur l'écriture de scripts Python d'accès aux base de données 
+avec la bibliothèque DB-API.</p>
+
+</news>

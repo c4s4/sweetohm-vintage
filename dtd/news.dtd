@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-text PUBLIC "-//CAFEBABE//DTD text 1.0//EN" 
+                           "text.dtd">
+%dtd-text;
+
+<!ELEMENT news (title,(%blocks;)*)>
+<!ATTLIST news
+          date CDATA #REQUIRED
+          url CDATA #IMPLIED>

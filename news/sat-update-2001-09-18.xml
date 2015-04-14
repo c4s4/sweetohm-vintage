@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/sat.html" date="2001-09-18">
+
+ 
+ <title>Mise à jour de SAT</title>
+ 
+
+ 
+
+  <p>Mise à jour majeure de mes Sweet Ant Tools:</p>
+
+  <list>
+   <item>Des commandes Beanshell sont disponibles pour accéder aux propriétés
+    Ant depuis un script (accès en lecture et écriture) et pour résoudre un
+    fichier relativement au répertoire du script.</item>
+   <item>Le code a été adapté aux dernières versions de Beanshell (sauf la
+    dernière 1.2b1 qui soufre d'un bug).</item>
+   <item>Tests intensifs (tests unitaires sous forme d'un script Ant dans le
+    répertoire <file>prj/test</file>) et debuggage (de la validité des attributs
+    des tâches en paticulier).</item>
+  </list>
+
+ 
+
+</news><!-- Local IspellDict: francais -->

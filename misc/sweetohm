@@ -1,0 +1,27 @@
+# Apache configuration file for sweetohm. Put this file in directory:
+# /etc/apache2/sites-available. To enable this site, type :
+# 
+#   sudo a2ensite sweetohm
+# 
+# To disable it:
+# 
+#   sudo a2dissite sweetohm
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+
+    DocumentRoot /home/web/sweetohm
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride All
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel warn
+
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+

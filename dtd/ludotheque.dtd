@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-jeu PUBLIC "-//CAFEBABE//DTD jeu 1.0//EN" 
+                          "jeu.dtd">
+%dtd-jeu;
+
+<!ELEMENT ludotheque (forewords,jeu*)>

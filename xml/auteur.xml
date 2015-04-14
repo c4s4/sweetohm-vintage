@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page author="Michel CASABIANCA"
+      email="casa@sweetohm.net"
+      date="2004-04-29"
+      id="auteur"
+      lang="fr">
+
+ <title>Curriculum Vitae</title>
+
+ <text>
+
+  <p>Mon CV est maintenant 
+   <link url="../arc/cv.html">à cette adress</link>.</p>
+
+ </text>
+
+</page>
+
+<!-- Local IspellDict: francais -->

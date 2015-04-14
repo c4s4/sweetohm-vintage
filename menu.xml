@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE menu PUBLIC "-//CAFEBABE//DTD menu 1.0//EN"
+                      "dtd/menu.dtd">
+
+<menu>
+  
+  <menuimage url="menu.sweetohm.png"/>
+  
+  <submenu title="Actualité">
+    <menuitem title="Blog" url="../index.html"/>
+    <menuitem title="No Apple" url="no-apple.html"/>
+    <menuitem title="Debian sur Zotac Nano CI320"
+              url="debian-jessie-zotac-nano-ci320.html"/>
+    <menuitem title="Debian sur Acer C720P"
+              url="debian-jessie-acer-c720p.html"/>
+    <menuitem title="Un an avec un Raspberry Pi" url="raspi-un-an.html"/>
+    <menuitem title="Les interfaces du GO" url="go-interfaces.html"/>
+    <menuitem title="Parseurs YAML pour Go" url="go-yaml-parsers.html"/>
+    <menuitem title="Introduction à YAML" url="introduction-yaml.html"/>
+    <menuitem title="Notes Formation Perl" url="perl-notes-formation.html"/>
+    <menuitem title="Utiliser le module Ruby MySQL" url="ruby-mysql.html"/>
+    <menuitem title="Utiliser le module Ruby DBI" url="ruby-dbi.html"/>
+    <menuitem title="Scripts Python avec DB-API" url="python-dbapi.html"/>
+  </submenu>
+
+  <submenu title="Outils">
+    <menuitem title="Babel" url="babel.html"/>
+    <menuitem title="Bee" url="http://sweetohm.net/bee/"/>
+    <menuitem title="Tâches Ant" url="sat.html"/>
+    <menuitem title="Installeur Java" url="fiji.html"/>
+    <menuitem title="Visual SQL" url="vsql.html"/>
+  </submenu>
+
+  <submenu title="MacOSX">
+    <menuitem title="ViewCVS sous MacOSX" url="viewcvs-macosx.html"/>
+    <menuitem title="Emacs sous Panther" url="emacs-panther.html"/>
+  </submenu>
+  
+  <submenu title="Conférences">
+    <menuitem title="Outils J2EE Open Source" url="j2ee-os.html"/>
+    <menuitem title="Dév. XML en Java sous Linux" url="java-xml.html"/>
+    <menuitem title="Outils de dév. Java sous Linux" url="java-linux.html"/>
+  </submenu>
+  
+  <submenu title="Articles XML">
+    <menuitem title="Introduction à XML" url="intro-xml.html"/>
+    <menuitem title="Introduction à XSLT" url="intro-xslt.html"/>
+    <menuitem title="Développement XML en Java" url="xml-java.html"/>
+    <menuitem title="Générer des sites web avec Ant" url="ant-web.html"/>
+    <menuitem title="DTD Ant" url="ant-dtd.html"/>
+    <menuitem title="Project X" url="projectx.html"/>
+  </submenu>
+  
+  <submenu title="Articles Java">
+    <menuitem title="Tips CodeGuide" url="codeguide-tips.html"/>
+    <menuitem title="KFM et Jars" url="kfm-jar.html"/>
+    <menuitem title="Mails en Java" url="java-mail.html"/>
+    <menuitem title="Java et préprocesseur" url="java-preprocesseur.html"/>
+    <menuitem title="Java et images" url="java-image.html"/>
+    <menuitem title="Threads" url="java-threads.html"/>
+    <menuitem title="Événements" url="java-evenements.html"/>
+    <menuitem title="Astuces" url="java-astuces.html"/>
+  </submenu>
+  
+  <submenu title="Jeux">
+    <menuitem title="Awele" url="awele.html"/>
+    <menuitem title="AtomX" url="atomx.html"/>
+    <menuitem title="Core Warrior" url="corewarrior.html"/>
+    <menuitem title="Solitaire" url="solitaire.html"/>
+    <menuitem title="SpiceWars" url="spicewars.html"/>
+    <menuitem title="Tangram" url="tangram.html"/>
+    <menuitem title="Taquin" url="taquin.html"/>
+  </submenu>
+  
+  <submenu title="Simulations">
+    <menuitem title="Jeu de la vie" url="vie.html"/>
+    <menuitem title="Fourmi de Langton" url="langton.html"/>
+    <menuitem title="Tri du couvain" url="couvain.html"/>
+    <menuitem title="Piste de chasse" url="chasse.html"/>
+  </submenu>
+  
+  <submenu title="Graphisme">
+    <menuitem title="Fractales" url="fractales.html"/>
+    <menuitem title="Images 3D" url="images-3d.html"/>
+    <menuitem title="Powered by ..." url="powered.html"/>
+    <menuitem title="Ecce Duke" url="duke.html"/>
+    <menuitem title="TIE" url="tie.html"/>
+  </submenu>
+  
+  <submenu title="À propos">
+    <menuitem title="De l'auteur" url="../arc/cv-michel-casabianca.html"/>
+    <menuitem title="De ce site" url="site.html"/>
+  </submenu>
+  
+</menu>

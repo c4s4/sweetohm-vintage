@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/vsql.html" date="2000-08-30">
+
+ 
+ <title>Mise à jour VisualSQL</title>
+ 
+
+ 
+
+  <p>Cette mise à jour (mineure) concerne les points suivants :</p>
+
+  <list>
+   <item>Correction d'un bug du bouton de connexion.</item>
+   <item>Amélioration du système d'historique des requêtes SQL.</item>
+  </list>
+
+ 
+
+</news><!-- Local IspellDict: francais -->

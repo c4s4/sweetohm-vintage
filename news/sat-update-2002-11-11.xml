@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2002-11-11" url="html/sat.html">
+
+ <title>Version 0.7 de SAT</title>
+
+ <p>Après près d'une année de développement, voici la nouvelle mouture
+  de mes tâches Ant. Au menu de cette nouvelle version, on
+  trouvera&dp;</p>
+
+ <list>
+  <item>Un mode Ant pour Emacs.</item>
+  <item>Une tâche <code>server</code> pour accélérer les
+   builds.</item>
+  <item>Une nouvelle tâche <code>nest</code> de manipulation
+   XML.</item>
+  <item>Une nouvelle tâche <code>XML Word Count</code> pour compter
+   les mots d'un document XML.</item>
+ </list>
+
+</news>
+
+<!-- Local IspellDict: francais -->

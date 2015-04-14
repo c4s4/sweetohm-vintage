@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-forewords PUBLIC "-//CAFEBABE//DTD forewords 1.0//EN" 
+                                "forewords.dtd">
+%dtd-forewords;
+<!ENTITY % dtd-news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" 
+                           "news.dtd">
+%dtd-news;
+<!ENTITY % dtd-links PUBLIC "-//CAFEBABE//DTD links 1.0//EN" 
+                            "links.dtd">
+%dtd-links;
+
+<!ELEMENT index (forewords,news,links)*>

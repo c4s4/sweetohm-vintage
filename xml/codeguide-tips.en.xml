@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//SWEETOHM//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article author="Michel CASABIANCA"
+         email="casa@sweetohm.net"
+         date="2004-01-06"
+         id="codeguide-tips"
+         lang="en">
+
+ <title>Extend CodeGuide features</title>
+
+ <abstract>
+  <p>This article presents CodeGuide extensions to launch JUnit tests,
+   open a BeanShell console and Ant builds within this IDE.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>The Code Guide IDE</title>
+
+   <p>CodeGuide (which evaluation version can be downloaded on
+    <link url="http://www.omnicore.com">Omnicore's web site</link>)
+    is, in my humble opinion, the most efficient Java developement
+    environment. It includes the most useful features of better Java
+    tools (such as on the fly syntax checks, efficient code completion
+    and a fast debugger), but without unnecessary fat, with makes it
+    very fast (some of my colleagues though it was a native tool
+    :o)</p>
+
+   <figure url="codeguide-tips.codeguide.png">
+    <title>CodeGuide IDE</title>
+   </figure>
+
+   <p>It is possible to extend CodeGuide features using external
+    tools. CVS is integrated this way in the IDE for instance. In this
+    article, I show how you can integrate JUnit, Beanshell and Ant as
+    external tools.</p>
+
+  </sect>
+
+  <sect><title>JUnit integration</title>
+
+   <p>JUnit is a well known unit test framework. Using this tool,
+    developing and running these tests is a piece of cake. A dedicated
+    Ant task may also generate test reports. JUnit is an Open Source
+    tool that you can download for free at <link
+    url="http://www.junit.org"/>. I have written an introduction to
+    JUnit, in the May/June issue of <link
+    url="http://otn.oracle.com/oramag/oracle/03-may/o33junit.html">Oracle
+    Magazine</link>.</p>
+
+   <p>The goal of this integration is to run a unit test, within
+    CodeGuide, with a single click and see the result in the tools
+    console.</p>
+
+   <p>Open the <keyb>Tools/Configure Tools...</keyb> menu. The
+    following dialog box will open:</p>
+
+   <figure url="codeguide-tips.junit-dialog.png">
+    <title>JUnit integration in CodeGuide</title>
+   </figure>
+
+   <p>Click on the <imp>New</imp> button and fill fields with the
+    following values:</p>
+
+   <table>
+    <th>
+     <co>Field</co>
+     <co>Value</co>
+     <co>Comment</co>
+    </th>
+    <li>
+     <co>Category</co>
+     <co> </co>
+     <co>Leave this field empty (or the JUnit item would appear in a
+      JUnit submenu, which is useless in this case).</co>
+    </li>
+    <li>
+     <co>Name</co>
+     <co>JUnit</co>
+     <co>Logical</co>
+    </li>
+    <li>
+     <co>Kind</co>
+     <co>Tool for files</co>
+     <co>To launch a Java source file as a JUnit test</co>
+    </li>
+    <li>
+     <co>Console</co>
+     <co>JUnit</co>
+     <co>This is the name of the console which will display the result
+      of the test</co>
+    </li>
+    <li>
+     <co>Executable</co>
+     <co>java</co>
+     <co>We launch the <keyb>java</keyb> command</co>
+    </li>
+    <li>
+     <co>Working directory</co>
+     <co>$DESTINATION_DIRECTORY_PATH$</co>
+     <co>To launch JUnit in the compilation destination directory</co>
+    </li>
+    <li>
+     <co>Arguments</co>
+     <co>-cp $CLASSPATH$ junit.textui.TestRunner $FILE_CLASSNAME$</co>
+     <co>So that the launcher runs the Java class generated from the
+      edited Java source file</co>
+    </li>
+    <li>
+     <co>File pattern</co>
+     <co>*Test.java</co>
+     <co>We filter JUnit test cases</co>
+    </li>
+    <li>
+     <co>Behavior</co>
+     <co>Default</co>
+     <co>Why not...</co>
+    </li>
+   </table>
+   
+   <p>Close the tool configuration dialog box clicking the
+    <keyb>OK</keyb> button. You can now launch a test with a right
+    click on a Java source file (in the <imp>project</imp> pane or in
+    the editor itself) and selecting the <imp>JUnit</imp> item in the
+    menu.</p>
+
+   <figure url="codeguide-tips.junit-menu.png">
+    <title>Run a JUnit test</title>
+   </figure>
+
+   <p>The test result appears in the tools console:</p>
+
+   <figure url="codeguide-tips.junit-result.png">
+    <title>JUnit test result</title>
+   </figure>
+
+   <p>Note that you must click on the <imp>Build Project</imp> button
+    in the tool bar (or press key <imp>F9</imp>) before running a
+    test, in order to build the corresponding class file. Furthermore,
+    it is possible to launch a unit test using a <code>main()</code>
+    method and changing the starting point of the project, but it is
+    more convenient using the JUnit launcher (especially for web
+    application where starting point is a bit weird).</p>
+   
+  </sect>
+
+  <sect><title>Beanshell integration</title>
+
+   <p>Beanshell is a Java interpreter (with some scripting
+    features). You can download it for free at <link
+     url="http://www.beanshell.org"/>. Integration in an IDE is useful
+    when developing scripts or to test code fragments using the
+    Beanshell interpreter as a scrap book.</p>
+
+   <p>Thus, the goal of this integration is to run scripts from the
+    editor and launch a Beanshell console.</p>
+
+   <sect><title>Beanshell interpreter</title>
+
+    <p>To integrate the script interpreter, open the tool
+     configuration dialog box, click on the <imp>New</imp> button and
+     fill the fields with the following values:</p>
+
+    <table>
+     <th>
+      <co>Field</co>
+      <co>Value</co>
+      <co>Comment</co>
+     </th>
+     <li>
+      <co>Category</co>
+      <co> </co>
+      <co>Leave this field empty</co>
+     </li>
+     <li>
+      <co>Name</co>
+      <co>Beanshell Interpreter</co>
+      <co>Logical</co>
+     </li>
+     <li>
+      <co>Kind</co>
+      <co>Tool for files</co>
+      <co>To interpret Beanshell sources</co>
+     </li>
+     <li>
+      <co>Console</co>
+      <co>Beanshell</co>
+      <co>The name of this concole</co>
+     </li>
+     <li>
+      <co>Executable</co>
+      <co>java</co>
+      <co>We run the <keyb>java</keyb> command</co>
+     </li>
+     <li>
+      <co>Working directory</co>
+      <co>$PARENT_DIRECTORY_PATH$</co>
+      <co>We run a script within its directory</co>
+     </li>
+     <li>
+      <co>Arguments</co>
+      <co>-cp /opt/java/bsh/lib/bsh-1.2b7.jar:$CLASSPATH$
+       bsh.Interpreter $FILE_PATH$</co>
+      <co>We include the Beanshell's jar file in the CLASSPATH (change
+       this path for your Beanshell installation directory) and we add
+       the project's CLASSPATH, we pass the file to interpret as
+       parameter</co>
+     </li>
+     <li>
+      <co>File pattern</co>
+      <co>*.bsh</co>
+      <co>To select Beanshell source files</co>
+     </li>
+     <li>
+      <co>Behavior</co>
+      <co>Default</co>
+      <co>Why not...</co>
+     </li>
+    </table>
+
+    <p>We can now run the interpreter with a single right click on a
+     script source and see the output in the Beanshell console.</p>
+
+    <figure url="codeguide-tips.beanshell-interpreter.png">
+     <title>Beanshell interpreter</title>
+    </figure>
+
+   </sect>
+
+   <sect><title>Beanshell console</title>
+
+    <p>To run the interpreter in a console, open the tool
+     configuration dialog box, click on the <imp>New</imp> button, and
+     fill the fields with the following values:</p>
+
+    <table>
+     <th>
+      <co>Field</co>
+      <co>Value</co>
+      <co>Comment</co>
+     </th>
+     <li>
+      <co>Category</co>
+      <co> </co>
+      <co>Leave this field empty</co>
+     </li>
+     <li>
+      <co>Name</co>
+      <co>Beanshell Console</co>
+      <co>Logical</co>
+     </li>
+     <li>
+      <co>Kind</co>
+      <co>Tool in menu</co>
+      <co>To lauch the interpreter from the <imp>Tools</imp> menu</co>
+     </li>
+     <li>
+      <co>Console</co>
+      <co>Beanshell</co>
+      <co>The name of the console</co>
+     </li>
+     <li>
+      <co>Executable</co>
+      <co>java</co>
+      <co>We run the Java virtual machine</co>
+     </li>
+     <li>
+      <co>Working directory</co>
+      <co> </co>
+      <co>Leave empty (except if you want to work in a given
+       directory)</co>
+     </li>
+     <li>
+      <co>Arguments</co>
+      <co>-cp /opt/java/bsh/lib/bsh-1.2b7.jar:$CLASSPATH$ bsh.Interpreter</co>
+      <co>We add the Beanshell's jar file to the CLASSPATH (replace
+       with the path for your Beanshell installation directory) and we
+       append the CLASSPATH of the project. No file is passed on the
+       command line so that the interpreter runs the user's
+       inputs.</co>
+     </li>
+     <li>
+      <co>File pattern</co>
+      <co> </co>
+      <co>Leave empty, has no meaning in this context</co>
+     </li>
+     <li>
+      <co>Behavior</co>
+      <co>Default</co>
+      <co>Why not...</co>
+     </li>
+    </table>
+
+    <p>To open the Beanshell console, select the <keyb>Tools/Beanshell
+      Console</keyb> item of the menu, the following window appears:</p>
+
+    <figure url="codeguide-tips.beanshell-console.png">
+     <title>Beanshell console</title>
+    </figure>
+
+    <p>We can evaluate Java expressions and see the result in the
+     console. This is an handy way to quickly test a piece of code and
+     paste it in the editor.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Ant integration</title>
+
+   <p>Ant is a build tool (that may be compared to make) dedicated to
+    build Java projects. I have written a series of articles on Ant in
+    the November/December and January/February issues of <link
+    url="http://otn.oracle.com/oramag/oracle/02-nov/o62odev_ant.html">Oracle
+    Magazine</link>. Ant is integrated to CodeGuide out of the box,
+    but if you chose ant builds, on the fly code generation is not
+    running, which is a key feature of CodeGuide.</p>
+
+   <p>The goal of this integration is to launch an Ant build from
+    within the interface using on the fly code compilation.</p>
+
+   <p>Open the tool configuration dialog box and fill the fields as
+    following:</p>
+
+   <table>
+    <th>
+     <co>Field</co>
+     <co>Value</co>
+     <co>Comment</co>
+    </th>
+    <li>
+     <co>Category</co>
+     <co> </co>
+     <co>Leave this field empty</co>
+    </li>
+    <li>
+     <co>Name</co>
+     <co>Ant</co>
+     <co>No comment</co>
+    </li>
+    <li>
+     <co>Kind</co>
+     <co>Tool for files</co>
+     <co>So that Ant looks in parents directories of the file you
+      click (this works great if the build file is in the root
+      directory of the project)</co>
+    </li>
+    <li>
+     <co>Console</co>
+     <co>Ant</co>
+     <co>The name of the console</co>
+    </li>
+    <li>
+     <co>Executable</co>
+     <co>ant</co>
+     <co>We run Ant</co>
+    </li>
+    <li>
+     <co>Working directory</co>
+     <co>$PARENT_DIRECTORY_PATH$</co>
+     <co>We run Ant in the directory of the file</co>
+    </li>
+    <li>
+     <co>Arguments</co>
+     <co>-find build.xml $USER_ARGUMENTS$</co>
+     <co>We ask Ant to look for a build file named
+      <file>build.xml</file> recursively in parent directories. The
+      value <value>$USER_ARGUMENTS$</value> gives the user a chance to
+      type an Ant target to run</co>
+    </li>
+    <li>
+     <co>File pattern</co>
+     <co>*</co>
+     <co>We can click on any file to launch an Ant build (useful to
+      transform XML files using Ant builds for instance)</co>
+    </li>
+    <li>
+     <co>Behavior</co>
+     <co>Default</co>
+     <co>Why not...</co>
+    </li>
+   </table>
+
+   <p>You can now open a file context menu (with a right click) and
+    launch the build choosing the Ant item. I genrally choose <imp>Use
+     internal incremental compiler</imp> in my projects preferences
+    and launch Ant builds when necessary (to generate a jar file for
+    instance).</p>
+   
+    <figure url="codeguide-tips.ant.png">
+     <title>Ant console displaying a build result</title>
+    </figure>
+
+  </sect>
+
+  <sect><title>Conclusion</title>
+
+   <p>Even if CodeGuide's customization can't compete with Emacs, it
+    is very useful to integrate in this IDE your favorite tools. We
+    could wonder what is missing to CodeGuide (when you'll have tested
+    classes <term>Hot Swap</term> or Tomcat integration). Maybe a
+    plugin API so that any developer could send Omnicore their own
+    extensions. Please Omnicore developers, think about that!</p>
+
+  </sect>
+
+  <p>Thanks Frédéric for his corrections!</p>
+
+ </text>
+
+</article>
+
+<!-- Local IspellDict: francais -->

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-07-14" url="html/sat.en.html">
+
+ <title>SAT Release 0.9</title>
+
+ <p>This release removes the server task that is superceded by the Ant
+  Console.</p>
+
+ <figure url="index.ant.png"/>
+
+</news>
+
+<!-- Local IspellDict: francais -->

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- non breaking space -->
+<!ENTITY nbs "&#x00A0;">
+
+<!-- french entites -->
+
+<!-- guillemet ouvrant -->
+<!ENTITY go "«&#x00A0;">
+<!-- guillemet fermant -->
+<!ENTITY gf "&#x00A0;»">
+<!-- deux points -->
+<!ENTITY dp "&#x00A0;:">
+<!-- point-virgule -->
+<!ENTITY pv "&#x00A0;;">
+<!-- point d'exclamation -->
+<!ENTITY pe "&#x00A0;!">
+<!-- point d'interrogation -->
+<!ENTITY pi "&#x00A0;?">

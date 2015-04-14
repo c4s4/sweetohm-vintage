@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ELEMENT applet (#PCDATA | param)*>
+<!ATTLIST applet
+          code     CDATA #REQUIRED
+          codebase CDATA #IMPLIED
+          width    CDATA #REQUIRED
+          height   CDATA #REQUIRED
+          archive  CDATA #IMPLIED>
+
+<!ELEMENT param EMPTY>
+<!ATTLIST param
+          name  CDATA #REQUIRED
+	        value CDATA #REQUIRED>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2002-11-11" url="html/sat.en.html">
+
+ <title>New SAT version 0.7</title>
+
+ <p>After almost one year of development, here is the new version of
+  my Ant tasks. This new release includes:</p>
+
+ <list>
+  <item>A new Emacs Ant mode.</item>
+  <item>Un new <code>server</code> task to boost builds.</item>
+  <item>A new <code>nest</code> task to manipulate XML documents.</item>
+  <item>A new <code>XML Word Count</code> task (I guess you already
+   know what it does :o).</item>
+ </list>
+
+</news>
+
+<!-- Local IspellDict: american -->

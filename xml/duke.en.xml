@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="en" 
+      id="duke.en"
+      date="2001-06-07"
+      email="casa@sweetohm.net"
+      author="Michel CASABIANCA">
+
+ <title>Ecce Duke !</title>
+
+ <text>
+
+  <p>A funy image I made few years ago and just found on my hard disk.</p>
+
+  <figure url="duke.png"/>
+
+ </text>
+
+</page>

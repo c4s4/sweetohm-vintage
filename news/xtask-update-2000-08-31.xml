@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/xtask.html" date="2000-08-31">
+
+ 
+ <title>Mise à jour de XTask</title>
+ 
+
+ 
+
+  <p>J'ai paufiné mon système de génération de docs XML. Dorénavant,
+   les docs ne sont recompilées que lorsque cela est nécessaire (c'est
+   à dire lorsque le fichier source est plus récent que le fichier
+   généré).</p>
+
+ 
+
+</news><!-- Local IspellDict: francais -->

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links date="2003-10-05" 
+       url="http://www.porkrind.org/emacs/">
+
+ <title>Emacs Carbon</title>
+
+ <p>Enfin une version convenable d'Emacs sous MacOSX. Cette version
+  présente des performances très correctes mais présente encore des
+  problèmes de fontes pour le rendu des caractères accentués. Cette
+  version Carbon sera prochainement intégrée au tronc pricipal de
+  développement d'Emacs.</p>
+
+</links>
+
+<!-- Local IspellDict: francais -->

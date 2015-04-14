@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-11-27" 
+      url="html/emacs-panther.html">
+
+ <title>Emacs Carbon sous Panther</title>
+
+ <p>Dans une brève précédente, je donnais l'URL d'un site proposant
+  des builds d'Emacs sous Jaguar, mais restait le problème des fontes
+  pour les caractères accentués. J'ai trouvé les liens qui résolvent
+  ce problème et j'en ai fait une page qui regroupe les informations
+  pour travailler convenablement avec Emacs sous Panther (et aussi
+  probablement sous Jaguar, mais je n'ai pas testé).</p>
+
+ <figure url="index.emacs.png"/>
+
+</news>
+
+<!-- Local IspellDict: francais -->

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                      "../dtd/news.dtd">
+
+<news date="2012-07-17"
+      url="https://github.com/c4s4/jitsu">
+
+ <title>Jitsu sur Github</title>
+ 
+  <p>J'ai mis en ligne sur Github un framework minimaliste de test unitaire
+   JavaScript. Contrairement à ce que j'avais trouvé sur le net, Jitsu (c'est
+   son nom) permet de lancer ces tests en ligne de commande, donc lors d'un
+   build par exemple. C'est à l'adresse 
+   <link url="https://github.com/c4s4/jitsu"/>.</p>
+
+  <p>Enjoy!</p>
+
+</news>
+

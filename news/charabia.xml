@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links url="http://www.charabia.net"
+       date="2001-05-24">
+ 
+ <title>Charabia.net</title>
+ 
+  <figure url="index.charabia.png"/>
+
+  <p>Charabia.net est un site proposant des générateurs de texte
+   humoristiques. C'est très drôle (pour ma part, j'adore le
+   générateur de jurons du <link
+   url="http://www.charabia.net/generation/index.php?voir=affiche&amp;gen=21&amp;mode=">Capitaine
+   Haddock</link> et celui d'<link
+   url="http://www.charabia.net/generation/index.php?voir=affiche&amp;gen=10&amp;mode=">expressions
+   rurales</link>).</p>
+
+  <p>Il est aussi possible de créer ses propres générateurs à l'aide
+   d'une <link
+   url="http://www.charabia.net/generation/index.php?voir=recup&amp;mode=">application</link>
+   que l'on peut télécharger sur le site.</p>
+
+  <p>Bravo Rodrigo !</p>
+ 
+</links>
+
+<!-- Local IspellDict: francais -->

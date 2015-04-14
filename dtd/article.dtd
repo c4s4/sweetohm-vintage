@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-text PUBLIC "-//SWEETOHM//DTD text 1.0//EN" 
+                           "text.dtd">
+%dtd-text;
+
+<!ELEMENT article (title,abstract?,text)>
+<!ATTLIST article 
+          author  CDATA   #REQUIRED
+          email   CDATA   #REQUIRED
+          date    CDATA   #REQUIRED
+          id      CDATA   #REQUIRED
+          toc     NMTOKEN 'yes'
+          lang    NMTOKEN 'en'
+          pdf     NMTOKEN 'no'>
+
+<!ELEMENT abstract (%text;)*>

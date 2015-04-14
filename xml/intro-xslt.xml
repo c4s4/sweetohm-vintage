@@ -1,0 +1,1254 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//CAFEBABE//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article id="intro-xslt"
+         author="Michel CASABIANCA" 
+         email="casa@sweetohm.net"
+         date="2003-05-28"
+         lang="fr"
+         pdf="true">
+
+ <title>Introduction à XSLT</title>
+
+ <abstract>
+  <p>Ce document est une introduction à XSLT et constitue la deuxième
+   partie d'un cycle de trois tutoriels sur XML. La première partie
+   traite de XML et la troisième du développement XML en Java. Cet
+   article n'a pas la prétention d'être exhaustif et s'il permet de se
+   mettre le pied à l'étrier en moins d'une heure, il ne peut
+   remplacer la lecture d'ouvrages de référence ou de la
+   recommandation du W3 (voire bibliographie en fin de
+   l'article). Tout commentaire concernant cet article (correction ou
+   autre remarque) est le bienvenu.</p>
+  <p>Un grand merci à Arnaud Storq pour ses corrections.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Présentation de XSL</title>
+
+   <sect><title>Transformations</title>
+
+    <p>XSLT (pour eXtensible Stylesheet Language, Transformation) est
+     un langage de feuille de style pour XML. Il permet ainsi de
+     transformer un document XML (avec un <term>processeur XSLT</term>)
+     en un autre document, qui peut être un document XML (conforme à
+     une autre DTD), un document HTML, LaTeX ou un document de tout
+     autre format texte (par opposition à un format binaire).</p>
+
+    <p>Dans la pratique, XSLT donne la pleine mesure de sa puissance
+     lors de transformations de XML vers HTML ou XML. On l'utilise
+     ainsi généralement pour:</p>
+
+    <list>
+     <item>Produire une page HTML à partir d'un document XML</item>
+     <item>transformer un document pour le rendre conforme à une autre
+      DTD (XSLT sert alors de passerelle vers un autre format).</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Formatting Objects</title>
+
+    <p>XSLT n'est en fait qu'une partie d'un standard plus vaste: XSL
+     (pour eXtensible Stylesheet Language) qui comporte une autre
+     partie qui définit les <term>Formating Objects</term> (cette
+     partie du standard est appelée <term>XSLFO</term>). Comme leurs
+     noms le laisse supposer, XSLT permet de <imp>transformer</imp> un
+     document alors que XSLFO définit un jeu de balises pour la
+     définition du formatage d'un document. XSLFO définit donc un
+     format de documents comme PDF ou PostScript.</p>
+
+    <p>Typiquement, le rendu d'un document en XSLFO suivra les étapes
+     suivantes:</p>
+
+    <figure url="intro-xslt.xslfo.png">
+     <title>Transformation XSL-FO</title>
+    </figure>
+
+    <p>Ce document XSLFO peut alors être visualisé avec un programme
+     compatible. Si XSLT est largement utilisé pour la transformation
+     vers HTML et d'autres formats, les formating objects sont encore
+     peu utilisés car le nombre de programmes permettant de visualiser
+     de tels documents reste faible du fait de la jeunesse de la norme.</p>
+
+   </sect>
+
+   <sect><title>Standards associés</title>
+
+    <p>XSLT fait appel à d'autres standards de la nébuleuse XML:</p>
+
+    <list>
+     <item><imp>XPath</imp> définit une syntaxe pour la navigation
+      dans des fichiers XML. Cette syntaxe apparaît dans le contenu
+      d'éléments XSLT qui définissent une expression d'élément à
+      transformer. On pourrait comparer cela à un langage de
+      définition d'expressions rationnelles.</item>
+     <item><imp>XPointer</imp> définit une syntaxe pour les liens
+      entre documents XML. Cette recommandation du W3C définit un
+      certain nombre d'éléments (dont tous les noms commencent par
+      <value>xlink:</value>, c'est <term>l'espace de nommage de
+      XLink</term>). Ces éléments spéciaux sont (ou plutôt seront)
+      reconnus par des dispositifs d'affichage de documents XML (ou
+      par des feuilles de style les transformant en un format
+      affichable).</item>
+    </list>
+
+    <p>XSLT étend XPath par un jeu de fonctions qui lui sont propres.
+     La connaissance de ces standards est nécessaire à l'écriture de
+     ces feuilles de style.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Notions de base</title>
+
+   <p>Nous allons maintenant définir les notions de base de XSLT sans
+    prétendre à l'exhautivité (une section de référence des éléments
+    XSLT suivra).</p>
+
+   <sect><title>Notion de Template</title>
+
+    <p>XSLT est un langage dont la syntaxe est XML. Cela signifie
+     qu'une feuille de style XSLT est un document XML <term>bien
+     formé</term>. On ne peut cependant pas lui associer de DTD dans
+     le cas général (et donc valider une feuille de style) car elle
+     peut comporter des éléments (générés) qui ne sont pas définis
+     dans le standard XSL.</p>
+
+    <p>Commençons par un exemple simple de document. Soit l'article
+     XML suivant:</p>
+
+    <source><![CDATA[
+  <?xml version="1.0" encoding="iso-8859-1"?>
+
+  <article>
+  
+   <title>Introduction à XSLT</title>
+  
+   <sect><title>Présentation de XSL</title>
+    <p>XSL est un langage de feuilles de style pour XML...</p>
+   </sect>
+  
+   <sect><title>Syntaxe de XSLT</title>
+    <p>XSLT suit une syntaxe XML, c'est à dire qu'une feuille de style
+     est un document XML <term>bien formé</term>.</p>
+   </sect>
+
+  </article>
+]]></source>
+
+    <p>Pour transformer cet article en document HTML, nous pourrions
+     envisager la feuille de style suivante:</p>
+
+    <source><![CDATA[
+  <?xml version="1.0" encoding="iso-8859-1"?>
+  
+  <xsl:stylesheet version="1.0"
+                  encoding="iso-8859-1"
+                  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  
+   <!-- template pour la racine du document -->
+   <xsl:template match="/article">
+    <html>
+     <head><title><xsl:value-of select="title"/></title></head>
+     <body>
+      <xsl:apply-templates/>
+     </body>
+    </html>
+   </xsl:template>
+  
+   <!-- template pour les titres -->
+   <xsl:template match="title">
+    <center><h1><xsl:value-of select="."/></h1></center>
+   </xsl:template>
+  
+   <!-- template pour transformer les sections -->
+   <xsl:template match="sect">
+    <h2><xsl:value-of select="@title"/></h2>
+    <xsl:apply-templates/>
+   </xsl:template>
+  
+   <!-- template pour les paragraphes -->
+   <xsl:template match="p">
+    <p><xsl:apply-templates/></p>
+   </xsl:template>
+  
+   <!-- template pour les termes -->
+   <xsl:template match="term">
+    <i><xsl:apply-templates/></i>
+   </xsl:template>
+  
+  </xsl:stylesheet>
+]]></source>
+
+    <p>Cette feuille de style est très simple dans son principe:</p>
+
+    <list>
+     <item>Elle transforme l'élément racine en un en-tête de fichier
+      HTML (avec des éléments <code>&lt;html></code>,
+      <code>&lt;head></code> et <code>&lt;body></code>). Elle place le
+      titre du document dans le titre de la page HTML.</item>
+     <item>Elle transforme l'élément <code>&lt;title></code> en
+      élément <code>&lt;h1></code>.</item>
+     <item>Elle transforme les éléments <code>&lt;sect></code> en
+      éléments <code>&lt;h2></code>.</item>
+     <item>Elle transforme les éléments <code>&lt;p></code> en
+      éléments <code>&lt;p></code>.</item>
+     <item>Pour finir, elle transforme les éléments
+      <code>&lt;term></code> en éléments HTML <code>&lt;i></code>.</item>
+    </list>
+
+    <p>Nous aurons retenu de cet exemple que le nom XSL
+     <term>Transform</term> est amplement mérité ! La tache essentielle
+     d'une feuille de style XSLT est en effet de
+     <imp>transformer</imp> les éléments XML en autres chose (ici des
+     éléments HTML).</p>
+
+    <p>Pour indiquer au processeur XSLT les transformations à
+     effectuer, nous utilisons des <term>templates</term>. Ce sont des
+     déclarations (XSLT est un langage <term>déclaratif</term>) qui
+     indiquent au processeur comment effectuer cette
+     transformation. Par exemple, le template suivant:</p>
+
+    <source><![CDATA[
+  <xsl:template match="term">
+   <i><xsl:apply-templates/></i>
+  </xsl:template>
+]]></source>
+
+    <p>Déclare les éléments du document source à intercepter dans
+     l'attribut <code>match</code>. Ici nous souhaitons intercepter
+     les éléments <value>term</value> que nous allons remplacer par
+     des éléments HTML <code>&lt;i></code>.</p>
+
+    <p>Pour ce faire, nous écrivons directement dans le fichier XSLT
+     les éléments <code>&lt;i></code>. Comme leur espace de nommage
+     n'appartient pas à celui de XSLT, le processeur sait qu'il doit
+     les écrire tel quel dans le document résultant. D'autre part,
+     l'élément <code>&lt;term></code> encadre du texte, donc il faut
+     demander au processeur XSLT de traiter le contenu de l'élément du
+     document XML. Cela est fait avec l'élément
+     <code>&lt;xsl:apply-templates/></code>.</p>
+
+    <p><code>&lt;xsl:apply-templates/></code> demande au processeur de
+     traiter les noeuds inclus (des noeuds texte ou des éléments). Le
+     processeur recherche (dans l'ordre du document) les éléments qui
+     correspondent à un template et leur applique. Par défaut, il
+     n'est pas nécessaire de définir de template pour le texte (il est
+     écrit dans le document produit en l'absence de template).</p>
+
+    <p>Nous avons vu qu'une feuille de style XSLT est essentiellement
+     une liste de templates et ces templates forment la base de la
+     programmation XSLT. Cependant, ce type de développement déclaratif
+     est assez inhabituel (on est plus habitué à des langages
+     impératifs) et c'est la principale difficulté de XSLT.</p>
+
+   </sect>
+
+   <sect><title>Expressions XPath</title>
+
+    <p>Comme nous l'avons vu ci-dessus, XPath est un standard XML
+     utilisé par XSLT pour définir des chemins dans un fichier
+     XML. Ces chemins sont en particulier utilisés dans l'attribut
+     <code>match</code> des templates. En effet, pour déterminer s'il
+     doit traiter un noeud donné, le processeur examine les
+     expressions des attributs <code>match</code> et détermine s'ils
+     s'appliquent à ces noeuds.</p>
+
+    <p>L'expression XPath la plus simple (que nous avons déjà vue sans
+     le savoir) est un simple nom de noeud. Par exemple, l'expression
+     <code>sect</code> sélectionne les noeuds <code>sect</code> fils
+     de l'élément courant.</p>
+
+    <p>Il est aussi possible de décrire un chemin vers un noeud de la
+     même manière que dans un système de fichiers (Unix). Par exemple,
+     l'expression <code>foo/bar</code> sélectionne les éléments
+     <code>bar</code> fils d'un noeud <code>foo</code> et petit fils
+     du noeud courant. Dans le document d'exemple, l'expression
+     <code>sect/p</code> appliquée à la racine du document (dans
+     l'élément article) renvoie un ensemble de noeuds constitué des
+     deux éléments <code>p</code> du document.</p>
+
+    <p>Il est aussi possible de faire référence à la racine du
+     document avec un slash (/) en début d'expression (comme dans un
+     système de fichiers Unix). Par exemple, l'expression
+     <code>/article/sect</code> sélectionne les éléments
+     <code>p</code> du document.</p>
+
+    <p>Il est aussi d'indiquer une position d'un élément. Par exemple
+     l'expression XPath <code>/article/sect[2]</code> sélectionne la
+     deuxième section du document.</p>
+
+    <p>La partie entre crochets est appelée
+     <term>prédicat</term>. L'exemple précédent est un cas particulier
+     de prédicat qui porte sur la position, mais il est possible de
+     placer dans le prédicat une expression logique qui opère une
+     sélection des noeuds. Par exemple, l'expression
+     <code>/article/sect[title='Syntaxe de XSLT']</code> sélectionne la
+     section par son élément titre.</p>
+
+    <p>Jusqu'à présent, nous avons vu des expressions qui portent sur
+     des éléments. Il est aussi possible de sélectionner des
+     attributs en faisant précéder leur nom d'une arobase (@). Par
+     exemple, l'expression <code>@title</code> sélectionne l'attribut
+     <code>title</code>. Ainsi, pour sélectionner la section dont
+     l'attribut <code>title</code> a pour valeur <value>Syntaxe
+      XSLT</value>, on peut écrire <code>sect[@title='Syntaxe
+     XSLT']</code>.</p>
+
+    <p>Il est possible d'utiliser des opérateurs logiques dans des
+     prédicats. Ainsi, <code>sect[position()=1 or
+     @title='Introduction']</code> renverra la section en première
+     position ou dont l'attribut <code>title</code> a pour valeur
+     <value>Introduction</value>.</p>
+
+    <p>Au passage, nous avons une première <term>fonction</term> de
+     XPath (la fonction <code>position()</code> qui renvoie la
+     position d'un noeud). XPath définit un certain nombre de
+     fonctions. Je ne vais pas les détailler ici, voir la section
+     <imp>Références</imp> pour une liste exhaustive des fonctions
+     de XPath (ainsi que des extensions définies par XSLT).</p>
+
+    <p>Précisons enfin que certains attributs XSLT (comme l'attribut
+     <code>match</code> de l'élément <code>&lt;xsl:template></code>)
+     doivent contenir une expression XPath alors que d'autres n'en
+     contiennent pas à priori. Pour forcer le processeur XSLT à
+     interpréter le contenu d'un attribut comme une expression XPath,
+     nous devons entourer l'expression d'accolades. Par exemple
+     <code>&lt;img src="{@url}" alt="{@text}"></code> va placer des
+     l'attribut <code>src</code> la valeur de l'attribut
+     <code>url</code> et dans l'attribut <code>alt</code> celle de
+     l'attribut <code>text</code>.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Éléments XSLT</title>
+
+   <p>Nous allons maintenant passer en revue les principaux éléments
+   XSLT.</p>
+
+   <sect><title>Importation de fichiers</title>
+
+    <p>Une feuille de style peut parfois devenir complexe et l'on aura
+     intérêt à la découper modules. Par exemple, on pourra placer dans
+     un même fichier tous les templates relatifs au formatage du texte
+     et dans une deuxième, tous ceux relatifs à la structure du
+     document (table des matières, notes de bas de page). Pour
+     importer une feuille de style dans une autre, on pourra utiliser
+     une des syntaxes suivantes:</p>
+
+    <source><![CDATA[
+  <xsl:import href="uri"/>
+  <xsl:include href="uri"/>
+]]></source>
+
+    <p>L'attribut <code>href</code> indique l'URI du fichier (qui peut
+     être une URL ou un chemin dans le système de fichiers). Ces
+     déclarations doivent être les premières d'une feuille de
+     style.</p>
+
+    <p>Les templates des fichiers importés ont une priorité inférieure
+     à ceux du fichier dans lequel ils sont importés. On peut ainsi
+     <imp>surcharger</imp> des templates dans le fichier qui importe
+     des définitions. On peut changer cette règle de priorité dans le
+     corps d'un template avec la déclaration
+     <code>&lt;apply-imports></code> qui demande au processeur
+     d'utiliser les définitions importées. Il est aussi possible de
+     définir des priorités pour les templates avec l'attribut
+     <code>priority</code>. Cet attribut doit avoir une valeur
+     réelle. Une priorité de <value>+1</value> assure que ce template
+     sera toujours prioritaire par rapport aux templates sans priorité
+     et une valeur de <value>-1</value> que ce template ne sera jamais
+     prioritaire.</p>
+
+    <p>L'inclusion de template est un mécanisme beaucoup plus simple:
+     tout se passe comme si le fichier inclus était copié. Les
+     priorités des templates inclus sont identiques à celles de ceux
+     du fichier ayant déclaré l'inclusion.</p>
+
+   </sect>
+
+   <sect><title>Paramètres et variables</title>
+
+    <p>Il est possible de définir des variables dans un fichier XSLT à
+     l'aide des déclarations suivantes:</p>
+
+    <source><![CDATA[
+  <xsl:variable name="var">...</variable>
+  <xsl:variable name="var" select="..."/>
+]]></source>
+
+    <p>On peut faire référence à une variable dans une expression
+     XPath à l'aide de la forme <code>$var</code>. La portée d'une
+     variable dépend de l'endroit où elle a été déclarée: si elle est
+     déclarée dans la racine du document (sous l'élément
+     <code>&lt;xsl:stylesheet></code>, elle est accessible de tout le
+     document alors que si elle déclarée dans le corps d'un template,
+     elle n'est accessible qu'à l'intérieur de celui-ci. On notera que
+     la valeur d'une variable ne peut être modifiée (elles auraient pu
+     avantageusement être appelées <term>constant</term>).</p>
+
+    <p>On déclare un paramètre de la manière suivante:</p>
+
+    <source><![CDATA[
+  <xsl:param name="image-dir">img</xsl:param>
+]]></source>
+
+    <p>On pourra ainsi passer la valeur de ce paramètre au processeur
+     XSLT sur la ligne de commande. On peut alors faire référence à la
+     valeur de ce paramètre de la manière suivante:</p>
+
+    <source><![CDATA[
+  <xsl:template match="image">
+   <img src="{$image-dir}/{@url}"/>
+  <xsl:template>
+]]></source>
+
+    <p>On pourra aussi appeler un template en lui passant un ou
+     plusieurs paramètres de la manière suivante:</p>
+
+    <source><![CDATA[
+  <xsl:call-template name="image">
+   <xsl:with-param name="image-dir">img</xsl:with-param>
+  </xsl:call-template>
+
+  <xsl:template name="image">
+   <xsl:param name="image-dir"/>
+   <img src="{$image-dir}/{@url}"/>
+  </xsl:template>
+]]></source>
+
+    <p>On notera que ce template ne comporte par d'attribut
+     <code>match</code>, mais un attribut <code>name</code> à la
+     place. Ce template se comporte alors comme une fonction (à
+     laquelle on passe des paramètres).</p>
+
+   </sect>
+
+   <sect><title>Boucles et tests</title>
+
+    <p>Il est possible de boucler sur un ensemble de noeuds avec
+     l'élément <code>&lt;for-each></code>. Par exemple, pour générer
+     le bloc des notes de bas de page, on pourrait écrire:</p>
+
+    <source><![CDATA[
+  <xsl:for-each select="note">
+   <xsl:text>[</xsl:text>
+   <xsl:value-of select="count(preceding-sibling::note)+1"/>
+   <xsl:text>]</xsl:text>
+   <br/>
+   <xsl:apply-templates/>
+  </xsl:for-each>
+]]></source>
+
+    <p>L'élément <code>&lt;xsl:for-each></code> boucle sur les
+     éléments <code>note</code> du document et les affiche (après
+     avoir écrit leur numéro).</p>
+    
+    <p>Il est aussi possible d'effectuer des tests. La première
+     possibilité est d'utiliser l'élément
+     <code>&lt;xsl:if></code>. Par exemple:</p>
+
+    <source><![CDATA[
+  <xsl:if test="abstract">
+   <hr noshade="true" size="0"/>
+   <font size="-1">
+    <i><xsl:apply-templates select="abstract"/></i>
+   </font>
+   <hr noshade="true" size="0"/>
+   <br/>
+  </xsl:if>
+]]></source>
+
+    <p>Dans ce fragment, on teste l'existence d'un résumer et on
+     l'affiche s'il existe.</p>
+
+    <p>Il existe aussi l'équivalent d'un <term>switch</term> avec la
+     forme suivante:</p>
+
+    <source><![CDATA[
+  <xsl:choose>
+   <xsl:when test="/article[@lang='fr']">
+    <center>Table des matières</center>
+   </xsl:when>
+   <xsl:otherwise>
+    <center>Table of Contents</center>
+   </xsl:otherwise>
+  </xsl:choose>
+]]></source>
+
+    <p>On commence par énumérer les cas possibles dans des éléments
+     <code>&lt;when></code>, puis le cas par défaut dans un élément
+     <code>&lt;otherwise></code>.</p>
+
+   </sect>
+
+   <sect><title>Formats de sortie</title>
+
+    <p>Il est possible de produire, à l'aide d'une feuille de style,
+     des formats de sortie XML, HTML ou Texte. On doit déclarer le
+     format de sortie d'une feuille de style à l'aide de l'élément
+     <code>&lt;xsl:output></code>, placé sous l'élément
+     <code>&lt;xsl:stylesheet></code>. Chacun de ces traite
+     différemment les éléments XML ou les blancs:</p>
+
+    <list>
+     <item><imp>XML</imp> n'opère aucune transformation sur les
+      éléments, par contre, il se réserve le droit de réarranger les
+      blancs (espaces, tabulations ou retour de ligne) à sa
+      convenance. De plus, il ajoute un en-tête XML au début du
+      fichier.</item>
+     <item><imp>HTML</imp> élimine le slash terminal des éléments
+      vides. En effet, une feuille de style doit être un document XML
+      bien formé, donc un élément vide doit être terminé par un slash
+      terminal. Donc l'élément <code>&lt;hr></code> (qui est vide)
+      sera écrit dans une feuille de style <code>&lt;hr/></code> et
+      sera transformé en <code>&lt;hr></code> par le processeur
+      XSLT.</item>
+     <item><imp>Text</imp> ne touche ni aux éléments, ni au texte du
+      document.</item>
+    </list>
+
+    <p>Il est de plus possible d'indiquer au processeur XSLT de
+     préserver les blancs à l'aide de l'élément
+     <code>&lt;xsl:preserve-space elements="liste"></code>.</p>
+
+    <p>Pour finir, il est possible d'indiquer au processeur s'il doit
+     indenter le document (XML ou HTML) résultant avec l'attribut
+     <code>indent="yes|no"</code> de l'élément
+     <code>&lt;xsl:output></code>.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>XPath</title>
+
+   <p>XPath propose un jeu de fonctions et d'opérateurs pour exprimer
+    des chemins dans un document XML. Nous avons déjà vu l'essentiel
+    de la syntaxe XPath, reste à voir la notion d'axe.</p>
+
+   <sect><title>Les axes XPath</title>
+
+    <p>Jusqu'à présent, nous avons vu des expressions XPath de la
+     forme <code>foo</code> dont le slash indique que l'élément
+     <code>foo</code> est le <term>fils</term> de l'élément courant. On
+     dit alors que l'on fait une recherche sur l'axe
+     <term>fils</term>. On pourrait aussi vouloir rechercher un
+     élément <term>père</term> de <code>foo</code>. Pour ce faire, on
+     utilise une notation plus générale que sont les
+     <term>axes</term>. Par exemple, pour rechercher un élément
+     <code>foo</code> père de l'élément courant, on écrira:</p>
+
+    <source><![CDATA[
+  parent::foo
+]]></source>
+
+    <p>On notera que cette notation est équivalente à:</p>
+
+    <source><![CDATA[
+  ../foo
+]]></source>
+
+    <p>Avec une notation de type <term>système de fichier</term>.</p>
+
+    <p>XPath définit ainsi 13 axes de recherche:</p>
+
+    <table>
+     <th>
+      <co>Axe</co>
+      <co>Description</co>
+     </th>
+     <li>
+      <co>self</co>
+      <co>Noeud courant (noté aussi .)</co>
+     </li>
+     <li>
+      <co>child</co>
+      <co>Noeud fils (par défaut)</co>
+     </li>
+     <li>
+      <co>descendant</co>
+      <co>Noeuds descendant du noeud courant (donc ses fils, les fils
+       de ses fils et ainsi de suite)</co>
+     </li>
+     <li>
+      <co>descendant-or-self</co>
+      <co>Idem, mais inclu aussi le noeud courant (noté //)</co>
+     </li>
+     <li>
+      <co>parent</co>
+      <co>Noeud parent du noeud courant (noté aussi ..)</co>
+     </li>
+     <li>
+      <co>ancestor</co>
+      <co>Ancêtres du noeud courant (parent, parent de ses parents etc.)</co>
+     </li>
+     <li>
+      <co>ancestor-or-self</co>
+      <co>Idem mais inclu aussi le noeud courant</co>
+     </li>
+     <li>
+      <co>following-sibling</co>
+      <co>Noeuds frères (ayant le même parent) se trouvant après le
+       noeud courant</co>
+     </li>
+     <li>
+      <co>preceding-sibling</co>
+      <co>Noeuds frères se trouvant après le noeud courant</co>
+     </li>
+     <li>
+      <co>following</co>
+      <co>Noeuds se trouvant après le noeud courant dans le document</co>
+     </li>
+     <li>
+      <co>preceding</co>
+      <co>Noeuds se trouvant avant le noeud courant dans le document</co>
+     </li>
+     <li>
+      <co>attribute</co>
+      <co>Les attributs du noeud courant (abrégé @)</co>
+     </li>
+     <li>
+      <co>namespace</co>
+      <co>Les noeuds de type <term>namespace</term> du noeud courant</co>
+     </li>
+    </table>
+
+    <p>Par exemple, pour rechercher les éléments
+     <code>&lt;chapitre></code> après le noeud courant dans l'ordre
+     du document, on écrira:</p>
+
+    <source><![CDATA[
+  following::chapitre
+]]></source>
+
+    <p>Pour rechercher le noeud ancêtre du noeud courant ayant pour ID
+     <value>foo</value>, on notera:</p>
+
+    <source><![CDATA[
+  ancestor::node()[@id='foo']
+]]></source>
+
+   </sect>
+
+   <sect><title>Fonctions XPath</title>
+
+    <p>XPath définit quatre types de base: les <term>booléens</term>
+     (pouvant avoir pour valeur <value>true</value> ou
+     <term>false</term>), les <term>entiers</term>, les
+     <term>réels</term> et les <term>chaînes</term>.</p>
+
+    <p>Les principales fontions définies sont les suivantes:</p>
+
+    <table>
+     <th>
+      <co>Fonction</co>
+      <co>Description</co>
+     </th>
+     <li>
+      <co>last()</co>
+      <co>Renvoie un booléen indiquant si le noeud est le dernier</co>
+     </li>
+     <li>
+      <co>position()</co>
+      <co>Renvoie la position du noeud</co>
+     </li>
+     <li>
+      <co>count(noeuds)</co>
+      <co>Renvoie le nombre de noeuds</co>
+     </li>
+     <li>
+      <co>concat(chaîne, chaîne, ...)</co>
+      <co>Concatène les chaînes passées en argument</co>
+     </li>
+     <li>
+      <co>starts-with(chaîne1, chaîne2)</co>
+      <co>Indique si la chaîne 1 commence avec les caractères de la
+       chaîne 2</co>
+     </li>
+     <li>
+      <co>contains(chaine1, chaîne2)</co>
+      <co>Indique si la chaîne 1 contient la chaîne 2</co>
+     </li>
+     <li>
+      <co>substring(chaîne, entier1, entier2 ?)</co>
+      <co>Renvoie la partie de la chaîne commençant à la position
+       entier1 et d'une longueur entier2 (renvoie la fin de la chaîne
+      si entier2 n'est pas indiqué)</co>
+     </li>
+     <li>
+      <co>string-length(chaîne)</co>
+      <co>Renvoie la longueur de la chaîne passée en argument</co>
+     </li>
+     <li>
+      <co>current()</co>
+      <co>Renvoie l'élément courant</co>
+     </li>
+    </table>
+
+    <p>Par exemple, l'expression:</p>
+
+    <source><![CDATA[
+  following-sibling::chapitre[position()=last()]
+]]></source>
+
+    <p>Renvoie le dernier élément <code>chapitre</code> frère de
+     l'élément courant.</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Exemples de mise en oeuvre</title>
+
+   <p>Nous allons voir maintenant des exemples de mise en oeuvre de
+    XSLT (dans le cadre de projets In Fusio).</p>
+
+   <sect><title>Sites des Éditions O'Reilly</title>
+
+    <sect><title>Pourquoi XML et XSLT ?</title>
+
+     <p>Le choix de XML nous a semblé le meilleur pour plusieurs
+      raisons :</p>
+
+     <list>
+      <item>Le site est essentiellement un <term>catalogue</term> (pas
+       exclusivement
+       toutefois, cet article en témoigne). On est donc amené à gérer de
+       nombreuses pages donc la mise en forme est identique (les pages
+       des livres). Il est alors intéressant de dissocier le fond de la forme,
+       afin que les éditeurs n'aient pas à faire du formatage HTML.</item>
+      <item>Les pages se doivent de suivre la charte graphique de celles
+       du site américain, qui est amenée à changer. Avec un site en HTML,
+       la modification de cette charte demanderait à ce que <imp>toutes</imp>
+       les pages du site soient modifiées manuellement (soit environ 300 
+       pages à l'heure actuelle). Cela donnerait des sueurs froides à tout
+       webmestre.</item>
+      <item>La possibilité de validation des documents permet d'éviter
+       certaines erreurs (d'omission en particulier).</item>
+      <item>À chaque compilation, la syntaxe HTML et les liens
+       de toutes les pages du site sont vérifiés. Nous avons donc
+       l'assurance que le rendu est correct sur tout navigateur et qu'il
+       n'existe aucun lien cassé.</item>
+     </list>
+
+    </sect>
+
+    <sect><title>Choix techniques</title>
+
+     <p>Les informations pouvant être raisonnablement mises à jour
+      quotidiennement, nous avons opté pour une solution de 
+      <imp>compilation statique</imp> des pages du site : les pages HTML sont
+      générées à partir des sources XML puis envoyées au serveur.</p>
+
+     <p>Il existe deux autres solutions :</p>
+
+     <list>
+      <item>Génération des pages par <term>servlets</term> : les fichiers
+       html sont générées lorsqu'ils sont appelés. Cette méthode
+       est indispensable lorsque les informations contenues dans les
+       pages changent très fréquemment, les pages sont ainsi toujours à 
+       jour. Le revers de la médaille est que cette méthode est gourmande
+       en ressources CPU côté serveur.</item>
+      <item>Génération des pages <imp>par le navigateur</imp> : elle a
+       les avantages de la méthode précédente sans en avoir les 
+       inconvénients. Cependant, les navigateurs ne sont pas encore
+       capables de réaliser une transformation XSL de manière fiable.
+       Il est donc préférable de s'en tenir pour le moment au HTML.
+       Dans un futur plus ou moins proche, c'est une solution qui
+       sera probablement envisageable.</item>
+     </list>
+
+    </sect>
+
+    <sect><title>Architecture</title>
+
+     <p>Le site est généré entièrement à chaque compilation (pour
+      éviter des problèmes de dépendances) à partir d'une arborescence
+      de fichiers XML. Les fichiers de même type sont placés dans le même
+      répertoire. Les types de fichiers sont au nombre de six :</p>
+
+     <list>
+      <item><imp>Catalogue :</imp> ces fichiers présentent les ouvrages du
+      catalogue. Chaque fichier (décrivant un livre) génère entre trois
+      et six fichiers HTML (index, auteur, description, critiques,
+      errata et exemples). Ces pages sont liées entre elles et aux pages
+      des catégories (Java, Logiciels Libres, Perl, etc.).</item>
+      <item><imp>Article :</imp> génère l'article sous forme HTML et place un résumé dans les pages de catégories adéquates.</item>
+      <item><imp>brève :</imp> ces brèves sont intégrées à la page d'accueil
+      du site et/ou à des pages de catégories.</item>
+      <item><imp>club :</imp> génèrent les pages du 
+      <link url="http://www.editions-oreilly.fr/club">Club O'Reilly</link>.
+     </item>
+      <item><imp>infos :</imp> comme les brèves, mais en plus long et sans 
+      date.</item>
+     </list>
+
+     <p>Les pages d'index (la page d'accueil et les pages des catégories)
+      sont générées par des fichiers XSL appliqués sur l'index XML du site :
+      un fichier XML regroupant tous les fichiers XML des sources. Il est
+      ainsi possible de générer les listes des ouvrages classées par
+      ordre alphabétique, la liste des brèves classées par date, etc.</p>
+
+     <p>Ainsi, la page d'accueil regroupe des fragments de nombre de
+      fichiers XML :</p>
+
+     <figure url="intro-xslt.page-accueil.png">
+      <title>Structure de la page d'accueil du site</title>
+     </figure>
+
+     <p>Les fichiers à l'origine des différentes zones de cette page sont les
+      suivants :</p>
+
+     <enum>
+      <item>La liste des catégories est codée dans le fichier XSL qui
+       génère la page d'accueil.</item>
+      <item>Les brèves proviennent du répertoire <term>breves</term> des sources.
+       Seules les brèves ayant <term>index</term> pour catégorie y sont
+       intégrées.</item>
+      <item>Les articles présentés sur cette page sont ceux marqués de
+       l'élément &lt;nouveau/>.</item>
+      <item>Suivent des infos issues du répertoire <term>info</term> et de la
+       catégorie <term>index</term>.</item>
+      <item>Pour finir, la liste des nouveautés est générée à partir des
+       fichiers du catalogue. Seuls les ouvrages dont les
+       fiches sont marquées de l'élément &lt;nouveau/> sont intégrées à
+       cette page.</item>
+     </enum>
+
+     <p>Pour conclure, je dirais que XML permet de gérer un tel site de 
+      manière rationnelle et en préservant les investissements des
+      Éditions O'Reilly du fait que XML est un standard et donc à l'abri
+      du bon vouloir d'un unique éditeur de logiciel.</p>
+
+    </sect>
+
+   </sect>
+
+   <sect><title>WAP SDK</title>
+
+    <p>Le WAP SDK permet aux développeurs de jeux d'accéder aux services
+     de GameZilla mais aussi de rendre le code du jeu indépendant de
+     la plateforme cible. En particulier, le WML des pages doit être
+     adapté aux deux principaux navigateurs WML que l'on trouve sur
+     les téléphones mobiles (Nokia et Phone.com) et traduites suivant
+     la langue de l'utilisateur.</p>
+    
+    <p>Il est bien sûr possible de le faire dynamiquement en PHP mais
+     cela imbrique la présentation et la logique du jeu (les templates 
+     pour les différentes versions du WML sont noyés dans le code) et
+     est gourmand en ressources (pour obtenir dynamiquement les
+     messages traduits, il faut aller les chercher dans une base de
+     données, ce qui peut impliquer plusieurs requêtes par page).</p>
+
+    <p>À cette approche dynamique, nous avons préféré une approche
+     statique:</p>
+
+    <list>
+     <item>Le code PHP est clairement séparé du WML (séparation de la
+      logique de jeu et de la présentation).</item>
+     <item>On applique une première feuille de style aux sources
+      pour adapter le WML au navigateur du client.</item>
+     <item>Une deuxième feuille de style traduit les références
+      aux messages (de la forme <code>@{reference}</code>) en messages
+      dans la langue du client.</item>
+    </list>
+
+    <p>Le programme de jeu doit être accompagné d'un fichier XML
+     contenant la traduction des messages et les noms des fichiers
+     des images suivant leur taille (fichier de <term>ressources</term>).
+     Il doit être aussi accompagné d'un descripteur indiquant les
+     configurations supportées (navigateurs, langues et tailles
+     d'images).</p>
+
+    <p>Lors de la compilation, le compilateur du SDK génère N
+     répertoires comportant les fichiers compilés. Un répertoire
+     correspond à une configuration possible (par exemple, navigateur
+     Nokia, français et grandes images).</p>
+
+    <p>Prenons le cas d'une page d'accueil d'un jeu:</p>
+
+    <source><![CDATA[  <?xml version="1.0"?>
+
+  <?php
+  // reset fields
+  $solution="";
+  session_register("solution");
+  $nb_attempts=0;
+  session_register("nb_attempts");
+  ?>
+
+  <wml>
+   <head>
+    <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT"/>
+    <meta http-equiv="Cache-Control" content="no-cache, max-age=0"/>
+   </head>
+  
+   <card id="menu" title="@{title}">
+    <p align="center"><img src="@{logo}" alt="@{title}"/></p>
+    <menu>
+     <item href="play.php">@{play}</item>
+     <item href="rules.php">@{rules-title}</item>
+     <item href="ranking.php">@{ranking}</item>
+    </menu>
+    <quit>@{quit}</quit>
+   </card>
+  </wml>]]></source>
+
+    <p>Cette page comporte les particularités suivantes:</p>
+
+    <list>
+     <item>Les guidelines du SDK imposent une séparation claire
+      du code PHP et du WML.</item>
+     <item>On remarque le présence de références du type <code>@{nom}</code>.
+      Ce sont des références à des ressources dont la valeur dépend de
+      la configuration.</item>
+     <item>Certains éléments de la partie WML ne font pas partie
+      de la norme. Ce sont des éléments propres au SDK In-Fusio qui
+      seront ensuite transformés suivant le navigateur ciblé. C'est le
+      cas par exemple de l'élément &lt;menu> qui sera transformé suivant
+      la plateforme cible.
+     </item>
+    </list>
+
+    <p>Fichier pour la configuration <code>Phone.com/fr/petites
+      images</code>:</p>
+
+    <source><![CDATA[  <?php
+  include("../lib/gz_configuration.php");
+  include("../lib/gz_tools.php");
+  include("../lib/gz_database.mysql.php");
+  include("../lib/gz_identification.php");
+  include("../lib/gz_score.php");
+  header("Content-type: text/vnd.wap.wml");
+  echo '<?xml version="1.0" encoding="iso-8859-1"?>';
+  ?><!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN"
+                       "http://www.wapforum.org/DTD/wml_1.1.xml">
+  
+  
+  <?php // reset fields
+  $solution="";
+  session_register("solution");
+  $nb_attempts=0;
+  session_register("nb_attempts");
+  ?><wml>
+   <head>
+    <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT"/>
+    <meta http-equiv="Cache-Control" content="no-cache, max-age=0"/>
+   </head>
+  
+   <card id="menu" title="L'âge du capitaine">
+    <p align="center"><b>L'âge du capitaine</b></p>
+    <p align="center"><img src="../../img/captain.small.wbmp" 
+                           alt="L'âge du capitaine"/>
+    </p>
+    <p><select>
+     <option onpick="play.php?<?php echo session_name();?>=
+       <?php echo session_id();?>">Jouer</option>
+     <option onpick="rules.php?<?php echo session_name();?>=
+       <?php echo session_id();?>">Règles du jeu</option>
+     <option onpick="ranking.php?<?php echo session_name();?>=
+       <?php echo session_id();?>">Scores</option>
+    </select></p>
+    <do label="Quitter" type="accept"><go href="index.php?
+       <?php echo session_name();?>=<?php echo session_id();?>"/>
+    </do>
+   </card>
+  </wml>
+  <?php
+  //gz_done();
+  ?>]]></source>
+
+    <p>Dans ce fichier, l'élément &lt;menu> a été remplacé par &lt;select>
+     et les éléments &lt;item> par des &lt;option>. Les références à des
+     ressources texte ont été remplacées par les messages en français
+     et les références à des images par leur valeur pour les petites 
+     images.</p>
+
+    <p>Le fichier généré pour la configuration <code>phone.com/en/grandes
+      images</code> est le suivant:</p>
+
+    <source><![CDATA[  <?php
+  include("../lib/gz_configuration.php");
+  include("../lib/gz_tools.php");
+  include("../lib/gz_database.mysql.php");
+  include("../lib/gz_identification.php");
+  include("../lib/gz_score.php");
+  header("Content-type: text/vnd.wap.wml");
+  echo '<?xml version="1.0" encoding="iso-8859-1"?>';
+  ?><!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN"
+                       "http://www.wapforum.org/DTD/wml_1.1.xml">
+  
+  
+  <?php // reset fields
+  $solution="";
+  session_register("solution");
+  $nb_attempts=0;
+  session_register("nb_attempts");
+  ?><wml>
+   <head>
+    <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT"/>
+    <meta http-equiv="Cache-Control" content="no-cache, max-age=0"/>
+   </head>
+  
+   <card id="menu" title="Age Of Captain">
+    <p align="center">
+      <img src="../../img/captain.big.wbmp" alt="Age Of Captain"/>
+    </p>
+
+    <p><a href="play.php?<?php echo session_name();?>=
+       <?php echo session_id();?>">Play</a></p>
+    <p><a href="rules.php?<?php echo session_name();?>=
+       <?php echo session_id();?>">Rules of the game</a></p>
+    <p><a href="ranking.php?<?php echo session_name();?>=
+       <?php echo session_id();?>">High scores</a></p>
+    
+    <p><a href="index.php?<?php echo session_name();?>=
+       <?php echo session_id();?>">Quit</a></p>
+   </card>
+  </wml>
+  <?php
+  //gz_done();
+  ?>]]></source>
+
+    <p>Dans ce fichier, l'élément &lt;menu> a été remplacé par une
+     liste d'éléments &lt;a href="">, les références à des
+     ressources texte ont été remplacées par les messages en anglais
+     et les références à des images par leur valeur pour les grandes
+     images.</p>
+
+    <p>Cette approche amène beaucoup de souplesse:</p>
+
+    <list>
+     <item>Si l'on souhaite ajouter une langue, il suffit de rajouter
+      les entrées correspondantes dans le fichier de ressources et
+      dans le descripteur.</item>
+     <item>Si l'on souhaite supporter une nouvelle famille (ou version)
+      de navigateur, il faut simplement écrire la feuille de style
+      adéquate.</item>
+    </list>
+
+   </sect>
+
+   <sect><title>Administration Tool</title>
+
+    <p>Cet outil permet d'administrer le serveur de production. Il
+     permet par exemple de gérer la base sans avoir à connaitre sa
+     structure et se présente sous la forme d'une application JSP.
+     Afin d'etre simple à utiliser, nous avons retenu une
+     approche par <term>wizard</term>. Un wizard est ici
+     une succession d'étapes pour réaliser une opération de
+     maintenance sur le serveur. Par exemple:</p>
+
+    <source><![CDATA[  <?xml version="1.0" encoding="iso-8859-1"?>
+  <!DOCTYPE wizard SYSTEM "wizard.dtd">
+  
+  <wizard title="Add Country"
+          bean="com.infusio.gamezilla.admin.ejb.Country">
+     
+   <step>
+    <input label="Country ID"   param="ID"/>
+    <input label="ISO Code"     param="isoCode"/>
+    <input label="Country Name" param="name"/>
+   </step>
+     
+   <step message="Do you confirm creation of Country ?">
+    <print label="Country ID"   value="$ID"/>
+    <print label="ISO Code"     value="$isoCode"/>
+    <print label="Country Name" value="$name"/>
+   </step>
+     
+   <step message="Country successfuly added">
+    <call method="addCountry($ID,$isoCode,$name)"/>
+   </step>
+  
+  </wizard>]]></source>
+
+    <p>Ce wizard XML est compilé en pages JSP avec une feuille de
+     style XSLT. Par exemple, le wizard ci-dessus génère la page
+     suivante:</p>
+
+    <source><![CDATA[
+<%@ page import="com.infusio.gamezilla.admin.*,com.jspsmart.upload.*" %>
+<jsp:useBean id="addCountry" class="com.infusio.gamezilla.admin.AddCountry" scope="session"/>
+<jsp:useBean id="smartUpload" class="com.jspsmart.upload.SmartUpload" scope="session"/>
+<jsp:setProperty name="addCountry" property="*"/><% 
+   Vector list;
+   Vector table;
+   String selected;
+   File file;
+   int size;
+   byte[] bytes;
+   Object object;
+   Files files;
+   // set the servlet context for the beans
+   Wizard.setServletContext(getServletContext());
+   if(addCountry.getAction()==null || 
+      addCountry.getAction().equals("Reset")) {
+     addCountry.reset();
+     addCountry.next();
+   } else if(addCountry.getAction().equals("Next")) {
+     addCountry.next();
+   } else if(addCountry.getAction().equals("Prev")) {
+     addCountry.prev();
+   } else if(addCountry.getAction().equals("Cancel") ||
+     addCountry.getAction().equals(" OK ")) {
+     addCountry.reset();
+   %><jsp:forward page="index.jsp"/><% } %><html>
+<head>
+<title>Add Country</title>
+</head>
+<body>
+<center>
+<h1>Add Country</h1>
+<h4>Step <%= addCountry.getStep() %>/3</h4>
+</center>
+ 
+ <% 
+   if(addCountry.getStep()==1) {
+  
+   %><form method="post"><center>
+<table border="0" cellspacing="0" cellpadding="5">
+<tr>
+<td align="right" bgcolor="#EEEEEE">ISO Code</td>
+<td align="left" bgcolor="#DDDDDD"><input type="text" name="isoCode" value="
+<%= addCountry.getIsoCode() %>"/></td>
+</tr>
+<tr>
+<td align="right" bgcolor="#EEEEEE">Country Name</td>
+<td align="left" bgcolor="#DDDDDD"><input type="text" name="name" value="
+<%= addCountry.getName() %>"/></td>
+</tr>
+</table>
+</center>
+<br/>
+<hr/>
+<table align="right">
+<tr>
+<td>
+<input type="submit" name="action" value="Cancel"/>
+</td>
+<td>
+<input type="submit" name="action" value="Next"/>
+</td>
+</tr>
+</table></form><% 
+  }
+   %>
+
+ <% 
+   if(addCountry.getStep()==2) {
+  
+   %><p>Do you confirm creation of Country ?</p><form method="post"><center>
+<table border="0" cellspacing="0" cellpadding="5">
+<tr>
+<td align="right" valign="top" bgcolor="#EEEEEE">ISO Code</td>
+<td align="left" bgcolor="#DDDDDD"><%= addCountry.getIsoCode()
+ %></td>
+</tr>
+<tr>
+<td align="right" valign="top" bgcolor="#EEEEEE">Country Name</td>
+<td align="left" bgcolor="#DDDDDD"><%= addCountry.getName()
+ %></td>
+</tr>
+</table>
+</center>
+<br/>
+<hr/>
+<table align="right">
+<tr>
+<td>
+<input type="submit" name="action" value="Cancel"/>
+</td>
+<td>
+<input type="submit" name="action" value="Prev"/>
+</td>
+<td>
+<input type="submit" name="action" value="Next"/>
+</td>
+</tr>
+</table></form><% 
+  }
+   %>
+
+ <% 
+   if(addCountry.getStep()==3) {
+  
+   %><% addCountry.run();
+   %><p>Country successfuly added</p><form method="post"><center>
+<table border="0" cellspacing="0" cellpadding="5">
+<tr>
+<td align="right" valign="top" bgcolor="#EEEEEE">Country ID</td>
+<td align="left" bgcolor="#DDDDDD"><%= addCountry.getId()
+ %></td>
+</tr>
+</table>
+</center>
+<br/>
+<hr/>
+<table align="right">
+<tr>
+<td>
+<input type="submit" name="action" value=" OK "/>
+</td>
+</tr>
+</table></form><% 
+  }
+   %>
+
+<%
+  if(addCountry.getStep()
+  <=0 ||
+  addCountry.getStep()
+  >3) {
+    out.print("<p>Wizard in inconsistent state (step="+addCountry.getStep()+" out of range)</p>");
+    addCountry.reset();
+   %><br/>
+<hr/>
+<table align="right">
+<tr>
+<td>
+<input type="submit" name="action" value=" OK "/>
+</td>
+</tr>
+</table><% } %></body>
+</html>
+]]></source>
+
+    <p>Les écrans générés pour ce wizard sont les suivants: </p>
+
+    <p><imp>Step 1</imp></p>
+
+    <figure url="intro-xslt.example-step-1.png"/>
+    
+    <p><imp>Step 2</imp></p>
+
+    <figure url="intro-xslt.example-step-2.png"/>
+
+    <p><imp>Step 3</imp></p>
+
+    <figure url="intro-xslt.example-step-3.png"/>
+
+    <p>Cette compilation XSLT permet ici de gagner en temps de
+     développement des wizards. En effet, l'écriture de ces pages JSP
+     serait très répétitive et propice aux erreurs. De plus, pour
+     modifier l'interface ou une fontionnalité des JSPs, il suffit de
+     modifier la feuille de style et de recompiler, les modifications
+     sont alors automatiquement prises en compte dans toutes les
+     pages.</p>
+
+   </sect>
+
+  </sect>
+
+ </text>
+
+</article>
+
+<!-- Local IspellDict: francais -->

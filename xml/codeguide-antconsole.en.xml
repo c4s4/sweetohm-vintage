@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//SWEETOHM//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article author="Michel CASABIANCA"
+         email="casa@sweetohm.net"
+         date="2004-01-06"
+         id="codeguide-antconsole.en"
+         lang="en">
+
+ <title>Fast Ant builds with CodeGuide</title>
+
+ <abstract>
+  <p>This article presents the integration of the Ant Console within
+   CodeGuide to boost significantly build times. For Ant integration
+   and other CodeGuide tips, see 
+   <link url="codeguide-tips.en.html">this article</link>.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Ant Console</title>
+
+   <p>This tool runs Ant in a console (in a terminal or within your
+    favorite IDE) and lets you type commands to run targets of the
+    loaded build file. This method runs much faster than Ant because
+    it saves time to launch the Java Virtual Machine, JIT compilation
+    time and build file loading. You can run builds up to 5 times
+    faster than running Ant on the command line. It is obvious than
+    you save more time on small builds (when time spent in usefull
+    code is small compared to startup time).</p>
+
+   <sect><title>Installation</title>
+
+    <p>Download SAT that you can get for free <link
+      url="http://www.cafebabe.net/html/sat.en.html">on my web
+      site</link>.</p>
+
+    <p>Go in the <file>bin</file> directory of your Ant installation,
+     copy the <file>ant</file> script (or <file>ant.bat</file> for OS
+     disabled people) to file <file>antc</file> (or
+     <file>antc.bat</file>). Replace
+     <code>org.apache.tools.ant.Main</code> with
+     <code>net.cafebabe.sat.ant.Console</code>. This script will
+     launch the Ant console instead of traditional Ant. Make sure that
+     this script is in your <code>PATH</code>.</p>
+
+    <p>You must,  of course, install SAT by dropping the file
+     <file>sat.jar</file> in the <file>lib</file> directory of your
+     Ant installation.</p>
+
+   </sect>
+
+   <sect><title>Usage</title>
+
+    <p>To run the Ant console, go in the directory of your project
+     (where is living your <file>build.xml</file> file) ant type
+     <keyb>antc</keyb>. You will display an help screen typing
+     <keyb>antc -help</keyb> on the command line&dp;</p>
+
+<source><![CDATA[Ant Console 0.8 (C) Michel Casabianca 2003
+type "help" to get help on console commands
+Usage: antc [-help] [-version] [-timer] [-file file] [-find file]
+-help    Print this help screen
+-version Print the version
+-timer   Print build times
+-file    To set the build file
+-find    To search for the build file]]></source>
+
+
+    <p>When you launch the Ant console, you will be promped as
+     following&dp;</p>
+
+    <figure url="codeguide-antconsole.console.png">
+     <title>Ant Console running</title>
+    </figure>
+
+    <p>To display an help screen about the console commands, type
+     <keyb>help</keyb> in the console&dp;</p>
+
+<source><![CDATA[Commands you can run in the console are the following:
+  help          To display this help screen
+  exit          To quit the console                                     
+  desc          To describe the loaded project
+  load file     To load the build file
+  find file     To find the project file
+  reload        To reload the current project
+  timer on/off  To set timer on/off
+  target foo    To run the target foo
+  targetname    To run the target (can't be a console command)
+  <empty>       To repeat the last command]]></source>
+
+    <p>Note that you can launch a given target by typing its name
+     (this is a shortcut for the <keyb>target</keyb> command) provided
+     that this target hasn't the same name than a console command. You
+     can repeat the last command by typing <keyb>ENTER</keyb>.</p>
+
+    <p>You can load a build file using the <keyb>load</keyb>
+     command (the path is then relative to the current directory) and
+     search for a build file recursively in the file system with the
+     <keyb>find</keyb> command (that behaves like the
+     <keyb>-find</keyb> command line argument for Ant). You can also
+     reload the current project with <keyb>reload</keyb>. This may be
+     necessary when the build file  changes on disk or when the
+     project is corrupted (which happens sometimes after a build error
+     because some tasks don't work after an error).</p>
+
+    <p>The <keyb>desc</keyb> command describes the current project
+     (behaves like the <keyb>-projecthelp</keyb> command line
+     parameter for Ant).</p>
+
+    <p>I have also implemented a timer (to display execution time for
+     builds) that you can switch <value>on</value> or
+     <value>off</value> using the <keyb>timer</keyb> command. The
+     result is in milliseconds (because the builds are so fast :o)</p>
+
+   </sect>
+
+  </sect>
+
+  <sect><title>Integration in CodeGuide</title>
+
+   <p>I have <link url="codeguide-tips.en.html">already said</link>
+    that this IDE is fast and probably the most powerful for real
+    world Java development, Ant is very slow compared to this
+    tool. The goal of this integration is to make Ant run at light
+    speed in CodeGuide.</p>
+
+   <p>First, make sure that the Ant Console runs properly from the
+    command line (by typing <keyb>antc</keyb> in a terminal). Then we
+    will integrate it as an external tool. To do so, open
+    <imp>Tools/Configure tools...</imp> in the menu. The following
+    window opens to let you configure an external tool:</p>
+
+   <figure url="codeguide-antconsole.configure-tools.png">
+    <title>Tools configuration window</title>
+   </figure>
+
+   <p>Click on the <imp>New</imp> button and fill fields with the
+    following values:</p>
+
+   <table>
+    <th>
+     <co>Field</co>
+     <co>Value</co>
+     <co>Comment</co>
+    </th>
+    <li>
+     <co>Category</co>
+     <co> </co>
+     <co>Leave this field empty (or the Ant Concole item would appear
+      in a submenu, which is useless in this case).</co>
+    </li>
+    <li>
+     <co>Name</co>
+     <co>Ant Console</co>
+     <co>Logical</co>
+    </li>
+    <li>
+     <co>Kind</co>
+     <co>Tool for files</co>
+     <co>To run the console searching for the build file recursively
+      in the file system</co>
+    </li>
+    <li>
+     <co>Console</co>
+     <co>Ant Console</co>
+     <co>As the tool is running in the background, it should run in
+      its own console (don't run it in the Ant console for instance
+      because you wold have to stop it to launch a regular build)</co>
+    </li>
+    <li>
+     <co>Executable</co>
+     <co>antc</co>
+     <co>We launch the <keyb>antc</keyb> command</co>
+    </li>
+    <li>
+     <co>Working directory</co>
+     <co>$PARENT_DIRECTORY_PATH$</co>
+     <co>To launch the console it the directory of the file</co>
+    </li>
+    <li>
+     <co>Arguments</co>
+     <co>-find build.xml</co>
+     <co>The console look for the build file in the file system (so
+      that if we launch the console on a Java source file, it will
+      search for the build file in a parent directory)</co>
+    </li>
+    <li>
+     <co>File pattern</co>
+     <co>*</co>
+     <co>We can launch the console on any file (I use it to perform my
+      XSLT transformations for instance, so I run it on XML files for
+      instance)</co>
+    </li>
+    <li>
+     <co>Behavior</co>
+     <co>Default</co>
+     <co>Why not...</co>
+    </li>
+   </table>
+
+   <p>To run the console, right click on a file (in the ditor pane or
+    in the <imp>Project</imp> bar) and select the item <imp>Ant
+    Console</imp>.</p>
+
+   <figure url="codeguide-antconsole.menu.png">
+    <title>Launch the Ant Console on a file</title>
+   </figure>
+
+   <p>This will open a dedicated console where Ant is waiting for your
+    commands. Take a look at the build times (in milliseconds), it
+    screams!</p>
+
+   <figure url="codeguide-antconsole.codeguide-console.png">
+    <title>The Ant Console running in CodeGuide</title>
+   </figure>
+
+   <p>The same build using Ant takes about 6 seconds (about 4 times
+    more). Using the latest PowerMac dual G5 2GHz, you could probably
+    compete for the fastest Ant builds on earth :o)</p>
+
+  </sect>
+
+  <p>Thanks Frédéric for his corrections</p>
+
+  <p>Enjoy!</p>
+
+ </text>
+
+</article>
+
+<!-- Local IspellDict: english -->

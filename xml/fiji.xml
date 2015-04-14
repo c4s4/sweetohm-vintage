@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"  
+                      "../dtd/page.dtd"
+[
+<!ENTITY version "1.0-1">
+<!ENTITY size "780">
+]>
+
+<page author="Michel CASABIANCA"  
+      email="casa@sweetohm.net"  
+      date="2003-01-13"
+      id="fiji"
+      lang="fr">
+
+ <title>FiJI</title>
+
+ <text>
+  
+  <p>FiJI est un installeur Java sous licence GPL. Il permet de
+   distribuer simplement des applications sans que l'utilisateur
+   ait à modifier des scripts de lancements (pour modifier un
+   <code>CLASSPATH</code> par exemple).</p>
+
+  <table>
+   <li>
+    <co><link url="fiji.doc.html">La documentation est disponible ici
+      en ligne.</link></co>
+   </li>
+  </table>
+
+  <figure url="fiji.title.png"/>
+
+  <table>
+   <li>
+    <co>Auto installeur 
+     <link url="../arc/fiji-&version;.jar">fiji-&version;.jar</link>
+      (&size; ko environ)</co>
+   </li>
+  </table>
+
+  <p>Ce programme demande une machine virtuelle Java récente (1.2 ou
+   1.3). Pour l'installer, se placer dans le répertoire de l'archive
+   et taper <keyb>java -jar fiji-&version;.jar</keyb> sur la ligne de 
+   commande.</p>
+
+  <p>Lire la documentation du répertoire <file>doc</file> pour plus de
+   précisions sur l'installation et l'utilisation.</p>
+
+ </text>
+
+</page>
+
+<!-- Local IspellDict: francais -->

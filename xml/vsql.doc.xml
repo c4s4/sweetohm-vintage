@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//CAFEBABE//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article lang="fr" 
+         id="vsql.doc" 
+         date="2001-10-15" 
+         email="casa@sweetohm.net"
+         author="Michel CASABIANCA">
+
+ <title>VisualSQL 0.5</title>
+
+ <abstract>
+  <p>VisualSQL est un outil visuel permettant d'afficher le résultat de
+   requêtes SQL dans un table. C'est un logiciel libre sous licence GPL.</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Installation de VisualSQL</title>
+
+   <p>Pour utiliser VisualSQL, il faut auparavant:</p>
+
+   <enum>
+    <item>Installer une base de données (vous pouvez utiliser
+     <link url="http://www.postgresql.org">PostgreSQL</link> qui est
+     une base de données relationnelle libre.</item>
+    <item>Installer une machine virtuelle Java 1.2 or 1.3. On peut en
+     télécharger gratuitement une sur <link url="http://java.sun.com/j2se">le
+      site de Sun</link>.</item>
+    <item>Télécharger un pilote JDBC pour votre base de données (on peut en
+     trouver un pour PostgreSQL sur <link url="http://jdbc.postgresql.org">Ce
+      site</link>).</item>
+   </enum>
+
+   <p>Pour installer VisualSQL, taper <code>java -jar vsql-.jar</code>
+    sur la ligne de commande dans le répertoire de l'archive. Cela va
+    lancer l'auto-installeur. Vous devez copier la pilote JDBC de votre
+    base dans le répertoire <file>lib</file> de VisualSQL. Les utilisateurs
+    de Windows doivent ensuite éditer le fichier <file>bin\vsql.bat</file>
+    pour y ajouter ce fichier jar dans la CLASSPATH. Si votre pilote est
+    une archive zip, il faut en changer l'extension pour .jar.</p>
+
+   <p>On peut trouver la dernière version de VisualSQL sur
+    <link url="http://www.cafebabe.net/html/vsql.html">ma page
+     personnelle</link>.</p>
+
+  </sect>
+
+  <sect><title>Compiler VisualSQL</title>
+
+   <p>Pour compiler VisualSQL, il vous faut installer Ant en version
+    1.3. On peut le télécharger sur 
+    <link url="http://jakarta.apache.org/ant">le site de Apache</link>.
+    Se placer dans le répertoire <code>prj</code> et taper <code>ant all</code>
+    pour reconstruire le tout.</p>
+
+   <p>Pour générer la documentation, vous devez télécharger et installer
+    SAT (un jeu de tâches Ant) que l'on peut trouver sur 
+    <link url="http://www.cafebabe.net/html/sat.html">ma page
+     personnelle</link>. Pour générer l'installeur, il vous faudra aussi
+    FiJI, un générateur d'installeur que l'on peut télécharger sur
+    <link url="http://www.cafebabe.net/html/fiji.html">ma page 
+     personnelle</link>.</p>
+
+  </sect>
+
+  <sect><title>Utiliser VisualSQL</title>
+
+   <p>Taper <code>vsql</code> sur la ligne de commande pour lancer le programme.
+    L'application a l'allure suivante:</p>
+
+   <figure url="vsql.screen.png"/>
+
+   <p>Vous devez commencer par vous connecter à la base de données:</p>
+
+   <enum>
+    <item>Entrer le nom de la classe de votre pilote JDBC. Elle devrait
+     être indiquée dans la documentation de votre pilote. Pour PostgreSQL
+     7.0, c'est <file>org.postgresql.Driver</file>.</item>
+    <item>Saisissez ensuite l'URL de votre base de données. Elle dépend
+     de votre pilote et devrait être indiquée dans la documentation
+     de votre pilote. Pour PostgreSQL, c'est de la forme
+     <file>jdbc:postgresql://localhost:5432/myDB</file>.
+    </item>
+    <item>Entrer ensuite l'utilisateur et son mot de passe.</item>
+   </enum>
+
+   <p>Cliquer ensuite sur le bouton pour vous connecter. En cas de
+    problème, une boite de dialogue devrait détailler l'erreur.
+    Lorsque vous êtes connecté (pas de message d'erreur), vous pouvez
+    saisir des requêtes SQL dans la zone de texte et les envoyer à la
+    base en cliquant sur le bouton. Le résultat (s'il y en a un) est
+    affiché dans la table en dessous. Vous pouvez afficher des requêtes
+    de l'historique en cliquant sur les flèches (vers le haut pour les
+    requêtes précédentes et vers le bas pour les suivantes).</p>
+
+   <p>On est déconnecté de la base lorsque l'on quitte l'application ou
+    lorsque l'on clique sur le bouton de déconnexion. Lorsque l'on quitte,
+    la configuration est enregistrée dans un fichier de propriétés
+    (<file>~/.vsql.properties</file> sous Unix ou 
+    <file>&lt;VSQL_HOME&gt;\vsql.properties</file> sous Windows). L'historique
+    des requêtes (les 100 dernières requêtes saisies) est enregistré dans 
+    un fichier XML (<file>~/.vsql.history</file> sous Unix ou 
+    <file>&lt;VSQL_HOME&gt;\vsql.history</file> sous Windows).</p>
+
+   <p>Les raccourcis clavier sont les suivants:</p>
+
+   <list>
+    <item><imp>Ctrl+Espace</imp>: Connexion/Déconnexion de la base.</item>
+    <item><imp>Ctrl+Entrée</imp>: Exécution de la requête.</item>
+    <item><imp>Ctrl+Haut</imp>: Requête précédente dans l'historique.</item>
+    <item><imp>Ctrl+Bas</imp>: Requête suivante dans l'historique.</item>
+   </list>
+
+  </sect>
+
+  <sect><title>Fichier de configuration</title>
+
+   <p>Les propriétés de la connexion à la base sont enregistrées dans le
+    fichier de propriétés ayant les entrées suivantes:</p>
+
+   <list>
+    <item><imp>jdbc.driver</imp>: la classe du pilote JDBC.</item>
+    <item><imp>jdbc.url</imp>: l'URL de la base de données.</item>
+    <item><imp>jdbc.user</imp>: le nom de l'utilisateur.</item>
+    <item><imp>jdbc.password</imp>: son mot de passe.</item>
+   </list>
+
+   <p>D'autres propriétés peuvent être modifiées dans ce fichier:</p>
+
+   <list>
+    <item><imp>debug</imp>: pour lancer le programme en mode débuggage. Les
+     stack traces sont alors affichées sur la console. Copier ces stack
+     traces pour envoyer un rapport de bug. Cette propriété peut prendre
+     les valeurs <file>true</file> ou <file>false</file>.</item>
+    <item><imp>swing.icons</imp>: c'est le nom du jeu d'icônes à utiliser
+     dans l'interface. Peut avoir les valeurs <file>swing</file> ou 
+     <file>jlobby</file>. Les icônes Java Lobby sont Copyright(C) 1998 par
+     <link url="mailto:dean@gallant.com">Dean S. Jones</link> et peuvent
+     être téléchargées à l'adresse 
+     <link url="http://www.gallant.com/icons.htm">www.gallant.com/icons.htm</link>.
+    </item>
+    <item><imp>swing.primaryX</imp> et <imp>swing.secondaryY</imp>: changer
+     ces valeurs pour personnaliser votre interface. Ces valeurs peuvent être
+     décimales, hexadécimales (si elles commencent par <file>0x</file>) ou
+     octales octales (si elles commencent par <file>O</file>).</item>
+   </list>
+
+  </sect>
+
+  <sect><title>License</title>
+
+   <p>Ce programme est un logiciel libre sous licence
+    <link url="http://www.gnu.org/copyleft/gpl.html">GPL</link>.
+    Vous pouvez trouver une copie de cette licence dans le fichier
+    <file>LICENSE</file> du répertoire d'installation.</p>
+
+  </sect>
+
+  <sect><title>Historique</title>
+
+   <sect><title>Version 0.5 (2001-10-15)</title>
+
+    <p>Correction de bug (les raccourcis claviers concernant les requêtes
+     étaient actifs même hors connexion à la base).</p>
+
+    <p>Déconnexion à la base lors de la sortie de la VM (par une
+     requête d'exécution des finalizers pour les VMs 1.2 et shutdown 
+     hook pour les 1.3).</p>
+
+   </sect>
+
+   <sect><title>Version 0.4 (2001-10-10)</title>
+
+    <p>Le programme a été entièrement réécrit avec un modèle objet qui
+    tient la route (je l'espère).</p>
+
+   </sect>
+
+   <sect><title>Version 0.3 (2001-08-22)</title>
+
+    <p>Correction de bugs (le programme ne démarrait pas sans fichier
+     d'historique) et améliorations (étiquettes dans les en tête de
+     colonnes). Merci à <link url="mailto:vixxes@noos.fr">Laurent
+      ROMEO</link> pour sa contribution.</p>
+
+    <p>Mise à jour de la documentation.</p>
+
+   </sect>
+
+   <sect><title>Version 0.2 (2000-08-31)</title>
+
+    <p>Changement de la structure des répertoires. Ajout des raccourcis
+     clavier et des thèmes.</p>
+
+   </sect>
+
+   <sect><title>Version 0.1 (2000-08-30)</title>
+
+    <p>Correction de bugs mineurs (relatifs à la connexion) et 
+     améliorations (relatives à l'historique).</p>
+
+   </sect>
+
+   <sect><title>Version 0.0 (2000-06-07)</title>
+
+    <p>Première version distribuée.</p>
+
+   </sect>
+
+  </sect>
+
+  <p><imp>Enjoy !</imp></p>
+
+ </text>
+</article><!-- Local IspellDict: francais -->

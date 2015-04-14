@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="fr"
+      id="tie"
+      date="2000-02-15"
+      email="casa@sweetohm.net"
+      author="Michel CASABIANCA">
+
+ <title>TIE pour POV</title>
+
+ <text>
+
+  <p>En visitant le site de Moonlight (excellent modeleur pour Linux),
+   je me suis rappelé des heures glorieuses où l'on éditait fébrilement
+   nos scripts pour POV sur des 386 poussifs (qui mettaient des heures
+   pour calculer des images que nous n'oserions plus montrer maintenant).</p>
+
+  <p>Dans mes archives, j'ai toutefois déniché un script qui peut encore
+   être intéressant : un chasseur TIE !</p>
+
+  <figure url="tie.png"/>
+
+  <p>Je me suis dit comme ça que cela pourrait encore servir à
+   quelqu'un, je le propose donc à qui veut l'utiliser. L'image
+   ci-dessus est extraite d'une animation réalisée à partir de ce
+   script. En suivant  <link url="../arc/tie.zip">ce lien</link>, pour
+   pouvez télécharger une archive contenant le script et la vidéo au
+   format AVI (environ 1 Mo).</p>
+
+ </text>
+
+</page>

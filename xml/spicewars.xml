@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="fr" 
+      id="spicewars" 
+      date="2000-02-07"
+      email="casa@sweetohm.net" 
+      author="Michel CASABIANCA">
+
+ <title>Spice Wars</title>
+
+ <text>
+
+  <sect><title>Un jeu de Stratégie sur l'internet</title>
+
+   <p>Spice Wars est un jeu de statégie pour 3 (minimum pour que le jeu
+    soit intéressant, mais il est possible de jouer seul) à 6 joueurs.
+   </p>
+
+   <figure url="spicewars.capture.png"/>
+
+   <p>SpiceWars a remporté la première place à la 
+    <link url="http://www.jcup.com"/> dans la catégorie
+    <file>jeux</file>.</p>
+
+  </sect>
+
+  <sect><title>Télécharger SpiceWars</title>
+  
+   <p><link url="../arc/spicewars-0.4.zip">Cliquer ici</link> pour
+    télécharger la dernière version de SpiceWars (809 ko). L'archive
+    contient la  documentation et la licence du programme.</p>
+
+  </sect>
+
+ </text>
+
+</page>
+

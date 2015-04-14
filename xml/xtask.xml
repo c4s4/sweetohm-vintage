@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN" 
+                      "../dtd/page.dtd">
+
+<page lang="fr" 
+      id="xtask" 
+      date="2001-06-06" 
+      email="casa@sweetohm.net" 
+      author="Michel CASABIANCA">
+
+ <title>XTask</title>
+
+ <text>
+
+  <figure url="xtask.ant.png"/>
+  
+  <p>XTask est une tâche de génération XSLT pour le système de génération 
+   <link url="http://jakarta.apache.org/ant">Ant</link> (équivalent Java
+   de make). Il utilise 
+   <link url="http://www.jclark.com/xml/xt.html">XT</link> le processeur 
+   XSL Open Source de James Clark.</p>
+
+  <p>XTask permet en particulier de générer des docs HTML à partir de
+   documents XML au cours d'un processus Ant.</p>
+
+  <frame>
+   <p>XTask est maintenant distribué avec SAT. <link url="sat.html">Suivre
+     ce lien pour vous rendre sur la page de SAT</link>.</p>
+  </frame>
+
+ </text>
+
+</page>
+

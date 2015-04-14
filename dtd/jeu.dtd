@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-text PUBLIC "-//SWEETOHM//DTD text 1.0//EN" 
+                           "text.dtd">
+%dtd-text;
+
+<!ELEMENT jeu (commentaire,enfants)>
+<!ATTLIST jeu
+          id    ID            #REQUIRED
+          date  CDATA         #REQUIRED
+          titre CDATA         #REQUIRED
+          note  (0|1|2|3|4|5) #REQUIRED>
+
+<!ELEMENT commentaire (%blocks;)*>
+
+<!ELEMENT enfants (%blocks;)*>

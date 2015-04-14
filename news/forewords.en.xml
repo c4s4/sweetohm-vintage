@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE forewords PUBLIC "-//CAFEBABE//DTD forewords 1.0//EN"
+                           "../dtd/forewords.dtd">
+
+<forewords>
+
+ <title>Welcome to my Home Page</title>
+
+ <figure url="index.titre.png"/>
+
+ <p>This is my home page. You will find here articles about software
+  development, Java applets for gaming and simulation, etc...</p>
+
+ <p>Enjoy !</p>
+
+</forewords>
+
+<!-- Local IspellDict: american -->

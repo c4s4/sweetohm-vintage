@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                      "../dtd/links.dtd">
+
+<links date="2002-11-01"
+      url="http://otn.oracle.com/oramag/oracle/02-nov/o62odev_ant.html">
+
+ <title>Article about Ant</title>
+
+ <p>Oracle Magazine publishes in its November issue an article I wrote
+  about Ant. This article is an introduction to Ant with real world
+  build files. The next article (in January issue) will deal about
+  advance Ant features (such as Unit Testing and JSP compilation).</p>
+
+ <figure url="index.ant.png"/>
+
+</links>
+
+<!-- Local IspellDict: american -->

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-entities PUBLIC "-//CAFEBABE//DTD entities 1.0//EN" 
+                               "entities.dtd">
+%dtd-entities;
+
+<!ENTITY % words "#PCDATA | code | value | file | keyb | imp | term |
+glyph | link | ref | note | comment | version">
+
+<!ELEMENT code (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+<!ELEMENT file (#PCDATA)>
+<!ELEMENT keyb (#PCDATA)>
+<!ELEMENT imp (#PCDATA)>
+<!ELEMENT term (#PCDATA)>
+
+<!ELEMENT glyph EMPTY>
+<!ATTLIST glyph
+          url CDATA #REQUIRED>
+
+<!ELEMENT link (#PCDATA)>
+<!ATTLIST link 
+          url CDATA #REQUIRED>
+
+<!ELEMENT ref (#PCDATA)>
+<!ATTLIST ref 
+          id IDREF #REQUIRED>
+
+<!ELEMENT note (%words;)*>
+
+<!ELEMENT comment (%words;)*>
+<!ATTLIST comment
+          author CDATA #IMPLIED>
+
+<!ELEMENT version EMPTY>

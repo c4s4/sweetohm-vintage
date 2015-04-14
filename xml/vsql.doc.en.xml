@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE article PUBLIC "-//CAFEBABE//DTD article 1.0//EN"
+                         "../dtd/article.dtd">
+
+<article lang="en" 
+         id="vsql.doc.en" 
+         date="2001-10-15" 
+         email="casa@sweetohm.net"
+         author="Michel CASABIANCA">
+ 
+ <title>VisualSQL 0.5</title>
+
+ <abstract>
+  <p>VisualSQL is a simple visual tool to display the result of SQL queries 
+   in a table. It is Open Source (under the GPL license).</p>
+ </abstract>
+
+ <text>
+
+  <sect><title>Installing VisualSQL</title>
+
+   <p>To install VisualSQL, you must first :</p>
+
+   <enum>
+    <item>Install a Database (you can use 
+     <link url="http://www.postgresql.org">PostgreSQL</link> which is
+     an Open Source Relational Database).</item>
+    <item>Install a 1.2 or 1.3 Java Virtual Machine. You can download one
+     for free on <link url="http://java.sun.com/j2se">Sun's web 
+      site</link>.</item>
+    <item>Download a JDBC driver for your Database (you will find
+     some for PostgreSQL on <link url="http://jdbc.postgresql.org">this
+      site</link>).</item>
+   </enum>
+   
+   <p>To install VisualSQL, type <code>java -jar vsql-.jar</code> in
+    the directory of the archive. This will launch the auto installer.
+    You must then drop the JDBC driver for your database in the <file>lib</file>
+    directory of VisualSQL. Windows users must edit the <file>bin\vsql.bat</file>
+    file to add the driver jar file in the CLASSPATH. If your driver's 
+    archive is a zip file, simply rename it to make a .jar file.</p>
+
+   <p>The latest version of VisualSQL is on 
+    <link url="http://www.cafebabe.net/html/vsql.en.html">my web 
+     page</link>.</p>
+
+  </sect>
+
+  <sect><title>Building VisualSQL</title>
+
+   <p>To build VisualSQL, you will need Ant version 1.3, you will find it on 
+     <link url="http://jakarta.apache.org/ant">Apache web site</link>.
+    Go to the <code>prj</code> directory and type <code>ant all</code> to 
+    rebuild from sources.</p>
+
+   <p>To generate the doc, you will need SAT, my set of Ant tools. You can
+    find it on my 
+    <link url="http://www.cafebabe.net/html/sat.en.html">web page</link>.
+    To generate the installer, you will need FiJI, my installer generator.
+    You may find it on my <link url="http://www.cafebabe.net/html/fiji.en.html">
+    web site</link>.</p>
+
+  </sect>
+
+  <sect><title>Using VisualSQL</title>
+
+   <p>Type <code>vsql</code> on the command line to launch VisualSQL. The 
+    application will look like :</p>
+
+   <figure url="vsql.screen.png"/>
+
+   <p>First, you must connect to the database:</p>
+
+   <enum>
+    <item>Type in the name of your JDBC driver class. This should be
+     included in your driver's documentation. For PostgreSQL 7.0, the
+     driver class is <file>org.postgresql.Driver</file>.</item>
+    <item>Enter your database URL. This depends on your database and
+     your driver's documentation should document this. For PostgreSQL, 
+     this is something like <file>jdbc:postgresql://localhost:5432/myDB</file>.
+    </item>
+    <item>Type in user name and password (if any).</item>
+   </enum>
+   
+   <p>Then click on the button to connect. If connection fails, a dialog
+    box should detail the error. When connected (no error message), you 
+    can send SQL queries to the database by typing them in the text area 
+    and clicking on the query button. The result is shown on the lower pane.
+    You can display previous queries with arrows (up for previous and
+    down for next ones).</p>
+
+   <p>You disconnect from the database when quitting or by clicking on
+    the disconnect button. When quitting, your configuration is saved
+    in a configuration file (<file>~/.vsql.properties</file> on Unix or
+    <file>&lt;VSQL_HOME&gt;\vsql.properties</file> on Windows). The query
+    history (last 100 queries) is saved in a file (<file>~/.vsql.history</file>
+    on Unix or <file>&lt;VSQL_HOME&gt;\vsql.history</file> on Windows).</p>
+
+   <p>Key bindings are the following:</p>
+
+   <list>
+    <item><imp>Ctrl+Space</imp>: Connect/disconnect from the database.</item>
+    <item><imp>Ctrl+Enter</imp>: Execute Query.</item>
+    <item><imp>Ctrl+Up</imp>: Previous Query in the History.</item>
+    <item><imp>Ctrl+Down</imp>: Next Query in the History.</item>
+   </list>
+
+  </sect>
+
+  <sect><title>Configuration file</title>
+
+   <p>The database connection properties are saved when you quit the
+    application in the following properties:</p>
+
+   <list>
+    <item><imp>jdbc.driver</imp>: the JDBC driver to use.</item>
+    <item><imp>jdbc.url</imp>: the database URL.</item>
+    <item><imp>jdbc.user</imp>: the user name.</item>
+    <item><imp>jdbc.password</imp>: the password for the user.</item>
+   </list>
+
+   <p>There are other properties you can change by editing the properties
+    file:</p>
+
+   <list>
+    <item><imp>debug</imp>: to run the program in debug mode. The stack
+     traces are printed on the console. Copy those stack traces to
+     send a bug report. May have the values <file>true</file> or 
+     <file>false</file>.</item>
+    <item><imp>swing.icons</imp>: this is the set of icons to use in
+     the interface. May have the values <file>swing</file> or <file>jlobby</file>.
+     The Java Lobby icons are Copyright(C) 1998  by  
+     <link url="mailto:dean@gallant.com">Dean S. Jones</link> and may
+     be downloaded at <link url="http://www.gallant.com/icons.htm">www.gallant.com/icons.htm</link>.
+    </item>
+    <item><imp>swing.primaryX</imp> and <imp>swing.secondaryY</imp>: change
+     those values to customize you interface. Those values may be decimal,
+     hexadecimal (starting with <file>0x</file>) or octal (starting with
+     <file>O</file>) values.</item>
+   </list>
+
+  </sect>
+
+  <sect><title>License</title>
+
+   <p>This software is free and released under the 
+    <link url="http://www.gnu.org/copyleft/gpl.html">GPL</link>.
+    You can find a copy of this license in the file <file>LICENSE</file>
+    in the installation directory.</p>
+
+  </sect>
+
+  <sect><title>History</title>
+
+   <sect><title>Version 0.5 (2001-10-15)</title>
+
+    <p>Bug correction (query related key bindings were active even when 
+     not connected to the database).</p>
+
+    <p>Disconnection from the database on VM shutdown (using finalizer
+     execution request on 1.2 VMs and a shutdown hook on 1.3).</p>
+
+   </sect>
+
+   <sect><title>Version 0.4 (2001-10-10)</title>
+
+    <p>The program has been completely rewritten using a (supposed) clean
+     object design.</p>
+
+   </sect>
+
+   <sect><title>Version 0.3 (2001-08-22)</title>
+
+    <p>Bug corrections (the program didn't started if no history file
+     was found in the user's home) and enhancements (tool tips on the
+     column headers). Thanks to <link url="mailto:vixxes@noos.fr">Laurent
+      ROMEO</link> for his contribution.</p>
+
+    <p>Documentation updates.</p>
+
+   </sect>
+
+   <sect><title>Version 0.2 (2000-08-31)</title>
+
+    <p>Directory tree changed, Hot Keys and theme added.</p>
+
+   </sect>
+
+   <sect><title>Version 0.1 (2000-08-30)</title>
+
+    <p>Minor bug fix (related to the Connect button) and an enhancement
+     (related to the History list).</p>
+
+   </sect>
+
+   <sect><title>Version 0.0 (2000-06-07)</title>
+
+    <p>First release.</p>
+
+   </sect>
+
+  </sect>
+
+  <p><imp>Enjoy !</imp></p>
+
+ </text>
+</article><!-- Local IspellDict: english -->

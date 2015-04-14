@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-06-30" url="html/viewcvs-macosx.html">
+
+ <title>Installer ViewCVS sous MacOSX</title>
+
+ <p>Un petit article détaillant l'installation de ViewCVS sous
+  MacOSX en quelques minutes.</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2003-07-13" url="html/sat.html">
+
+ <title>Release 0.8 de SAT</title>
+
+ <p>Cette release propose un mode console Ant qui accélère grandement
+  la vitesse des builds.</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

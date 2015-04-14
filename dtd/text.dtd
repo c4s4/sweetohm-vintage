@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-blocks PUBLIC "-//SWEETOHM//DTD blocks 1.0//EN" 
+                             "blocks.dtd">
+%dtd-blocks;
+
+<!ENTITY % text "%blocks; | sect">
+
+<!ELEMENT text (%text;)*>
+
+<!ELEMENT sect (title, (%text;)*)>
+<!ATTLIST sect
+          id    ID    #IMPLIED
+          level CDATA #IMPLIED>

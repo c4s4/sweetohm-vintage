@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links url="http://www.javasearch.net" date="2004-08-09">
+  
+ <title>JavaSearch.net</title>
+
+ <p>Un site proposant la recherche par mots clefs dans la JavaDoc. Une 
+  sorte de Google pour développeur Java. Très bien fait et efficace.
+  Indispensable !</p>
+
+ <figure url="index.javasearch.png"/>
+
+</links>
+
+<!-- Local IspellDict: francais -->

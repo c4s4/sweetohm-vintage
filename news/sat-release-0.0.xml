@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+<news url="html/sat.html" date="2001-05-29">
+ 
+ 
+ <title>Première release de SAT</title>
+ 
+
+ 
+  
+  <p>SAT (pour Sweet Ant Tools) est un ensemble de tâches pour Ant.
+   J'ai enfin trouvé le temps de mettre les sources au propre et
+   de faire la documentation (pas encore disponible en anglais).</p>
+
+  <p>XTask est maintenant distribué avec SAT, il est donc préférable
+   de télécharger SAT plutôt que XTask qui n'est plus entretenu
+   seul (j'ai laissé la page sur mon site pour éviter de briser des
+   liens).</p>
+
+ 
+
+</news><!-- Local IspellDict: francais -->

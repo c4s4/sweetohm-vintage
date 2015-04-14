@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="fr" 
+      id="atomx"
+      date="2000-02-07"
+      email="casa@sweetohm.net"
+      author="Michel CASABIANCA">
+
+ <title>Atom X</title>
+
+ <part file="regles"><title>Règles</title>
+
+  <text>
+
+   <sect><title>But du jeu</title>
+    
+    <p>Le but du jeu est de découvrir les atomes cachés sur le
+    plateau. Pour ce faire, on doit envoyer des particules par les
+    bords de ce dernier. Le programme indique alors le point d'entrée
+    (flèche entrante rouge) et le ou les points de sortie de la ou des
+    particules (par des flèches vertes sortantes). Il est possible
+    qu'une particule entre et ressorte par la même case, il y a alors
+    une flèche rouge entrante et une verte sortante sur le même
+    bord.</p>
+
+   </sect>
+
+   <sect><title>Types d'atomes</title>
+
+    <p>Il existe 4 types d'atomes différents :</p>
+
+    <list>
+
+     <item><imp>OR (jaune):</imp> Lorsque la particule le heurte de
+      face, elle repart en sens contraire.</item>
+
+     <item><imp>PLOMB (gris):</imp> Lorsque la particule le heurte de
+      face, elle est absorbée.</item>
+
+     <item><imp>URANIUM (rouge):</imp> Il engendre 4 particules qui
+      partent dans les 4 directions.</item>
+
+     <item><imp>BORE (vert):</imp> Il renvoie une particule
+      aléatoirement dans une des 4 directions possibles.</item>
+
+    </list>
+
+    <p>Voici un récapitulatif des actions des différents atomes,
+     lorsqu'ils sont heurtés de face :</p>
+
+    <figure url="atomx.exemple1.png"><title>Différents types d'atomes</title></figure>
+
+    <p>Lorsqu'un atome est heurté de coté, il renvoie la particule à angle
+     droit, quelle que soit sa nature. Voici un exemple des rebonds
+     possibles sur un atome :</p>
+
+    <figure url="atomx.exemple2.png"><title>Chocs de côté</title></figure>
+    
+    <p>Les rebonds sur les différents atomes et les actions de ceux-ci
+     lors d'un choc frontal se combinent lors d'un même tir, ce qui va
+     franchement compliquer votre tâche pour trouver où se trouvent les
+     atomes. Voici un exemple de tir :</p>
+
+    <figure url="atomx.exemple3.png"><title>Tir complexe</title></figure>
+   
+   </sect>
+
+   <sect><title>Déroulement d'une partie</title>
+
+    <p>On peut :</p>
+
+    <sect><title>Choisir son niveau de jeu</title>
+
+     <p>on clique sur le bouton <imp>[Recommencer]</imp> , il apparaît
+      alors une fenètre pour choisir le niveau :</p>
+
+     <figure url="atomx.exemple4.png"><title>Choix du niveau</title></figure>
+
+     <p>On clique sur le niveau désiré, puis sur <imp>[OK]</imp>.</p>
+
+     <list>
+
+      <item>Au niveau <file>Bachelier</file>, seuls des atomes d'or sont
+      présents sur le plateau, et ils sont au nombre de 4.</item>
+
+      <item>Au niveau <file>Licencié</file>, il peut y avoir sur le
+      plateau des atomes d'or et de plomb, et ils sont au nombre de 4
+      ou 5.</item>
+
+      <item>Au niveau <file>Docteur</file>, des atomes d'uranium peuvent
+      être aussi présents, et il y a entre 4 et 6 atomes en jeu.</item>
+
+      <item>Vient ensuite le niveau <file>Génie</file>, tous les atomes
+      peuvent être présents sur le plateau et ils sont entre 4 et
+      7.</item>
+
+     </list>
+
+     <p>Au lancement du programme, il a automatiquement généré un
+      problème du niveau <file>Bachelier</file>.</p>
+
+    </sect>
+
+    <sect><title>Faire des essais de tir</title>
+
+     <p>Il suffit de cliquer sur la flèche du bord sur lequel on désire
+      effectuer le tir. Les flèches rouges indiquent les cases d'entrée des
+      particules, le vertes, les cases de sortie.</p>
+
+    </sect>
+
+    <sect><title>Construire sa solution</title>
+
+     <p>Au fil des tirs successif, on se fait une idée de la localisation
+      des particules.</p>
+
+     <figure url="atomx.exemple5.png"><title>Construire sa solution</title></figure>
+
+     <p>On peut alors placer des particules sur le scope : il suffit de
+      cliquer sur la particule que l'on désire placer, puis de cliquer sur
+      la case du scope où l'on veut la placer. Si l'on clique sur un atome
+      du plateau, celui-ci est enlevé. On peut nettoyer entièrement le
+      plateau en appuyant sur le bouton <imp>[Effacer]</imp>.</p>
+
+    </sect>
+
+    <sect><title>Revoir les tirs précédents</title>
+
+     <p>Les tirs effectués sont numérotés et stockés en mémoire :</p>
+
+     <figure url="atomx.exemple6.png"><title>Revoir les tirs précédents</title></figure>
+
+     <p>Pour les revoir il suffit de cliquer sur les flèches gauche ou
+      droite, ce qui fait défiler les tirs successifs, avec leur numéro
+      d'ordre.</p>
+
+    </sect>
+
+    <sect><title>Vérifier sa solution</title>
+
+     <p>Lorsqu'on est certain de sa solution, on peut alors la
+      vérifier : cliquer sur le bouton <imp>[Solution]</imp>. La
+      solution s'affiche alors dans une fenètre. Vous pouvez continuer
+      à faire des tirs (sans refermer la fenètre), c'est très utile au
+      début pour se familiariser avec le déplacement des
+      particules. On peut refaire une partie en cliquant sur
+      recommencer.</p>
+
+    </sect>
+
+    <sect><title>Aide</title>
+
+     <p>Cliquer sur le bouton <imp>[Aide]</imp> pour faire apparaitre
+      une fenètre d'aide succinte.</p>
+
+    </sect>
+
+    <p>Vous en savez assez pour jouer. Cliquez sur le lien
+    <file>Applet</file> ci-dessous pour jouer avec l'applet Java.</p>
+
+   </sect>
+
+  </text>
+
+ </part>
+
+ <part file="applet"><title>Applet</title>
+
+  <text>
+
+   
+    <applet code="atomx.class" codebase="atomx" width="530" height="350"/>
+   
+
+  </text>
+
+ </part>
+
+</page><!-- 
+Local Variables: 
+mode: xml 
+sgml-indent-data: t 
+sgml-indent-step: 1 
+End:  
+-->

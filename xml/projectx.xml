@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page lang="fr"
+      id="projectx"
+      date="2000-02-12"
+      email="casa@sweetohm.net"
+      author="Michel CASABIANCA">
+
+ <title>ProjectX de Sun</title>
+
+ <text>
+
+  <p>Le parser XML de Sun (nom de code "ProjectX") présente un défaut 
+   de localisation.  Cet article se propose d'y remédier.</p>
+
+  <sect><title>Un bug de localisation</title>
+
+   <p>Le <link url="http://java.sun.com/xml">parser XML de Sun</link> 
+    est réputé pour son respect des normes et la clarté de ses 
+    messages d'erreur (voir le test de 
+    <link url="http://developerlife.com/domconformance/default.htm">Developer Life</link>. 
+    Il est donc tout indiqué pour programmer un validateur de fichiers XML.</p>
+
+   <p>Le code suivant est un exemple d'un tel validateur (simple
+    pour la démonstration) :</p>
+
+   <source>import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+
+public class Validator
+{
+  /** parser XML validant de ProjectX */
+  private static final String parserClassName=
+    "com.sun.xml.parser.ValidatingParser";
+
+  /**
+   * Méthode main
+   *
+   * @param args le fichier à valider
+   */
+  public static void main(String[] args) {
+    try {
+      // on instancie le parser
+      Parser parser=ParserFactory.makeParser(parserClassName);
+      // on construit la source du fichier à valider
+      String fichier="file:"+
+        System.getProperty("user.dir")+
+        System.getProperty("file.separator")+
+        args[0];
+      InputSource source=new InputSource(fichier);
+      // on parse le fichier
+      parser.parse(source);
+    }
+    // on intercepte les exceptions de type SAXParseException
+    // qui encapsulent les messages d'erreur XML
+    catch(SAXParseException e1) {
+      System.out.println(e1.getSystemId()+":"+
+                 e1.getLineNumber()+":"+
+                 e1.getMessage());
+    }
+    // on affiche les autres exceptions
+    catch(Exception e2) {e2.printStackTrace();}
+  }
+}</source>
+
+   <p>Ce programme est très simple et je n'expliquerai pas son
+    fonctionnement dans cet article (la programmation d'applications
+    SAX pourrait bien faire prochainement l'objet d'un article).</p>
+
+   <p>Pour lancer le programme, il faut bien sûr inclure l'archive
+    <file>xml.jar</file> du parser du ProjectX dans le <code>CLASSPATH</code>.
+    Pour lancer ce programme, on pourra utiliser (sous UNIX) le script 
+    suivant :</p>
+
+   <source>#!/bin/bash
+# on désactive le compilateur JIT
+export JAVA_COMPILER=
+# répertoire du validateur (à modifier)
+VALID_HOME=/home/casa/tmp/test
+# définition du CLASSPATH
+export CLASSPATH=$VALID_HOME/:$VALID_HOME/xml.jar
+# lancement du validateur
+java Validator $*</source>
+
+   <p>Essayons maintenant notre validateur sur un simple fichier
+    d'exemple, comme celui-ci :</p>
+
+   <source>&lt;?xml version="1.0"?&gt;
+
+&lt;exemple&gt;
+&lt;exemple&gt;</source>
+
+   <p>On obtient alors le message d'erreur suivant :</p>
+
+   <source>file:/home/casa/tmp/test/test.xml:4:com.sun.xml.parser/P-035</source>
+
+   <p>Le moins que l'on puisse dire, c'est que ce n'est pas clair !
+    Le problème vient du fait que la locale française n'existe
+    pas pour les messages d'erreur. On pourrait cependant s'attendre
+    à ce que le parser passe à la locale anglaise, mais ce n'est pas
+    le cas...</p>
+
+  </sect>
+
+  <sect><title>Première solution : changer la locale</title>
+
+   <p>La première solution consiste à demander au parser de changer 
+    de locale pour la locale <file>en_US</file>, avec la ligne suivante :</p>
+
+   <source>parser.setLocale(new java.util.Locale("en","US"));</source>
+
+   <p>Le code de notre validateur de fichiers devient alors :</p>
+
+   <source>import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+
+public class Validator
+{
+  /** parser XML validant de ProjectX */
+  private static final String parserClassName=
+    "com.sun.xml.parser.ValidatingParser";
+
+  /**
+   * Méthode main
+   *
+   * @param args le fichier à valider
+   */
+  public static void main(String[] args) {
+    try {
+      // on instancie le parser
+      Parser parser=ParserFactory.makeParser(parserClassName);
+      // on change la locale
+      parser.setLocale(new java.util.Locale("en","US"));
+      // on construit la source du fichier à valider
+      String fichier="file:"+
+        System.getProperty("user.dir")+
+        System.getProperty("file.separator")+
+        args[0];
+      InputSource source=new InputSource(fichier);
+      // on parse le fichier
+      parser.parse(source);
+    }
+    // on intercepte les exceptions de type SAXParseException
+    // qui encapsulent les messages d'erreur XML
+    catch(SAXParseException e1) {
+      System.out.println(e1.getSystemId()+":"+
+                 e1.getLineNumber()+":"+
+                 e1.getMessage());
+    }
+    // on affiche les autres exceptions
+    catch(Exception e2) {e2.printStackTrace();}
+  }
+}</source>
+
+   <p>Si l'on parse notre document, on obtient maintenant le message
+    suivant :</p>
+
+   <source>file:/home/casa/tmp/test/test.xml:4:End of entity not allowed; 
+an end tag is missing.</source>
+
+   <p>Ce qui est tout de même mieux !</p>
+
+  </sect>
+
+  <sect><title>Deuxième solution : correction des sources</title>
+
+   <p>Une deuxième solution consiste tout simplement à corriger ce
+    bug, de manière à ce que le parser adopte la locale <file>en_US</file>
+    si la locale de la VM n'est pas supportée.</p>
+
+   <p>Pour ce faire, il nous faut modifier la méthode <code>init()</code>
+    du fichier <file>com/sun/xml/parser/Parser</file> des sources comme
+    suit :</p>
+
+   <p>Remplacer :</p>
+
+   <source>if (locale == null)
+  locale = Locale.getDefault ();</source>
+
+   <p>Par :</p>
+
+   <source>if (locale == null) {
+  locale = Locale.getDefault ();
+  // casa: test if default locale is supported
+  if(!messages.isLocaleSupported (locale.toString ()))
+    locale = new Locale("en","US");
+}</source>
+
+   <p>Ainsi, on vérifie si la locale par défaut de la VM est supportée
+    et on passe à la locale <file>en_US</file> si ce n'est pas le cas.</p>
+
+   <p>Pour recompiler les sources, on pourra utiliser le makefile
+    suivant (à placer dans le répertoire des sources) :</p>
+
+   <source>all: class jar
+class:
+	javac -O `find -name "*.java"`
+jar:
+	jar cf xml.jar `find -name "*.class"` `find -name "*.properties"`
+clean:
+	rm -f `find -name "*.class"`</source>
+
+   <p>On notera que cette recompilation est la bienvenue car le
+    fichier <file>jar</file> fourni par Sun a été compilé avec l'option
+    de débuggage activée (option <code>-g</code> de la ligne de commande).
+    La recompilation des sources permet ainsi de gagner en vitesse 
+    d'exécution (le gain est cependant minime) et en place.</p>
+
+  </sect>
+
+  <sect><title>Troisième solution : traduction des messages</title>
+
+   <p>La troisième solution est certainement la meilleure : la
+    traduction des messages d'erreur. Pour ce faire, il faut fournir
+    au parser des fichiers <code>Messages_fr.properties</code> à placer
+    dans les répertoires <file>com.sun.xml.parser.resources</file> 
+    (pour les messages du parser SAX) et 
+    <file>com/sun/xml/tree/resources/Messages_fr.properties</file> 
+    (pour les messages du parser DOM)  des sources. Il faut ensuite 
+    recompiler le tout (avec le makefile ci-dessus). Les messages 
+    d'erreur sont alors affichés en français.</p>
+
+   <p>J'ai traduit les messages d'erreur pour les parsers SAX et DOM. 
+    Suivre <link url="../arc/projectx.zip">ce lien</link> pour les
+    télécharger. Cette archive contient également les fichiers
+    d'exemple de cet article.</p>
+
+  </sect>
+
+ </text>
+
+</page>
+

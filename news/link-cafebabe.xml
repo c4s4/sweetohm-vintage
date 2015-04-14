@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links date="2002-10-22" url="http://www.cafebabe.net">
+
+ <title>Nouvelle URL du site</title>
+
+ <p>La nouvelle URL est donc <link url="http://www.cafebabe.net"/>. 
+  Merci d'utiliser cette nouvelle URL pour référencer ce site (même
+  si elle est redirigée vers <file>sdv.fr</file>, mon hébergeur).</p>
+
+</links>
+
+<!-- Local IspellDict: francais -->

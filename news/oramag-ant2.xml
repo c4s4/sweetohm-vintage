@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                      "../dtd/links.dtd">
+
+<links date="2003-01-16"
+      url="http://otn.oracle.com/oramag/oracle/03-jan/o13ant.html">
+
+ <title>Suite de mon article d'introduction à Ant</title>
+
+ <p>La suite de mon article d'introduction à Ant est parue dans le
+  numéro de Janvier/Février d'Oracle Magazine (en anglais). On y
+  découvre des fonctionnalités avancées de Ant (comme packager des
+  applications, passer des tests unitaires et bien d'autres choses
+  encore).</p>
+
+ <figure url="index.ant.png"/>
+
+</links>
+
+<!-- Local IspellDict: francais -->

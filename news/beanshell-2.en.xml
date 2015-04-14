@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links date="2003-09-03" url="http://www.beanshell.org">
+
+ <title>Beanshell 2.0</title>
+
+ <p>Beanshell is a Java interpreter, very handy to test pieces of code
+  and write scripts able to make use of the huge API of this
+  language. This latest version (still in beta) is now able to
+  interpret all Java source files, even those defining classes (which
+  was not possible using previous versions). A good news!</p>
+
+ <figure url="index.beany.png"/>
+
+</links>
+
+<!-- Local IspellDict: francais -->

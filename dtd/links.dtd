@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!ENTITY % dtd-text PUBLIC "-//SWEETOHM//DTD text 1.0//EN" 
+                           "text.dtd">
+%dtd-text;
+
+<!ELEMENT links (title,(%blocks;)*)>
+<!ATTLIST links
+          date CDATA #REQUIRED
+          url CDATA #IMPLIED>

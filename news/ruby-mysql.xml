@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN" "../dtd/news.dtd">
+
+<news url="html/ruby-mysql.html" date="2008-06-09">
+ 
+ <title>Utiliser le module Ruby MySQL</title>
+
+  <p>J'ai terminé la traduction de cet article sur l'utilisation du module
+    MySQL pour Ruby. Merci à Paul Dubois pour m'avoir permis de faire
+    profiter nos amis francophones de son travail ! On trouvera d'autres
+    articles traitant de MySQL sur sa page à l'adresse
+    <link url="http://www.kitebird.com/articles/"/>.</p>
+
+</news>
+<!-- Local IspellDict: francais -->

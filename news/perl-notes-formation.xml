@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                      "../dtd/news.dtd">
+
+<news date="2014-06-23" 
+      url="html/perl-notes-formation.html">
+
+ <title>Notes Formation Perl</title>
+
+ <p>J'ai suivi une formation Perl et voici mes notes en vrac.</p>
+
+ <p>Enjoy!</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->

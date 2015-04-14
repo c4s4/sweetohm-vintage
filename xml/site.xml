@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE page PUBLIC "-//CAFEBABE//DTD page 1.0//EN"
+                      "../dtd/page.dtd">
+
+<page author="Michel CASABIANCA"
+      email="casa@sweetohm.net"
+      date="2002-10-23"
+      id="site"
+      lang="fr">
+
+ <title>À propos de ce site</title>
+
+ <text>
+
+  <p>Ce site est entièrement géré en XML. Chaque page (ou groupe de pages)
+   est stocké dans un fichier XML à partir duquel sont générées les page
+   HTML à l'aide de feuilles de style XSL. La génération est
+   automatisée en utilisant Ant et des tâches XML dédiées que je
+   distribue dans le package 
+   <link url="http://www.cafebabe.net/html/sat.html">SAT</link>.</p>
+
+  <p>La gestion d'un site XML est bien plus simple que celle d'un site
+   HTML classique car les fichiers XML ne se préoccupent que du contenu,
+   la forme étant codée dans les feuilles de style XSLT. La mise en
+   page étant répétitive, il est intéressant de l'automatiser en la
+   codant dans les feuilles de style.</p>
+
+  <p>Pour plus d'explications, voir mon article <link
+    url="ant-web.html">Générer un site web avec Ant</link>.</p>
+
+ </text>
+
+</page>
+
+<!-- Local IspellDict: francais -->

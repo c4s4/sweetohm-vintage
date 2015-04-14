@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE links PUBLIC "-//CAFEBABE//DTD links 1.0//EN"
+                       "../dtd/links.dtd">
+
+<links date="2003-05-14" 
+       url="http://otn.oracle.com/oramag/oracle/03-may/o33junit.html">
+
+ <title>Article d'introduction à JUnit</title>
+
+ <p>Cet article, publié dans Oracle Magazine, est une introduction au
+  framework de tests unitaire, JUnit. Il fait le tour de cet outil,
+  des fichiers de test les plus simples aux fonctionnalités avancées
+  comme les suites de test ou l'intégration à Ant. Bonne lecture.</p>
+
+</links>
+
+<!-- Local IspellDict: francais -->

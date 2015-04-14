@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE news PUBLIC "-//CAFEBABE//DTD news 1.0//EN"
+                       "../dtd/news.dtd">
+
+<news date="2004-01-06" url="html/emacs-panther.html">
+
+  <title>Mise à jour de ma page Emacs sous Panther</title>
+
+  <p>Où comment configurer Emacs sous Panther de manière à ce qu'il
+  gère convenablement les caractères accentués.</p>
+
+</news>
+
+<!-- Local IspellDict: francais -->
