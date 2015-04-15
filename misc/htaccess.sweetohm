@@ -9,3 +9,4 @@ Redirect permanent /blog/rss.xml http://sweetohm.net/rss.xml
 Redirect permanent /html/gointerfaces.html /html/go-interfaces.html
 Redirect permanent /html/gointerfaces.en.html /html/go-interfaces.en.html
 RedirectMatch permanent /blog/index-(.*)\.html http://sweetohm.net/index-$1.html
+RedirectMatch permanent /arc/(.*)\.pdf http://sweetohm.net/pdf/$1.pdf
