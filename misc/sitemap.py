@@ -11,6 +11,7 @@ GLOBS = {
     '%s/*.html':      0.0,
     '%s/html/*.html': 1.0,
     '%s/blog/*.html': 1.0,
+    '%s/pdf/*.pdf':   1.0,
 }
 
 HTML_ROOT = '''<?xml version="1.0" encoding="UTF-8"?>
