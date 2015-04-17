@@ -88,7 +88,7 @@
   </submenu>
   
   <submenu title="À propos">
-    <menuitem title="De l'auteur" url="../arc/cv-michel-casabianca.html"/>
+    <menuitem title="De l'auteur" url="michel-casabianca.html"/>
     <menuitem title="De ce site" url="site.html"/>
   </submenu>
   
