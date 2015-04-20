@@ -7,7 +7,8 @@
          date="2002-11-26" 
          email="casa@sweetohm.net" 
          author="Michel CASABIANCA"
-         pdf="true">
+         pdf="true"
+         keywords="xml">
 
  <title>Introduction à XML</title>
 

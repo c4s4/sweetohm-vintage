@@ -7,7 +7,8 @@
          date="2000-05-12" 
          email="casa@sweetohm.net" 
          author="Michel CASABIANCA"
-         pdf="true">
+         pdf="true"
+         keywords="java, linux">
 
  <title>Outils de développement Java sous Linux</title>
 

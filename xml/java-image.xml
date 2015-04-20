@@ -6,7 +6,8 @@
       id="java-image" 
       date="2000-05-05"
       email="casa@sweetohm.net" 
-      author="Michel CASABIANCA">
+      author="Michel CASABIANCA"
+      keywords="java, images">
 
 
  <title>Attendre le chargement d'une image</title>

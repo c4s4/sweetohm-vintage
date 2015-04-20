@@ -6,7 +6,8 @@
       id="xtask.en" 
       date="2001-06-06" 
       email="casa@sweetohm.net" 
-      author="Michel CASABIANCA">
+      author="Michel CASABIANCA"
+      keywords="ant, xslt">
 
  <title>XTask</title>
 

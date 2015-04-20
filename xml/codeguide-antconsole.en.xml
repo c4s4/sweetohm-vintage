@@ -6,7 +6,8 @@
          email="casa@sweetohm.net"
          date="2004-01-06"
          id="codeguide-antconsole.en"
-         lang="en">
+         lang="en"
+         keywords="codeguide, ant, console">
 
  <title>Fast Ant builds with CodeGuide</title>
 

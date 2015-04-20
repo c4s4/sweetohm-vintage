@@ -6,12 +6,13 @@
 
 <!ELEMENT article (title,abstract?,text)>
 <!ATTLIST article 
-          author  CDATA   #REQUIRED
-          email   CDATA   #REQUIRED
-          date    CDATA   #REQUIRED
-          id      CDATA   #REQUIRED
-          toc     NMTOKEN 'yes'
-          lang    NMTOKEN 'en'
-          pdf     NMTOKEN 'no'>
+          author   CDATA   #REQUIRED
+          email    CDATA   #REQUIRED
+          date     CDATA   #REQUIRED
+          keywords CDATA   #REQUIRED
+          id       CDATA   #REQUIRED
+          toc      NMTOKEN 'yes'
+          lang     NMTOKEN 'en'
+          pdf      NMTOKEN 'no'>
 
 <!ELEMENT abstract (%text;)*>

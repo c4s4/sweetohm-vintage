@@ -7,7 +7,8 @@
          email="casa@sweetohm.net"
          date="2003-05-28"
          lang="fr"
-         pdf="true">
+         pdf="true"
+         keywords="xml, xslt">
 
  <title>Introduction à XSLT</title>
 

@@ -6,7 +6,8 @@
          id="sat.doc.en"
          date="2003-07-14"
          email="casa@sweetohm.net"
-         author="Michel CASABIANCA">
+         author="Michel CASABIANCA"
+         keywords="ant, tool, plugin">
   
  <title>Sweet Ant Tools 1.0</title>
 
