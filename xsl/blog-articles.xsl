@@ -24,6 +24,7 @@
    <xsl:variable name="previous" select="$current + 1"/>
    <xsl:variable name="next" select="$current - 1"/>
    <xsl:processing-instruction name="split">file=&quot;<xsl:value-of select="$current"/>.html&quot;?</xsl:processing-instruction>
+   <xsl:call-template name="params"/>
    <xsl:call-template name="blog-title">
     <xsl:with-param name="current" select="$current"/>
     <xsl:with-param name="last" select="$last"/>
@@ -66,6 +67,20 @@
    </xsl:call-template>
    <xsl:processing-instruction name="split">file=&quot;<xsl:value-of select="$current"/>.html&quot;?</xsl:processing-instruction>
   </xsl:for-each>
+ </xsl:template>
+
+ <!-- print parameters -->
+ <xsl:template name="params">
+  <xsl:comment>
+###PARAMS###
+id:       <xsl:value-of select="@id"/>
+date:     <xsl:value-of select="@date"/>
+author:   <xsl:value-of select="@author"/>
+email:    <xsl:value-of select="@email"/>
+keywords: <xsl:value-of select="@keywords"/>
+lang:     <xsl:value-of select="@lang"/>
+title:    <xsl:value-of select="title"/>
+  </xsl:comment>
  </xsl:template>
 
  <xsl:template name="blog-title">                                               

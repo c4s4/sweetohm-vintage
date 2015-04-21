@@ -13,6 +13,7 @@
 
  <!-- catch the root element -->
  <xsl:template match="/article">
+  <xsl:call-template name="params"/>
   <xsl:choose>
    <xsl:when test="$fragment='no'">
     <html>
@@ -35,6 +36,20 @@
     </xsl:call-template>
    </xsl:otherwise>
   </xsl:choose>
+ </xsl:template>
+
+ <!-- print parameters -->
+ <xsl:template name="params">
+  <xsl:comment>
+###PARAMS###
+id:       <xsl:value-of select="@id"/>
+date:     <xsl:value-of select="@date"/>
+author:   <xsl:value-of select="@author"/>
+email:    <xsl:value-of select="@email"/>
+keywords: <xsl:value-of select="@keywords"/>
+lang:     <xsl:value-of select="@lang"/>
+title:    <xsl:value-of select="title"/>
+  </xsl:comment>
  </xsl:template>
 
  <!-- print the body -->

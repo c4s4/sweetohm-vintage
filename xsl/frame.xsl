@@ -14,14 +14,11 @@
 </xsl:text>
   <html lang="###lang###">
    <head>
-    <title>###title###</title>
-    <!--<link rel="stylesheet" href="{$root-dir}/style.css"/>-->
+    <meta name="keywords" content="###keywords###"/>
+    <meta name="author" content="###author###"/>
     <link rel="alternate" type="application/rss+xml"
           title="Sweetohm" href="http://sweetohm.net/rss.xml" />
-    <meta charset="ISO-8859-1"/>
-    <meta name="keywords" content="###keywords###"/>
-    <meta name="description" content="###description###"/>
-    <meta name="author" content="###author###"/>
+    <title>###title###</title>
    </head>
    <body bgcolor="{$background-color}" text="{$text-color}" 
          link="{$link-color}" vlink="{$visited-link-color}"

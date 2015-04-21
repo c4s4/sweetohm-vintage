@@ -11,6 +11,7 @@
  <xsl:param name="limit">0000-01-01</xsl:param>
 
  <xsl:template match="/index">
+  <xsl:call-template name="index-params"/>
   <xsl:apply-templates select="forewords"/>
   <table border="0" cellpadding="10" cellspacing="0">
    <tr>
@@ -23,6 +24,17 @@
    </tr>
   </table>
   <xsl:call-template name="date"/>
+ </xsl:template>
+
+ <!-- print parameters -->
+ <xsl:template name="index-params">
+  <xsl:comment>
+###PARAMS###
+author:   Michel Casabianca
+keywords: sweetohm
+lang:     en
+title:    Sweetohm
+  </xsl:comment>
  </xsl:template>
 
  <xsl:template match="forewords">
