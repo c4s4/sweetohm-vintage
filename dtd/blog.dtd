@@ -6,5 +6,11 @@
 
 <!ELEMENT blog (title,(%blocks;)*)>
 <!ATTLIST blog
-          date CDATA #REQUIRED
-          id   CDATA #REQUIRED>
+          date     CDATA   #REQUIRED
+          id       CDATA   #REQUIRED
+          author   CDATA   #REQUIRED
+          email    CDATA   #REQUIRED
+          keywords CDATA   #REQUIRED
+          toc      NMTOKEN 'no'
+          lang     NMTOKEN 'fr'
+          pdf      NMTOKEN 'no'>

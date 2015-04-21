@@ -6,11 +6,12 @@
 
 <!ELEMENT page (title, (text | part*))>
 <!ATTLIST page
-          author  CDATA   #REQUIRED
-	  email   CDATA   #REQUIRED
-	  date    CDATA   #REQUIRED
-	  id      ID      #REQUIRED
-          lang    NMTOKEN 'en'>
+          author   CDATA   #REQUIRED
+          email    CDATA   #REQUIRED
+          keywords CDATA   #REQUIRED
+          date     CDATA   #REQUIRED
+          id       ID      #REQUIRED
+          lang     NMTOKEN 'en'>
 
 <!ELEMENT part (title,text)>
 <!ATTLIST part

@@ -6,7 +6,8 @@
       id="java-evenements"
       date="2000-05-05"
       email="peignier@mygale.org"
-      author="Alain PEIGNIER">
+      author="Alain PEIGNIER"
+      keywords="java, evenements">
 
  <title>Toute la vérité sur les évènements de l'AWT 1.1</title>
 

@@ -10,11 +10,15 @@
  <xsl:param name="img-dir" select="'.'"/>
 
  <xsl:template match="/">
-  <html>
+  <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html>
+</xsl:text>
+  <html lang="###lang###">
    <head>
-    <title>Sweetohm</title>
+    <meta name="keywords" content="###keywords###"/>
+    <meta name="author" content="###author###"/>
     <link rel="alternate" type="application/rss+xml"
           title="Sweetohm" href="http://sweetohm.net/rss.xml" />
+    <title>###title###</title>
    </head>
    <body bgcolor="{$background-color}" text="{$text-color}" 
          link="{$link-color}" vlink="{$visited-link-color}"

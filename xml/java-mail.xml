@@ -6,7 +6,8 @@
       id="java-mail" 
       date="2000-05-05"
       email="casa@sweetohm.net" 
-      author="Michel CASABIANCA">
+      author="Michel CASABIANCA"
+      keywords="java, email, mail">
 
  <title>Envoyer des mails en Java</title>
  <text>

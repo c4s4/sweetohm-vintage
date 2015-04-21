@@ -327,13 +327,20 @@
     </copy>
   </target>
 
+  <target name="pagemeta" description="Replace page meta data">
+    <exec executable="python">
+      <arg value="misc/pagemeta.py"/>
+      <arg value="${site}"/>
+    </exec>
+  </target>
+
   <target name="sitemap" description="Generate sitemap file">
     <exec executable="python">
       <arg value="misc/sitemap.py"/>
     </exec>
   </target>
 
-  <target name="all" depends="clean,valid,pages,blog,sitemap"
+  <target name="all" depends="clean,valid,pages,blog,pagemeta,sitemap"
           description="Make the whole site" />
 
 </project>

@@ -54,6 +54,9 @@
    </a>
    <xsl:if test="($max - @id) mod $entries-per-page=($entries-per-page - 1)">
     <br/>
+    <xsl:call-template name="blog-params">
+     <xsl:with-param name="current-page" select="$current-page"/>
+    </xsl:call-template>
     <xsl:call-template name="prevnext">
      <xsl:with-param name="current-page" select="$current-page"/>
      <xsl:with-param name="previous-page" select="$previous-page"/>
@@ -66,6 +69,18 @@
    </xsl:if>
   </xsl:for-each>
   <xsl:processing-instruction name="split">file=&quot;index-<xsl:value-of select="$last-page"/>.html&quot;?</xsl:processing-instruction>
+ </xsl:template>
+
+ <!-- print parameters -->
+ <xsl:template name="blog-params">
+  <xsl:param name="current-page"/>
+  <xsl:comment>
+###PARAMS###
+author:   Michel Casabianca
+keywords: sweetohm, blog
+lang:     fr
+title:    Sweetohm Blog <xsl:value-of select="$current-page"/>
+  </xsl:comment>
  </xsl:template>
 
  <xsl:template name="site-title">

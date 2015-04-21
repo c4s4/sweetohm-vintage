@@ -2,7 +2,16 @@
 
     <!DOCTYPE article PUBLIC "-//CAFEBABE//DTD blog 1.0//EN"
                              "../dtd/article.dtd">
-    <article id="babel" date="2014-11-05" author="Michel Casabianca" email="michel.casabianca@gmail.com" lang="en" toc="yes" pdf="no"><title>Babel</title><text>
+    <article id="babel" 
+             date="2014-11-05" 
+             author="Michel Casabianca" 
+             email="michel.casabianca@gmail.com" 
+             lang="en" 
+             toc="yes" 
+             pdf="no"
+             keywords="langage programmation, compilation">
+
+<title>Babel</title><text>
 <p>Babel is a set of tools to manage versions of your favorite programming languages.</p>
 <p>To build and install GO <term>1.3.3</term>:</p>
 <source>go-build 1.3.3</source>
