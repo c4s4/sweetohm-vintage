@@ -31,4 +31,8 @@
     <menuitem title="Ecce Duke" url="duke.en.html"/>
   </submenu>
   
+  <submenu title="About...">
+    <menuitem title="The author" url="michel-casabianca.en.html"/>
+  </submenu>
+  
 </menu>
