@@ -303,7 +303,7 @@
   <target name="copy"
           depends="all"
           description="Copy site to destination directory">
-    <copy todir="${root}">
+    <copy todir="${root}" overwrite="true">
       <fileset dir="${site}" includes="**/*" />
     </copy>
   </target>
