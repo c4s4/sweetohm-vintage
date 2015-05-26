@@ -36,7 +36,9 @@ def main():
     for url, weight in sorted(files.iteritems()):
         entries.append(HTML_ENTRY % (url, date, weight))
     sitemap = HTML_ROOT % '\n'.join(entries)
-    with open("%s/sitemap.xml" % SITE_ROOT, 'wb') as stream:
+    filename = "%s/sitemap.xml" % SITE_ROOT
+    print "Writing sitemap %s" % filename
+    with open(filename, 'wb') as stream:
         stream.write(sitemap)
 
 

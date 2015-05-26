@@ -31,6 +31,7 @@ def main(directories):
         files = glob.glob(os.path.join(directory, '**/*.html')) + \
                 glob.glob(os.path.join(directory, '*.html'))
         for f in files:
+            print "Processing %s..." % f
             with open(f) as stream:
                 text = stream.read()
             text = process(text)
