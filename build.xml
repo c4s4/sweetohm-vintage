@@ -194,49 +194,6 @@
     </nest>
   </target>
 
-  <target name="links" description="Test internal links in HTML files">
-    <link interrupt="true">
-      <fileset dir="${site}" includes="**/*.html" />
-    </link>
-  </target>
-
-  <target name="external-links" description="Test external links in HTML files">
-    <link log="links.txt" external="true" interrupt="false">
-      <fileset dir="${site}" includes="**/*.html" />
-    </link>
-  </target>
-
-  <target name="copy"
-          depends="all"
-          description="Copy site to destination directory">
-    <copy todir="${root}">
-      <fileset dir="${site}" includes="**/*" />
-    </copy>
-  </target>
-
-  <target name="sync"
-          depends="all"
-          description="RSync site to sweetohm">
-    <exec executable="rsync" dir="${site}">
-     <arg value="-av"/>
-     <arg value="."/>
-     <arg value="casa@sweetohm.net:/home/web/sweetohm/"/>
-    </exec>
-  </target>
-
-  <target name="clean" description="Clean generated files">
-    <delete dir="${build}" />
-  </target>
-
-  <target name="cleanall" depends="clean" description="Clean generated files">
-    <delete>
-      <fileset dir="${img}" includes="*.eps" />
-    </delete>
-    <delete>
-      <fileset dir="." includes="links.txt" />
-    </delete>
-  </target>
-
   <target name="blog" description="Generate and install blog pages"
           depends="time">
     <!-- make build directories -->
@@ -342,5 +299,48 @@
 
   <target name="all" depends="clean,valid,pages,blog,pagemeta,sitemap"
           description="Make the whole site" />
+
+  <target name="copy"
+          depends="all"
+          description="Copy site to destination directory">
+    <copy todir="${root}">
+      <fileset dir="${site}" includes="**/*" />
+    </copy>
+  </target>
+
+  <target name="sync"
+          depends="all"
+          description="RSync site to sweetohm">
+    <exec executable="rsync" dir="${site}">
+     <arg value="-av"/>
+     <arg value="."/>
+     <arg value="casa@sweetohm.net:/home/web/sweetohm/"/>
+    </exec>
+  </target>
+
+  <target name="links" description="Test internal links in HTML files">
+    <link interrupt="true">
+      <fileset dir="${site}" includes="**/*.html" />
+    </link>
+  </target>
+
+  <target name="external-links" description="Test external links in HTML files">
+    <link log="links.txt" external="true" interrupt="false">
+      <fileset dir="${site}" includes="**/*.html" />
+    </link>
+  </target>
+
+  <target name="clean" description="Clean generated files">
+    <delete dir="${build}" />
+  </target>
+
+  <target name="cleanall" depends="clean" description="Clean generated files">
+    <delete>
+      <fileset dir="${img}" includes="*.eps" />
+    </delete>
+    <delete>
+      <fileset dir="." includes="links.txt" />
+    </delete>
+  </target>
 
 </project>
